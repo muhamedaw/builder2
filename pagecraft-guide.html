@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>PageCraft — Complete Guide</title>
+<style>
+/* ── Reset & Base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:#1e293b;background:#fff;line-height:1.7}
+
+/* ── Print ── */
+@media print{
+  .no-print{display:none!important}
+  .page-break{page-break-after:always}
+  body{font-size:13px}
+  h1{font-size:28px!important}
+  .cover{min-height:auto!important;padding:60px 40px!important}
+}
+
+/* ── Cover ── */
+.cover{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);
+  color:#fff;text-align:center;padding:80px 40px;position:relative;overflow:hidden;
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 40%,rgba(108,99,255,.3) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 70%,rgba(167,139,250,.2) 0%,transparent 50%);
+}
+.cover-content{position:relative;z-index:1;max-width:700px}
+.cover-logo{font-size:72px;margin-bottom:24px;filter:drop-shadow(0 0 40px rgba(108,99,255,.5))}
+.cover-title{font-size:52px;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px;
+  background:linear-gradient(135deg,#fff 30%,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cover-sub{font-size:20px;opacity:.75;margin-bottom:40px;line-height:1.6}
+.cover-badges{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.badge{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.05em}
+.badge-purple{background:rgba(108,99,255,.3);border:1px solid rgba(108,99,255,.5);color:#c4b5fd}
+.badge-green{background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.4);color:#6ee7b7}
+.badge-blue{background:rgba(14,165,233,.2);border:1px solid rgba(14,165,233,.4);color:#7dd3fc}
+.cover-meta{position:absolute;bottom:32px;font-size:12px;opacity:.4;letter-spacing:.05em}
+
+/* ── Layout ── */
+.container{max-width:960px;margin:0 auto;padding:0 40px}
+.toc-page{padding:60px 40px;background:#f8fafc;border-bottom:3px solid #e2e8f0}
+.toc-title{font-size:32px;font-weight:800;color:#0f172a;margin-bottom:32px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.toc-section{padding:12px 16px;border-left:3px solid transparent;cursor:pointer;transition:all .15s;text-decoration:none;color:inherit;display:block}
+.toc-section:hover{border-left-color:#6c63ff;background:rgba(108,99,255,.05)}
+.toc-num{font-size:11px;font-weight:700;color:#6c63ff;letter-spacing:.08em;margin-bottom:2px}
+.toc-name{font-size:14px;font-weight:600;color:#1e293b}
+.toc-desc{font-size:11px;color:#64748b;margin-top:1px}
+
+/* ── Section ── */
+.doc-section{padding:64px 40px;border-bottom:1px solid #e2e8f0}
+.doc-section:nth-child(even){background:#fafbfc}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+.section-icon{font-size:40px;width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.section-num{font-size:11px;font-weight:700;color:#6c63ff;letter-spacing:.1em;margin-bottom:4px}
+h1.section-title{font-size:30px;font-weight:800;color:#0f172a}
+h2.section-title{font-size:24px;font-weight:800;color:#0f172a}
+.section-desc{font-size:15px;color:#64748b;margin-top:4px;line-height:1.6}
+p{color:#374151;margin-bottom:14px;line-height:1.75}
+
+/* ── Headings ── */
+h3{font-size:18px;font-weight:700;color:#0f172a;margin:28px 0 10px;padding-bottom:6px;border-bottom:2px solid #f1f5f9}
+h4{font-size:15px;font-weight:700;color:#1e293b;margin:20px 0 8px}
+
+/* ── Feature Map ── */
+.map-wrap{background:#0f172a;border-radius:16px;padding:32px;margin:24px 0;overflow:auto}
+.map-row{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.map-label{font-size:11px;font-weight:700;color:#64748b;letter-spacing:.08em;min-width:90px;padding-top:4px}
+.map-items{display:flex;flex-wrap:wrap;gap:8px}
+.map-chip{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:default}
+.mc-purple{background:rgba(108,99,255,.25);border:1px solid rgba(108,99,255,.4);color:#c4b5fd}
+.mc-green{background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
+.mc-blue{background:rgba(14,165,233,.2);border:1px solid rgba(14,165,233,.3);color:#7dd3fc}
+.mc-orange{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#fcd34d}
+.mc-red{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.mc-gray{background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.2);color:#94a3b8}
+
+/* ── Cards ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:20px 0}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;transition:border-color .15s}
+.card:hover{border-color:#6c63ff}
+.card-icon{font-size:28px;margin-bottom:10px}
+.card-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px}
+.card-desc{font-size:11px;color:#64748b;line-height:1.5}
+
+/* ── UI Map ── */
+.ui-map{background:#1e293b;border-radius:16px;padding:4px;margin:24px 0;position:relative}
+.ui-bar{background:#0f172a;border-radius:10px 10px 0 0;padding:10px 16px;display:flex;align-items:center;gap:8px}
+.ui-dot{width:10px;height:10px;border-radius:50%}
+.ui-body{display:grid;grid-template-columns:240px 1fr 260px;min-height:320px;gap:2px;background:#374151;border-radius:0 0 10px 10px;overflow:hidden}
+.ui-panel{background:#1e293b;padding:16px 12px}
+.ui-canvas{background:#e8e8f0;display:flex;flex-direction:column;align-items:center;padding:16px;gap:8px}
+.ui-canvas-block{background:#fff;border-radius:6px;width:100%;height:40px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#94a3b8;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.ui-panel-label{font-size:9px;font-weight:700;letter-spacing:.1em;color:#64748b;margin-bottom:8px;text-transform:uppercase}
+.ui-panel-item{background:#374151;border-radius:5px;padding:5px 8px;font-size:9px;color:#94a3b8;margin-bottom:4px}
+.ui-right{background:#1e293b;padding:12px}
+.ui-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700}
+
+/* ── Annotations ── */
+.annotations{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.ann{display:flex;gap:10px;padding:12px;background:#f8fafc;border-radius:8px;border-left:3px solid #6c63ff}
+.ann-num{font-size:11px;font-weight:800;color:#6c63ff;min-width:20px}
+.ann-text{font-size:12px;color:#374151;line-height:1.5}
+.ann-title{font-weight:700;color:#0f172a;display:block;margin-bottom:2px}
+
+/* ── Code ── */
+pre{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:20px 24px;overflow-x:auto;margin:16px 0;font-size:12px;line-height:1.7;position:relative}
+pre .comment{color:#64748b;font-style:italic}
+pre .key{color:#7dd3fc}
+pre .val{color:#86efac}
+pre .str{color:#fca5a5}
+pre .num{color:#fcd34d}
+pre .tag{color:#c4b5fd}
+pre .attr{color:#7dd3fc}
+code{background:#f1f5f9;color:#6c63ff;padding:2px 6px;border-radius:4px;font-size:12px;font-family:'Cascadia Code','Fira Code',monospace}
+.code-label{font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:.08em;margin-bottom:-12px;padding:0 24px;position:relative;z-index:1}
+
+/* ── Tables ── */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+th{background:#f1f5f9;padding:10px 14px;text-align:left;font-weight:700;color:#374151;font-size:12px;letter-spacing:.04em}
+td{padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#374151;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+
+/* ── Tips ── */
+.tip{display:flex;gap:12px;padding:14px 18px;border-radius:10px;margin:12px 0}
+.tip-info{background:#eff6ff;border-left:4px solid #3b82f6}
+.tip-warn{background:#fffbeb;border-left:4px solid #f59e0b}
+.tip-success{background:#f0fdf4;border-left:4px solid #22c55e}
+.tip-danger{background:#fef2f2;border-left:4px solid #ef4444}
+.tip-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.tip-body{font-size:13px;line-height:1.6;color:#374151}
+.tip-body strong{color:#0f172a}
+
+/* ── Steps ── */
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:12px;margin:16px 0}
+.step{display:flex;gap:14px;padding:14px 18px;background:#fafbfc;border-radius:10px;border:1px solid #e2e8f0}
+.step::before{counter-increment:step;content:counter(step);min-width:28px;height:28px;background:#6c63ff;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.step-content{font-size:13px;color:#374151;line-height:1.6}
+.step-content strong{color:#0f172a}
+
+/* ── Kbd ── */
+kbd{display:inline-flex;align-items:center;padding:3px 8px;background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:5px;font-size:11px;font-weight:700;font-family:monospace;color:#374151}
+
+/* ── Section Type Grid ── */
+.sec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:16px 0}
+.sec-card{padding:16px;border-radius:10px;border:1px solid #e2e8f0;text-align:center;transition:transform .15s}
+.sec-card:hover{transform:translateY(-2px)}
+.sec-icon{font-size:24px;margin-bottom:8px}
+.sec-name{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px}
+.sec-type{font-size:10px;color:#64748b;font-family:monospace;background:#f1f5f9;padding:2px 6px;border-radius:4px}
+
+/* ── Footer ── */
+.guide-footer{background:#0f172a;color:#64748b;text-align:center;padding:40px;font-size:13px}
+.guide-footer strong{color:#a78bfa}
+
+/* ── TOC Print numbers ── */
+.print-only{display:none}
+@media print{.print-only{display:block}}
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover page-break">
+  <div class="cover-content">
+    <div class="cover-logo">⚡</div>
+    <h1 class="cover-title">PageCraft<br/>Complete Guide</h1>
+    <p class="cover-sub">Full documentation · Feature map · Code examples<br/>Everything you need to build stunning websites</p>
+    <div class="cover-badges">
+      <span class="badge badge-purple">✦ 8 Core Features</span>
+      <span class="badge badge-green">🛠 30+ Section Types</span>
+      <span class="badge badge-blue">💡 Code Examples</span>
+    </div>
+  </div>
+  <div class="cover-meta">PageCraft Website Builder — v1.0 · 2025</div>
+</div>
+
+<!-- ══ TABLE OF CONTENTS ══ -->
+<div class="toc-page page-break">
+  <div style="max-width:860px;margin:0 auto">
+    <div class="toc-title">📋 Table of Contents</div>
+    <div class="toc-grid">
+      <a class="toc-section" href="#s1"><div class="toc-num">01</div><div class="toc-name">Interface Map</div><div class="toc-desc">All UI zones explained visually</div></a>
+      <a class="toc-section" href="#s2"><div class="toc-num">02</div><div class="toc-name">Topbar Reference</div><div class="toc-desc">Every button in the toolbar</div></a>
+      <a class="toc-section" href="#s3"><div class="toc-num">03</div><div class="toc-name">Left Sidebar</div><div class="toc-desc">Blocks · Components · Layers · Pages</div></a>
+      <a class="toc-section" href="#s4"><div class="toc-num">04</div><div class="toc-name">Section Types</div><div class="toc-desc">All 15+ section types with props</div></a>
+      <a class="toc-section" href="#s5"><div class="toc-num">05</div><div class="toc-name">Edit Panel</div><div class="toc-desc">Properties · Style · Animations</div></a>
+      <a class="toc-section" href="#s6"><div class="toc-num">06</div><div class="toc-name">Multi-page</div><div class="toc-desc">Managing multiple pages</div></a>
+      <a class="toc-section" href="#s7"><div class="toc-num">07</div><div class="toc-name">Media Library</div><div class="toc-desc">Upload & manage assets</div></a>
+      <a class="toc-section" href="#s8"><div class="toc-num">08</div><div class="toc-name">Form Builder</div><div class="toc-desc">Drag & drop forms</div></a>
+      <a class="toc-section" href="#s9"><div class="toc-num">09</div><div class="toc-name">Global Styles</div><div class="toc-desc">Site-wide design system</div></a>
+      <a class="toc-section" href="#s10"><div class="toc-num">10</div><div class="toc-name">E-commerce</div><div class="toc-desc">Products · Cart · Checkout</div></a>
+      <a class="toc-section" href="#s11"><div class="toc-num">11</div><div class="toc-name">AI Generator</div><div class="toc-desc">Generate content with Groq AI</div></a>
+      <a class="toc-section" href="#s12"><div class="toc-num">12</div><div class="toc-name">SEO Manager</div><div class="toc-desc">Per-page SEO & sitemap</div></a>
+      <a class="toc-section" href="#s13"><div class="toc-num">13</div><div class="toc-name">Video Backgrounds</div><div class="toc-desc">YouTube · Vimeo · Local video</div></a>
+      <a class="toc-section" href="#s14"><div class="toc-num">14</div><div class="toc-name">Export & Deploy</div><div class="toc-desc">HTML · React · Deploy options</div></a>
+      <a class="toc-section" href="#s15"><div class="toc-num">15</div><div class="toc-name">Code Examples</div><div class="toc-desc">Custom HTML · JSON · API</div></a>
+      <a class="toc-section" href="#s16"><div class="toc-num">16</div><div class="toc-name">Keyboard Shortcuts</div><div class="toc-desc">All shortcuts reference</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 1. INTERFACE MAP ══ -->
+<div class="doc-section page-break" id="s1">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#6c63ff22">🗺️</div>
+    <div><div class="section-num">01</div><h1 class="section-title">Interface Map</h1><div class="section-desc">Understanding every zone of the PageCraft editor</div></div>
+  </div>
+
+  <!-- UI Diagram -->
+  <div class="ui-map">
+    <div class="ui-bar">
+      <div class="ui-dot" style="background:#ef4444"></div>
+      <div class="ui-dot" style="background:#f59e0b"></div>
+      <div class="ui-dot" style="background:#22c55e"></div>
+      <span style="margin-left:12px;font-size:11px;color:#64748b;font-weight:600">PageCraft — Website Builder</span>
+      <span style="margin-left:auto;display:flex;gap:6px">
+        <span class="ui-badge" style="background:rgba(108,99,255,.3);color:#a78bfa">⬇ Export</span>
+        <span class="ui-badge" style="background:rgba(16,185,129,.3);color:#6ee7b7">🚀 Deploy</span>
+      </span>
+    </div>
+    <div class="ui-body">
+      <!-- Left Panel -->
+      <div class="ui-panel">
+        <div class="ui-panel-label">① Left Sidebar</div>
+        <div style="display:flex;gap:4px;margin-bottom:8px">
+          <span style="background:#6c63ff;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px">Blocks</span>
+          <span style="background:#374151;color:#94a3b8;font-size:8px;padding:2px 6px;border-radius:4px">Components</span>
+          <span style="background:#374151;color:#94a3b8;font-size:8px;padding:2px 6px;border-radius:4px">Layers</span>
+        </div>
+        <div class="ui-panel-item">🦸 Hero</div>
+        <div class="ui-panel-item">👤 About</div>
+        <div class="ui-panel-item">✨ Features</div>
+        <div class="ui-panel-item">💬 Testimonial</div>
+        <div class="ui-panel-item">✉️ Contact</div>
+        <div class="ui-panel-item">🔻 Footer</div>
+      </div>
+      <!-- Canvas -->
+      <div class="ui-canvas">
+        <div style="font-size:8px;color:#6c63ff;font-weight:700;margin-bottom:4px">② CANVAS</div>
+        <div class="ui-canvas-block" style="height:60px;background:linear-gradient(135deg,#0f172a,#1e1b4b);color:#fff">🦸 Hero Section</div>
+        <div class="ui-canvas-block">✨ Features Section</div>
+        <div class="ui-canvas-block">💬 Testimonial</div>
+        <div style="width:100%;height:1px;background:#cbd5e1;margin:4px 0"></div>
+        <div style="font-size:8px;color:#94a3b8">Drop sections here</div>
+      </div>
+      <!-- Right Panel -->
+      <div class="ui-right">
+        <div class="ui-panel-label">③ Edit Panel</div>
+        <div style="display:flex;gap:4px;margin-bottom:8px">
+          <span style="background:#6c63ff;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px">Edit</span>
+          <span style="background:#374151;color:#94a3b8;font-size:8px;padding:2px 6px;border-radius:4px">Style</span>
+          <span style="background:#374151;color:#94a3b8;font-size:8px;padding:2px 6px;border-radius:4px">Anim</span>
+        </div>
+        <div style="background:#374151;border-radius:5px;padding:6px 8px;margin-bottom:4px">
+          <div style="font-size:7px;color:#64748b;margin-bottom:2px">HEADLINE</div>
+          <div style="font-size:9px;color:#e2e8f0">Build Something...</div>
+        </div>
+        <div style="background:#374151;border-radius:5px;padding:6px 8px;margin-bottom:4px">
+          <div style="font-size:7px;color:#64748b;margin-bottom:2px">CTA TEXT</div>
+          <div style="font-size:9px;color:#e2e8f0">Get Started</div>
+        </div>
+        <div style="background:#374151;border-radius:5px;padding:6px 8px">
+          <div style="font-size:7px;color:#64748b;margin-bottom:2px">BG COLOR</div>
+          <div style="display:flex;gap:4px;align-items:center">
+            <div style="width:16px;height:16px;background:#6c63ff;border-radius:3px"></div>
+            <div style="font-size:9px;color:#e2e8f0">#6c63ff</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotations">
+    <div class="ann"><div class="ann-num">①</div><div class="ann-text"><span class="ann-title">Left Sidebar</span>Contains all section types organized in tabs: Blocks (basic), Components (advanced), Layers (order), Pages (multi-page), Suggest (AI layout ideas)</div></div>
+    <div class="ann"><div class="ann-num">②</div><div class="ann-text"><span class="ann-title">Canvas</span>The visual editor where you see your page live. Click any section to select it. Drag the ⠿ handle to reorder. Double-click text to edit inline.</div></div>
+    <div class="ann"><div class="ann-num">③</div><div class="ann-text"><span class="ann-title">Right Edit Panel</span>Shows properties of the selected section. Three tabs: Edit (content), Style (colors), Animations (scroll effects).</div></div>
+    <div class="ann"><div class="ann-num">④</div><div class="ann-text"><span class="ann-title">Topbar</span>All main actions: Undo/Redo, mode switch (Edit/Preview), and all feature buttons (Export, Deploy, AI, SEO, Shop, etc.)</div></div>
+  </div>
+
+  <h3>Website Feature Map</h3>
+  <div class="map-wrap">
+    <div class="map-row"><div class="map-label" style="color:#a78bfa">TOPBAR</div><div class="map-items"><span class="map-chip mc-purple">↩ Undo</span><span class="map-chip mc-purple">↪ Redo</span><span class="map-chip mc-purple">Edit Mode</span><span class="map-chip mc-purple">Preview Mode</span><span class="map-chip mc-purple">Page Title</span><span class="map-chip mc-gray">Clear</span><span class="map-chip mc-blue">📐 Templates</span><span class="map-chip mc-blue">📁 Projects</span><span class="map-chip mc-blue">✏️ CMS</span><span class="map-chip mc-blue">🧩 Plugins</span><span class="map-chip mc-blue">🏢 Workspace</span><span class="map-chip mc-blue">🔌 Integrations</span><span class="map-chip mc-orange">🤖 AI</span><span class="map-chip mc-orange">🛍 Shop</span><span class="map-chip mc-orange">🎨 Styles</span><span class="map-chip mc-orange">🖼 Media</span><span class="map-chip mc-orange">📋 Submissions</span><span class="map-chip mc-orange">🔍 SEO</span><span class="map-chip mc-green">✨ Animate</span><span class="map-chip mc-green">📱 Responsive</span><span class="map-chip mc-green">⬇ Export</span><span class="map-chip mc-green">🚀 Deploy</span></div></div>
+    <div class="map-row"><div class="map-label" style="color:#7dd3fc">SIDEBAR</div><div class="map-items"><span class="map-chip mc-blue">Blocks tab</span><span class="map-chip mc-blue">Components tab</span><span class="map-chip mc-blue">Layers tab</span><span class="map-chip mc-blue">📄 Pages tab</span><span class="map-chip mc-blue">💡 Suggest tab</span></div></div>
+    <div class="map-row"><div class="map-label" style="color:#6ee7b7">SECTIONS</div><div class="map-items"><span class="map-chip mc-green">🦸 Hero</span><span class="map-chip mc-green">👤 About</span><span class="map-chip mc-green">✉️ Contact</span><span class="map-chip mc-green">✨ Features</span><span class="map-chip mc-green">💬 Testimonial</span><span class="map-chip mc-green">🔻 Footer</span><span class="map-chip mc-purple">💎 Pricing</span><span class="map-chip mc-purple">❓ FAQ</span><span class="map-chip mc-purple">🖼 Gallery</span><span class="map-chip mc-purple">📋 Form</span><span class="map-chip mc-purple">🛍 Products</span><span class="map-chip mc-purple">🎬 Video Hero</span><span class="map-chip mc-orange">✦ Particles</span><span class="map-chip mc-orange">🌊 Waves</span><span class="map-chip mc-orange">🌍 Globe</span><span class="map-chip mc-orange">🃏 3D Cards</span><span class="map-chip mc-gray">&lt;/&gt; Custom HTML</span></div></div>
+    <div class="map-row"><div class="map-label" style="color:#fcd34d">FEATURES</div><div class="map-items"><span class="map-chip mc-orange">Multi-page</span><span class="map-chip mc-orange">Media Library</span><span class="map-chip mc-orange">Form Builder</span><span class="map-chip mc-orange">Global Styles</span><span class="map-chip mc-orange">E-commerce</span><span class="map-chip mc-orange">AI Generator</span><span class="map-chip mc-orange">SEO Panel</span><span class="map-chip mc-orange">Video BG</span><span class="map-chip mc-red">Real-time Collab</span><span class="map-chip mc-red">CMS</span><span class="map-chip mc-red">Plugins SDK</span><span class="map-chip mc-red">White Label</span></div></div>
+    <div class="map-row"><div class="map-label" style="color:#fca5a5">EXPORT</div><div class="map-items"><span class="map-chip mc-red">HTML Export</span><span class="map-chip mc-red">React JSX</span><span class="map-chip mc-red">All Pages ZIP</span><span class="map-chip mc-red">JSON Project</span><span class="map-chip mc-red">Sitemap XML</span><span class="map-chip mc-red">Deploy Static</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ══ 2. TOPBAR ══ -->
+<div class="doc-section page-break" id="s2">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#0ea5e922">🔧</div>
+    <div><div class="section-num">02</div><h1 class="section-title">Topbar Reference</h1><div class="section-desc">Complete guide to every button in the toolbar</div></div>
+  </div>
+
+  <table>
+    <tr><th>Button</th><th>Action</th><th>Shortcut</th><th>Description</th></tr>
+    <tr><td><kbd>↩ Undo</kbd></td><td>Undo last action</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Reverts the last change to canvas. History stored in memory (not saved).</td></tr>
+    <tr><td><kbd>↪ Redo</kbd></td><td>Redo action</td><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Re-applies an undone action.</td></tr>
+    <tr><td><code>Edit / Preview</code></td><td>Toggle mode</td><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>Edit mode shows controls. Preview mode shows the clean page without UI chrome.</td></tr>
+    <tr><td><code>Page Title</code></td><td>Rename page</td><td>—</td><td>The text field in the topbar center — sets the current page name.</td></tr>
+    <tr><td><code>📐 Templates</code></td><td>Browse templates</td><td>—</td><td>Pre-built page layouts. Click one to load it onto the canvas.</td></tr>
+    <tr><td><code>📁 Projects</code></td><td>Save/load projects</td><td>—</td><td>All projects stored in browser localStorage. Load, save, duplicate, or delete projects.</td></tr>
+    <tr><td><code>🤖 AI</code></td><td>AI content generator</td><td>—</td><td>Generate headlines, descriptions, CTAs using Groq (free AI). Requires API key.</td></tr>
+    <tr><td><code>🛍 Shop</code></td><td>Product management</td><td>—</td><td>Add/edit/delete products. Manage orders. Set Stripe key for payments.</td></tr>
+    <tr><td><code>🎨 Styles</code></td><td>Global design system</td><td>—</td><td>Set site-wide fonts, colors, spacing. Changes apply to all sections instantly.</td></tr>
+    <tr><td><code>🖼 Media</code></td><td>Media library</td><td>—</td><td>Upload images. Reuse them across sections. Up to 8MB per image.</td></tr>
+    <tr><td><code>📋 Submissions</code></td><td>Form submissions</td><td>—</td><td>View all form entries. Export as CSV. Filter by section.</td></tr>
+    <tr><td><code>🔍 SEO</code></td><td>SEO manager</td><td>—</td><td>Per-page: meta title, description, OG tags, Twitter cards, JSON-LD, SEO score.</td></tr>
+    <tr><td><code>✨ Animate</code></td><td>Scroll animations</td><td>—</td><td>Add scroll-triggered animations to any section (fade, slide, zoom, etc.).</td></tr>
+    <tr><td><code>📱 Responsive</code></td><td>Responsive rules</td><td>—</td><td>Set custom CSS rules for mobile, tablet, desktop breakpoints.</td></tr>
+    <tr><td><code>⬇ Export</code></td><td>Export site</td><td>—</td><td>Download as HTML file. Options: minify, fonts, analytics, all pages.</td></tr>
+    <tr><td><code>🚀 Deploy</code></td><td>Deploy site</td><td>—</td><td>Deploy to static hosting (Netlify drop, GitHub Pages, custom).</td></tr>
+    <tr><td><code>💾</code></td><td>Save project</td><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Saves current project to browser storage.</td></tr>
+    <tr><td><code>📂</code></td><td>Load project</td><td>—</td><td>Import a .json project file.</td></tr>
+    <tr><td><code>🚩</code></td><td>Feature flags</td><td>—</td><td>Toggle experimental features on/off.</td></tr>
+    <tr><td><code>🗄️</code></td><td>Backups</td><td>—</td><td>Auto-backup system with restore points.</td></tr>
+    <tr><td><code>🔑</code></td><td>API keys</td><td>—</td><td>Manage API keys for the collaboration server.</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ══ 3. SIDEBAR ══ -->
+<div class="doc-section page-break" id="s3">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#10b98122">📦</div>
+    <div><div class="section-num">03</div><h1 class="section-title">Left Sidebar</h1><div class="section-desc">Blocks, Components, Layers, Pages, and Suggestions</div></div>
+  </div>
+
+  <h3>Sidebar Tabs Overview</h3>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🧱</div><div class="card-title">Blocks</div><div class="card-desc">Core section types: Hero, About, Features, Testimonial, Contact, Footer. Drag to canvas or click to add.</div></div>
+    <div class="card"><div class="card-icon">🧩</div><div class="card-title">Components</div><div class="card-desc">Rich interactive sections: Pricing, FAQ, Gallery, Forms, 3D Scenes, Product Grid, Video Hero, Custom HTML.</div></div>
+    <div class="card"><div class="card-icon">🗂</div><div class="card-title">Layers</div><div class="card-desc">All sections listed in order. Click to select, drag to reorder, see section count badge.</div></div>
+    <div class="card"><div class="card-icon">📄</div><div class="card-title">Pages</div><div class="card-desc">Create multiple pages. Each page has its own sections. Rename, duplicate, delete, reorder pages.</div></div>
+    <div class="card"><div class="card-icon">💡</div><div class="card-title">Suggest</div><div class="card-desc">AI layout suggestions based on your page type. Click a suggestion to auto-add sections.</div></div>
+  </div>
+
+  <h3>Adding Sections — 3 Ways</h3>
+  <div class="steps">
+    <div class="step"><div class="step-content"><strong>Drag & Drop:</strong> Grab any block card from the sidebar and drag it to your desired position on the canvas. A blue line shows where it will land.</div></div>
+    <div class="step"><div class="step-content"><strong>Click to Add:</strong> Simply click a block card — it gets added at the bottom of the canvas automatically.</div></div>
+    <div class="step"><div class="step-content"><strong>Between Sections:</strong> Hover between two sections on the canvas to see a drop zone, then drag a block there.</div></div>
+  </div>
+
+  <h3>Managing Pages (Pages Tab)</h3>
+  <div class="steps">
+    <div class="step"><div class="step-content"><strong>Add Page:</strong> Click <code>＋ Add New Page</code> — creates a blank page and switches to it.</div></div>
+    <div class="step"><div class="step-content"><strong>Rename:</strong> Double-click the page name or click ✏️ icon. The active page title also syncs with the topbar text field.</div></div>
+    <div class="step"><div class="step-content"><strong>Switch:</strong> Click any page in the list. Sections are saved automatically before switching.</div></div>
+    <div class="step"><div class="step-content"><strong>Duplicate:</strong> Click ⧉ — creates a copy with all sections. Rename it after.</div></div>
+    <div class="step"><div class="step-content"><strong>Delete:</strong> Click ✕ — cannot delete the last remaining page.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ══ 4. SECTION TYPES ══ -->
+<div class="doc-section page-break" id="s4">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#8b5cf622">📐</div>
+    <div><div class="section-num">04</div><h1 class="section-title">Section Types Reference</h1><div class="section-desc">All available section types, their purpose, and key properties</div></div>
+  </div>
+
+  <h3>Base Blocks</h3>
+  <div class="sec-grid">
+    <div class="sec-card" style="border-color:#6c63ff33"><div class="sec-icon">🦸</div><div class="sec-name">Hero</div><div class="sec-type">hero</div></div>
+    <div class="sec-card" style="border-color:#10b98133"><div class="sec-icon">👤</div><div class="sec-name">About</div><div class="sec-type">about</div></div>
+    <div class="sec-card" style="border-color:#f59e0b33"><div class="sec-icon">✉️</div><div class="sec-name">Contact</div><div class="sec-type">contact</div></div>
+    <div class="sec-card" style="border-color:#8b5cf633"><div class="sec-icon">✨</div><div class="sec-name">Features</div><div class="sec-type">features</div></div>
+    <div class="sec-card" style="border-color:#ec489933"><div class="sec-icon">💬</div><div class="sec-name">Testimonial</div><div class="sec-type">testimonial</div></div>
+    <div class="sec-card" style="border-color:#64748b33"><div class="sec-icon">🔻</div><div class="sec-name">Footer</div><div class="sec-type">footer</div></div>
+  </div>
+
+  <h3>Components</h3>
+  <div class="sec-grid">
+    <div class="sec-card" style="border-color:#0ea5e933"><div class="sec-icon">💎</div><div class="sec-name">Pricing</div><div class="sec-type">pricing</div></div>
+    <div class="sec-card" style="border-color:#0ea5e933"><div class="sec-icon">❓</div><div class="sec-name">FAQ</div><div class="sec-type">faq</div></div>
+    <div class="sec-card" style="border-color:#0ea5e933"><div class="sec-icon">🖼</div><div class="sec-name">Gallery</div><div class="sec-type">gallery</div></div>
+    <div class="sec-card" style="border-color:#6c63ff33"><div class="sec-icon">📋</div><div class="sec-name">Form Builder</div><div class="sec-type">form-builder</div></div>
+    <div class="sec-card" style="border-color:#10b98133"><div class="sec-icon">🛍</div><div class="sec-name">Product Grid</div><div class="sec-type">product-grid</div></div>
+    <div class="sec-card" style="border-color:#ef444433"><div class="sec-icon">🎬</div><div class="sec-name">Video Hero</div><div class="sec-type">video-hero</div></div>
+    <div class="sec-card" style="border-color:#64748b33"><div class="sec-icon">&lt;/&gt;</div><div class="sec-name">Custom HTML</div><div class="sec-type">custom-html</div></div>
+    <div class="sec-card" style="border-color:#a78bfa33"><div class="sec-icon">✦</div><div class="sec-name">Particles</div><div class="sec-type">scene-particles</div></div>
+    <div class="sec-card" style="border-color:#a78bfa33"><div class="sec-icon">🌊</div><div class="sec-name">Waves</div><div class="sec-type">scene-waves</div></div>
+    <div class="sec-card" style="border-color:#a78bfa33"><div class="sec-icon">🌍</div><div class="sec-name">Globe</div><div class="sec-type">scene-globe</div></div>
+    <div class="sec-card" style="border-color:#a78bfa33"><div class="sec-icon">🃏</div><div class="sec-name">3D Cards</div><div class="sec-type">scene-cards</div></div>
+  </div>
+
+  <h3>Section Properties Reference</h3>
+  <table>
+    <tr><th>Section</th><th>Key Properties</th><th>Special Features</th></tr>
+    <tr><td><strong>Hero</strong></td><td>headline, subheadline, ctaText, ctaLink, ctaSecText, align, minHeight, bgImage</td><td>Optional YouTube/Vimeo video background</td></tr>
+    <tr><td><strong>About</strong></td><td>heading, subheading, body, highlight, image, imagePos</td><td>Image left/right layout toggle</td></tr>
+    <tr><td><strong>Features</strong></td><td>heading, feat1-3 (icon, title, desc)</td><td>3-column grid layout</td></tr>
+    <tr><td><strong>Pricing</strong></td><td>3 tiers with monthly/annual toggle</td><td>Featured card highlight, annual discount badge</td></tr>
+    <tr><td><strong>FAQ</strong></td><td>Up to 6 Q&A pairs</td><td>Accordion expand/collapse</td></tr>
+    <tr><td><strong>Gallery</strong></td><td>Up to 6 images with captions</td><td>Grid / Masonry / Featured layouts</td></tr>
+    <tr><td><strong>Form Builder</strong></td><td>fields (JSON), submitText, successMsg, webhook</td><td>Custom drag-drop panel, 8 field types</td></tr>
+    <tr><td><strong>Product Grid</strong></td><td>cols, currency, showPrice, showDesc</td><td>Reads from global ProductStore</td></tr>
+    <tr><td><strong>Video Hero</strong></td><td>videoType, videoUrl, overlayColor, overlayOpacity, posterImage</td><td>YouTube / Vimeo / Local video</td></tr>
+    <tr><td><strong>3D Scenes</strong></td><td>particleCount, waveSpeed, rotateSpeed (per type)</td><td>WebGL powered, Three.js — Pro feature</td></tr>
+    <tr><td><strong>Custom HTML</strong></td><td>code (raw HTML/CSS/JS), minHeight</td><td>Full script execution, sandboxed</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ══ 5. EDIT PANEL ══ -->
+<div class="doc-section page-break" id="s5">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#f59e0b22">🎛</div>
+    <div><div class="section-num">05</div><h1 class="section-title">Edit Panel</h1><div class="section-desc">The right panel — Edit, Style, and Animations tabs</div></div>
+  </div>
+
+  <h3>Edit Tab</h3>
+  <p>Shows all editable properties of the selected section, organized into groups. Each field type:</p>
+  <table>
+    <tr><th>Field Type</th><th>Description</th><th>AI Button?</th></tr>
+    <tr><td><code>text</code></td><td>Single-line input for headlines, labels, URLs</td><td>✅ Yes</td></tr>
+    <tr><td><code>textarea</code></td><td>Multi-line for descriptions and body content</td><td>✅ Yes</td></tr>
+    <tr><td><code>select</code></td><td>Dropdown for layout choices (left/center, columns count)</td><td>—</td></tr>
+    <tr><td><code>img</code></td><td>Image picker — upload, URL, media library, or stock photos</td><td>—</td></tr>
+  </table>
+
+  <div class="tip tip-info"><div class="tip-icon">💡</div><div class="tip-body"><strong>Inline editing:</strong> You can also double-click any text on the canvas directly to edit it inline — changes sync to the panel automatically.</div></div>
+  <div class="tip tip-info"><div class="tip-icon">✦</div><div class="tip-body"><strong>AI buttons:</strong> Every text/textarea field has a small <code>✦ AI</code> button next to its label. Click it to auto-open the AI generator pre-configured for that field type.</div></div>
+
+  <h3>Style Tab</h3>
+  <p>Color controls for each section. Every section has at minimum:</p>
+  <table>
+    <tr><th>Property</th><th>Effect</th></tr>
+    <tr><td><code>bgColor</code></td><td>Background color of the section</td></tr>
+    <tr><td><code>textColor</code></td><td>Primary text color</td></tr>
+    <tr><td><code>accentColor</code></td><td>Buttons, highlights, links — brand color</td></tr>
+  </table>
+  <p>Each color has both a color swatch (click to open color picker) and a hex text input.</p>
+
+  <h3>Animations Tab</h3>
+  <p>Add scroll-triggered animations to any section:</p>
+  <table>
+    <tr><th>Setting</th><th>Options</th></tr>
+    <tr><td>Preset</td><td>None, Fade Up, Fade In, Slide Left/Right, Zoom In, Flip, Bounce</td></tr>
+    <tr><td>Duration</td><td>0.1s – 3.0s (slider)</td></tr>
+    <tr><td>Delay</td><td>0s – 2s (slider)</td></tr>
+    <tr><td>Easing</td><td>ease, ease-in, ease-out, ease-in-out, spring, bounce</td></tr>
+    <tr><td>Stagger</td><td>Staggers child elements one by one</td></tr>
+    <tr><td>Threshold</td><td>How much of the section must be visible to trigger (0–1)</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ══ 6. MULTI-PAGE ══ -->
+<div class="doc-section" id="s6">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#6c63ff22">📄</div>
+    <div><div class="section-num">06</div><h1 class="section-title">Multi-page Support</h1><div class="section-desc">Building complete multi-page websites</div></div>
+  </div>
+
+  <h3>How Pages Work</h3>
+  <p>Each project contains one or more pages. Every page has its own independent set of sections. Switching pages saves the current canvas state automatically.</p>
+
+  <div class="tip tip-success"><div class="tip-icon">✅</div><div class="tip-body"><strong>Home page = first page.</strong> When you export all pages, the first page becomes <code>index.html</code>. Additional pages get slugified names like <code>about.html</code>, <code>contact.html</code>.</div></div>
+
+  <h3>Page Navigation in Export</h3>
+  <p>When you export all pages, a navigation bar is automatically injected at the top of every page with links to all other pages.</p>
+
+  <h3>Project JSON Structure</h3>
+  <div class="code-label">JSON — project file with 2 pages</div>
+  <pre>{
+  <span class="key">"id"</span>: <span class="str">"proj_abc123"</span>,
+  <span class="key">"name"</span>: <span class="str">"My Website"</span>,
+  <span class="key">"pages"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="str">"page_home"</span>,
+      <span class="key">"name"</span>: <span class="str">"Home"</span>,
+      <span class="key">"sections"</span>: [
+        { <span class="key">"id"</span>: <span class="str">"s1"</span>, <span class="key">"type"</span>: <span class="str">"hero"</span>, <span class="key">"props"</span>: { <span class="key">"headline"</span>: <span class="str">"Welcome"</span> } },
+        { <span class="key">"id"</span>: <span class="str">"s2"</span>, <span class="key">"type"</span>: <span class="str">"features"</span>, <span class="key">"props"</span>: {} }
+      ]
+    },
+    {
+      <span class="key">"id"</span>: <span class="str">"page_about"</span>,
+      <span class="key">"name"</span>: <span class="str">"About"</span>,
+      <span class="key">"sections"</span>: [
+        { <span class="key">"id"</span>: <span class="str">"s3"</span>, <span class="key">"type"</span>: <span class="str">"about"</span>, <span class="key">"props"</span>: {} }
+      ]
+    }
+  ]
+}</pre>
+</div>
+</div>
+
+<!-- ══ 7. MEDIA LIBRARY ══ -->
+<div class="doc-section page-break" id="s7">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#ec489922">🖼</div>
+    <div><div class="section-num">07</div><h1 class="section-title">Media Library</h1><div class="section-desc">Upload, organize, and reuse image assets</div></div>
+  </div>
+
+  <h3>Opening the Media Library</h3>
+  <p>Click <code>🖼 Media</code> in the topbar. You can also access it from any image field in the Edit Panel — click <code>📂 Upload / Replace</code>.</p>
+
+  <h3>Uploading Images</h3>
+  <div class="steps">
+    <div class="step"><div class="step-content"><strong>Click Upload:</strong> Click anywhere in the upload zone or the "Upload" button. Select one or more images.</div></div>
+    <div class="step"><div class="step-content"><strong>Drag & Drop:</strong> Drag image files directly onto the media library grid.</div></div>
+    <div class="step"><div class="step-content">Images are stored as <strong>base64 data URLs</strong> in localStorage. Max size: <strong>8MB per image</strong>.</div></div>
+  </div>
+
+  <h3>Using Images in Sections</h3>
+  <p>When editing any image field, the image picker has 4 tabs:</p>
+  <table>
+    <tr><th>Tab</th><th>Description</th></tr>
+    <tr><td><strong>Upload</strong></td><td>Upload a new image from your computer</td></tr>
+    <tr><td><strong>My Media</strong></td><td>All images you've uploaded — click to use</td></tr>
+    <tr><td><strong>URL</strong></td><td>Paste a direct image URL from the web</td></tr>
+    <tr><td><strong>Stock</strong></td><td>Free Unsplash stock photos — search by keyword</td></tr>
+  </table>
+
+  <div class="tip tip-warn"><div class="tip-icon">⚠️</div><div class="tip-body"><strong>Storage limit:</strong> localStorage has ~5–10MB total limit per browser. If you get storage errors, delete unused assets from the media library.</div></div>
+</div>
+</div>
+
+<!-- ══ 8. FORM BUILDER ══ -->
+<div class="doc-section" id="s8">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#6c63ff22">📋</div>
+    <div><div class="section-num">08</div><h1 class="section-title">Form Builder</h1><div class="section-desc">Create contact forms, surveys, and lead capture forms</div></div>
+  </div>
+
+  <h3>Adding a Form</h3>
+  <p>Go to <strong>Components</strong> tab in the sidebar → drag <strong>📋 Form Builder</strong> onto the canvas.</p>
+
+  <h3>Available Field Types</h3>
+  <div class="cards">
+    <div class="card"><div class="card-icon">📝</div><div class="card-title">Text</div><div class="card-desc">Single-line text input for names, short answers</div></div>
+    <div class="card"><div class="card-icon">📧</div><div class="card-title">Email</div><div class="card-desc">Email input with built-in format validation</div></div>
+    <div class="card"><div class="card-icon">🔢</div><div class="card-title">Number</div><div class="card-desc">Numeric input with optional min/max</div></div>
+    <div class="card"><div class="card-icon">📄</div><div class="card-title">Textarea</div><div class="card-desc">Multi-line text for messages, comments</div></div>
+    <div class="card"><div class="card-icon">📋</div><div class="card-title">Select</div><div class="card-desc">Dropdown menu with custom options (one per line)</div></div>
+    <div class="card"><div class="card-icon">☑️</div><div class="card-title">Checkbox</div><div class="card-desc">Single true/false checkbox with custom label</div></div>
+    <div class="card"><div class="card-icon">🔘</div><div class="card-title">Radio</div><div class="card-desc">Multiple choice — pick one option</div></div>
+    <div class="card"><div class="card-icon">📎</div><div class="card-title">File Upload</div><div class="card-desc">Let users attach files to their submission</div></div>
+  </div>
+
+  <h3>Webhook (Email Notifications)</h3>
+  <p>Set a webhook URL in the Form Settings to receive submissions as a POST request. Works with:</p>
+  <table>
+    <tr><th>Service</th><th>URL Format</th></tr>
+    <tr><td>Make.com (Integromat)</td><td><code>https://hook.eu1.make.com/xxxxx</code></td></tr>
+    <tr><td>Zapier</td><td><code>https://hooks.zapier.com/hooks/catch/xxxxx</code></td></tr>
+    <tr><td>n8n</td><td><code>https://your-n8n.com/webhook/xxxxx</code></td></tr>
+    <tr><td>Custom API</td><td>Any HTTPS POST endpoint you control</td></tr>
+  </table>
+
+  <h3>Viewing Submissions</h3>
+  <p>Click <code>📋 Submissions</code> in the topbar. You can filter by form, export to CSV, or clear submissions.</p>
+
+  <h3>Submission Data Example</h3>
+  <div class="code-label">JSON — form submission payload</div>
+  <pre>{
+  <span class="key">"fb_1"</span>: <span class="str">"John Doe"</span>,          <span class="comment">// Full Name field</span>
+  <span class="key">"fb_2"</span>: <span class="str">"john@example.com"</span>,  <span class="comment">// Email field</span>
+  <span class="key">"fb_3"</span>: <span class="str">"Hello, I love your site!"</span>,
+  <span class="key">"_submittedAt"</span>: <span class="str">"2025-04-01T14:23:00.000Z"</span>,
+  <span class="key">"_sectionId"</span>: <span class="str">"s5_abc123"</span>
+}</pre>
+</div>
+</div>
+
+<!-- ══ 9. GLOBAL STYLES ══ -->
+<div class="doc-section page-break" id="s9">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#a78bfa22">🎨</div>
+    <div><div class="section-num">09</div><h1 class="section-title">Global Styles</h1><div class="section-desc">Site-wide design system — fonts, colors, spacing</div></div>
+  </div>
+
+  <h3>Opening Global Styles</h3>
+  <p>Click <code>🎨 Styles</code> in the topbar. Changes apply live to the canvas instantly.</p>
+
+  <h3>The 4 Tabs</h3>
+  <table>
+    <tr><th>Tab</th><th>Controls</th></tr>
+    <tr><td><strong>🎨 Colors</strong></td><td>Primary, Secondary, Background, Text, Accent, Muted — 6 site-wide colors</td></tr>
+    <tr><td><strong>🔤 Typography</strong></td><td>Heading font, body font, h1–h6 sizes, body size, line height</td></tr>
+    <tr><td><strong>📐 Spacing</strong></td><td>Base spacing unit, section padding, border radius</td></tr>
+    <tr><td><strong>✦ Presets</strong></td><td>8 built-in design presets: Default, Midnight, Forest, Ocean, Sunset, Luxury, Minimal, Coral</td></tr>
+  </table>
+
+  <h3>CSS Custom Properties Generated</h3>
+  <div class="code-label">CSS Variables injected into :root</div>
+  <pre><span class="tag">:root</span> {
+  <span class="key">--gs-primary</span>: <span class="str">#6c63ff</span>;
+  <span class="key">--gs-secondary</span>: <span class="str">#a78bfa</span>;
+  <span class="key">--gs-bg</span>: <span class="str">#ffffff</span>;
+  <span class="key">--gs-text</span>: <span class="str">#0f172a</span>;
+  <span class="key">--gs-accent</span>: <span class="str">#10b981</span>;
+  <span class="key">--gs-muted</span>: <span class="str">#64748b</span>;
+  <span class="key">--gs-radius</span>: <span class="num">8</span>px;
+  <span class="key">--gs-space</span>: <span class="num">16</span>px;
+}
+<span class="comment">/* Typography applied globally */</span>
+<span class="tag">h1</span> { <span class="key">font-size</span>: <span class="num">48</span>px; <span class="key">font-family</span>: <span class="str">'Inter'</span>, system-ui; }
+<span class="tag">h2</span> { <span class="key">font-size</span>: <span class="num">38</span>px; }
+<span class="tag">body</span> { <span class="key">font-family</span>: <span class="str">'Inter'</span>, system-ui; <span class="key">font-size</span>: <span class="num">15</span>px; }</pre>
+
+  <div class="tip tip-info"><div class="tip-icon">💡</div><div class="tip-body"><strong>Save as Preset:</strong> After customizing your design, click <code>Save as Preset</code> to keep it for future projects.</div></div>
+</div>
+</div>
+
+<!-- ══ 10. E-COMMERCE ══ -->
+<div class="doc-section" id="s10">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#10b98122">🛍</div>
+    <div><div class="section-num">10</div><h1 class="section-title">E-commerce</div><div class="section-desc">Products, cart, checkout, and order management</div></div>
+  </div>
+
+  <h3>Setup in 3 Steps</h3>
+  <div class="steps">
+    <div class="step"><div class="step-content"><strong>Add products:</strong> Click <code>🛍 Shop</code> in topbar → click <code>+ Add Product</code> → fill in name, price, image, description.</div></div>
+    <div class="step"><div class="step-content"><strong>Add Product Grid:</strong> Go to Components tab → drag <code>🛍 Product Grid</code> onto canvas. Products appear automatically.</div></div>
+    <div class="step"><div class="step-content"><strong>Cart is automatic:</strong> "Add to Cart" buttons appear on each product card. A floating cart button appears on the page.</div></div>
+  </div>
+
+  <h3>Product Fields</h3>
+  <table>
+    <tr><th>Field</th><th>Description</th></tr>
+    <tr><td>Name</td><td>Product title shown on the card</td></tr>
+    <tr><td>Price</td><td>Numeric price (uses currency symbol from section props)</td></tr>
+    <tr><td>Description</td><td>Short product description (shown if Show Description is on)</td></tr>
+    <tr><td>Image</td><td>Product photo — URL or base64</td></tr>
+    <tr><td>Badge</td><td>Optional label like "New", "Sale", "Hot" — shown as a colored pill</td></tr>
+    <tr><td>Icon/Emoji</td><td>Fallback emoji if no image is provided</td></tr>
+  </table>
+
+  <h3>Cart & Checkout Flow</h3>
+  <p>Customer adds items → floats cart button badge updates → opens cart drawer → proceeds to checkout → fills name/email/address → order saved to localStorage.</p>
+
+  <h3>Viewing Orders</h3>
+  <p>Click the <code>📋 Orders</code> button inside <code>🛍 Shop</code> panel. You can export orders as CSV.</p>
+
+  <h3>Exported HTML with Cart</h3>
+  <p>When you export a page containing a Product Grid, the full cart system is automatically included in the exported HTML file — no server needed, works standalone.</p>
+</div>
+</div>
+
+<!-- ══ 11. AI GENERATOR ══ -->
+<div class="doc-section page-break" id="s11">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#6c63ff22">🤖</div>
+    <div><div class="section-num">11</div><h1 class="section-title">AI Content Generator</h1><div class="section-desc">Generate website copy using Groq AI (free)</div></div>
+  </div>
+
+  <h3>Setup (One-time)</h3>
+  <div class="steps">
+    <div class="step"><div class="step-content">Go to <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a> → create a free account → click "Create API Key".</div></div>
+    <div class="step"><div class="step-content">Copy the key (starts with <code>gsk_…</code>). Click <code>🤖 AI</code> in topbar → paste the key → click Save.</div></div>
+    <div class="step"><div class="step-content">Done! The key is saved in localStorage for all future sessions.</div></div>
+  </div>
+
+  <h3>Generating Content</h3>
+  <table>
+    <tr><th>Content Type</th><th>Output</th></tr>
+    <tr><td>Headline</td><td>Short punchy heading (max 10 words)</td></tr>
+    <tr><td>Sub-headline</td><td>Supporting tagline (max 20 words)</td></tr>
+    <tr><td>Description</td><td>2-3 sentence compelling paragraph</td></tr>
+    <tr><td>CTA Button</td><td>2-5 word call-to-action label</td></tr>
+    <tr><td>Tagline</td><td>Memorable brand tagline (max 8 words)</td></tr>
+    <tr><td>Feature Title</td><td>3-6 word feature name + 1 sentence desc</td></tr>
+    <tr><td>Testimonial</td><td>Realistic customer quote (2-3 sentences)</td></tr>
+    <tr><td>Full Section</td><td>Headline + sub-headline + description together</td></tr>
+  </table>
+
+  <h3>Tone Options</h3>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+    <span style="padding:5px 14px;background:#6c63ff22;border:1px solid #6c63ff44;border-radius:20px;font-size:12px;font-weight:600;color:#6c63ff">Professional</span>
+    <span style="padding:5px 14px;background:#10b98122;border:1px solid #10b98144;border-radius:20px;font-size:12px;font-weight:600;color:#10b981">Casual</span>
+    <span style="padding:5px 14px;background:#f59e0b22;border:1px solid #f59e0b44;border-radius:20px;font-size:12px;font-weight:600;color:#f59e0b">Friendly</span>
+    <span style="padding:5px 14px;background:#ef444422;border:1px solid #ef444444;border-radius:20px;font-size:12px;font-weight:600;color:#ef4444">Bold</span>
+    <span style="padding:5px 14px;background:#8b5cf622;border:1px solid #8b5cf644;border-radius:20px;font-size:12px;font-weight:600;color:#8b5cf6">Funny</span>
+    <span style="padding:5px 14px;background:#0ea5e922;border:1px solid #0ea5e944;border-radius:20px;font-size:12px;font-weight:600;color:#0ea5e9">Luxury</span>
+  </div>
+
+  <h3>Quick Generate from Edit Panel</h3>
+  <p>Every text and textarea field in the Edit Panel has a small <code>✦ AI</code> button. Click it to instantly open the AI generator pre-configured for that field. After generating, click <code>✓ Apply to field</code>.</p>
+
+  <div class="tip tip-info"><div class="tip-icon">💡</div><div class="tip-body"><strong>Free limits:</strong> Groq free tier — up to 14,400 requests/day. More than enough for any website project.</div></div>
+</div>
+</div>
+
+<!-- ══ 12. SEO ══ -->
+<div class="doc-section" id="s12">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#0ea5e922">🔍</div>
+    <div><div class="section-num">12</div><h1 class="section-title">SEO Manager</h1><div class="section-desc">Per-page SEO tags, structured data, and sitemap</div></div>
+  </div>
+
+  <h3>Opening the SEO Manager</h3>
+  <p>Click <code>🔍 SEO</code> in the topbar. Use the page selector pills at the top to switch between pages.</p>
+
+  <h3>SEO Tabs</h3>
+  <table>
+    <tr><th>Tab</th><th>Fields</th></tr>
+    <tr><td><strong>📝 Meta Tags</strong></td><td>Page title, meta description, canonical URL, robots (index/noindex), author. Live Google preview.</td></tr>
+    <tr><td><strong>📣 Open Graph</strong></td><td>og:title, og:description, og:image, og:type, og:url, og:site_name — for Facebook/LinkedIn sharing</td></tr>
+    <tr><td><strong>🐦 Twitter Card</strong></td><td>Card type, title, description, image, @handle — for X/Twitter sharing</td></tr>
+    <tr><td><strong>🔧 Structured Data</strong></td><td>JSON-LD for Organization (name, URL, logo) and WebPage — helps Google understand your content</td></tr>
+    <tr><td><strong>📊 SEO Score</strong></td><td>8-point checklist with score 0–100. Checks title length, description, headings, OG image, canonical, robots, schema, Twitter</td></tr>
+  </table>
+
+  <h3>SEO Score Checklist</h3>
+  <table>
+    <tr><th>Check</th><th>Ideal Range</th><th>Impact</th></tr>
+    <tr><td>Page Title</td><td>10–60 characters</td><td>High</td></tr>
+    <tr><td>Meta Description</td><td>50–160 characters</td><td>High</td></tr>
+    <tr><td>H1 / Hero Heading</td><td>Must exist</td><td>High</td></tr>
+    <tr><td>OG Image</td><td>1200×630px URL</td><td>Medium</td></tr>
+    <tr><td>Canonical URL</td><td>Full https:// URL</td><td>Medium</td></tr>
+    <tr><td>Robots tag</td><td>index,follow</td><td>Medium</td></tr>
+    <tr><td>Structured Data</td><td>Organization or WebPage</td><td>Medium</td></tr>
+    <tr><td>Twitter Card</td><td>summary_large_image</td><td>Low</td></tr>
+  </table>
+
+  <h3>Exporting Sitemap</h3>
+  <p>Click <code>🗺 Export Sitemap</code> in the SEO modal header. Downloads <code>sitemap.xml</code> with all pages, their canonical URLs, priority, and changefreq.</p>
+
+  <div class="code-label">XML — sitemap.xml example</div>
+  <pre><span class="tag">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag">&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;</span>
+  <span class="tag">&lt;url&gt;</span>
+    <span class="tag">&lt;loc&gt;</span>https://example.com/<span class="tag">&lt;/loc&gt;</span>
+    <span class="tag">&lt;changefreq&gt;</span>weekly<span class="tag">&lt;/changefreq&gt;</span>
+    <span class="tag">&lt;priority&gt;</span>1.0<span class="tag">&lt;/priority&gt;</span>
+  <span class="tag">&lt;/url&gt;</span>
+  <span class="tag">&lt;url&gt;</span>
+    <span class="tag">&lt;loc&gt;</span>https://example.com/about<span class="tag">&lt;/loc&gt;</span>
+    <span class="tag">&lt;changefreq&gt;</span>weekly<span class="tag">&lt;/changefreq&gt;</span>
+    <span class="tag">&lt;priority&gt;</span>0.8<span class="tag">&lt;/priority&gt;</span>
+  <span class="tag">&lt;/url&gt;</span>
+<span class="tag">&lt;/urlset&gt;</span></pre>
+</div>
+</div>
+
+<!-- ══ 13. VIDEO ══ -->
+<div class="doc-section page-break" id="s13">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#ef444422">🎬</div>
+    <div><div class="section-num">13</div><h1 class="section-title">Video Backgrounds</h1><div class="section-desc">YouTube, Vimeo, and local video as full-screen backgrounds</div></div>
+  </div>
+
+  <h3>Two Ways to Use Video Backgrounds</h3>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🎬</div><div class="card-title">Video Hero Section</div><div class="card-desc">A dedicated section type from Components tab. Full video background with headline, sub-headline, and 2 CTA buttons on top.</div></div>
+    <div class="card"><div class="card-icon">🦸</div><div class="card-title">Hero + Video Toggle</div><div class="card-desc">Any existing Hero section can have video added. In Edit Panel → "Video Background" group → set Enable Video BG to true.</div></div>
+  </div>
+
+  <h3>Supported Video Sources</h3>
+  <table>
+    <tr><th>Source</th><th>How to Use</th><th>Example URL</th></tr>
+    <tr><td><strong>YouTube</strong></td><td>Paste any YouTube URL — ID extracted automatically</td><td><code>https://youtube.com/watch?v=dQw4w9WgXcQ</code></td></tr>
+    <tr><td><strong>Vimeo</strong></td><td>Paste any Vimeo URL — ID extracted automatically</td><td><code>https://vimeo.com/123456789</code></td></tr>
+    <tr><td><strong>Local File</strong></td><td>Upload .mp4 via Media Library, paste URL</td><td><code>data:video/mp4;base64,…</code></td></tr>
+    <tr><td><strong>None</strong></td><td>No video — shows poster image or gradient</td><td>—</td></tr>
+  </table>
+
+  <h3>Playback Settings</h3>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+    <tr><td>Autoplay</td><td>On</td><td>Video starts playing automatically when page loads</td></tr>
+    <tr><td>Loop</td><td>On</td><td>Video replays when it reaches the end</td></tr>
+    <tr><td>Muted</td><td>On</td><td>Required for autoplay in browsers (browser policy)</td></tr>
+    <tr><td>Overlay Color</td><td>#000000</td><td>Color tint over the video</td></tr>
+    <tr><td>Overlay Opacity</td><td>0.5</td><td>0 = no overlay, 1 = fully covered. Recommended: 0.4–0.6</td></tr>
+    <tr><td>Poster Image</td><td>—</td><td>Fallback image shown on mobile or if video fails to load</td></tr>
+  </table>
+
+  <div class="tip tip-warn"><div class="tip-icon">⚠️</div><div class="tip-body"><strong>Autoplay + Muted:</strong> Browsers require videos to be muted for autoplay to work. Never set Muted to false if you want Autoplay on — it will fail silently.</div></div>
+  <div class="tip tip-info"><div class="tip-icon">📱</div><div class="tip-body"><strong>Mobile fallback:</strong> Always set a Poster Image for mobile users — many mobile browsers block video autoplay entirely.</div></div>
+</div>
+</div>
+
+<!-- ══ 14. EXPORT ══ -->
+<div class="doc-section" id="s14">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#22c55e22">⬇</div>
+    <div><div class="section-num">14</div><h1 class="section-title">Export & Deploy</h1><div class="section-desc">Getting your website out into the world</div></div>
+  </div>
+
+  <h3>Export Options</h3>
+  <table>
+    <tr><th>Option</th><th>Description</th></tr>
+    <tr><td><strong>⬇ HTML File</strong></td><td>Downloads a single <code>.html</code> file with all CSS/JS inline. Fully self-contained — works without a server.</td></tr>
+    <tr><td><strong>All Pages</strong></td><td>Exports each page as a separate HTML file. Downloads them sequentially. Includes auto-generated nav bar.</td></tr>
+    <tr><td><strong>React JSX</strong></td><td>Exports your page as a React component (<code>.jsx</code>). Use with any React project.</td></tr>
+    <tr><td><strong>JSON Project</strong></td><td>Saves the full project structure as a <code>.json</code> file. Use 📂 to reload it later.</td></tr>
+  </table>
+
+  <h3>Export Settings</h3>
+  <table>
+    <tr><th>Setting</th><th>Default</th><th>Effect</th></tr>
+    <tr><td>Minify HTML</td><td>On</td><td>Removes whitespace from output — smaller file size</td></tr>
+    <tr><td>Include Fonts</td><td>On</td><td>Adds Google Fonts link for Inter (clean typography)</td></tr>
+    <tr><td>Responsive</td><td>On</td><td>Includes mobile CSS rules you defined in the Responsive panel</td></tr>
+    <tr><td>Analytics ID</td><td>—</td><td>Google Analytics (G-XXXXXXXX) or Plausible domain — injects tracking code</td></tr>
+  </table>
+
+  <h3>What's Auto-Included in Export</h3>
+  <p>The following are automatically added when relevant:</p>
+  <table>
+    <tr><td>Global Styles (CSS variables)</td><td>Always included if Global Styles are set</td></tr>
+    <tr><td>Three.js</td><td>Only when 3D sections (Particles, Waves, Globe) exist</td></tr>
+    <tr><td>Cart System (HTML + JS)</td><td>Only when Product Grid section exists</td></tr>
+    <tr><td>SEO Meta Tags</td><td>Always — from SEO Manager per page</td></tr>
+    <tr><td>JSON-LD Structured Data</td><td>Only if configured in SEO Manager</td></tr>
+    <tr><td>Scroll Animations</td><td>Only if any section has animations enabled</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ══ 15. CODE EXAMPLES ══ -->
+<div class="doc-section page-break" id="s15">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#0ea5e922">&lt;/&gt;</div>
+    <div><div class="section-num">15</div><h1 class="section-title">Code Examples</h1><div class="section-desc">Custom HTML, project JSON, API usage, and advanced recipes</div></div>
+  </div>
+
+  <h3>Example 1 — Custom HTML Countdown Timer</h3>
+  <p>Paste this into a <strong>Custom HTML</strong> section:</p>
+  <div class="code-label">Custom HTML Section — Countdown Timer</div>
+  <pre><span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="str">"countdown"</span> <span class="attr">style</span>=<span class="str">"text-align:center;padding:60px 20px;font-family:sans-serif;background:#0f172a;color:#fff"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h2</span> <span class="attr">style</span>=<span class="str">"font-size:2rem;margin-bottom:24px;color:#a78bfa"</span><span class="tag">&gt;</span>Launching In<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="str">"display:flex;gap:24px;justify-content:center"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div&gt;&lt;span</span> <span class="attr">id</span>=<span class="str">"cd-d"</span> <span class="attr">style</span>=<span class="str">"font-size:3rem;font-weight:800"</span><span class="tag">&gt;</span>00<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="str">"font-size:11px;opacity:.5;letter-spacing:.1em"</span><span class="tag">&gt;</span>DAYS<span class="tag">&lt;/p&gt;&lt;/div&gt;</span>
+    <span class="tag">&lt;div&gt;&lt;span</span> <span class="attr">id</span>=<span class="str">"cd-h"</span> <span class="attr">style</span>=<span class="str">"font-size:3rem;font-weight:800"</span><span class="tag">&gt;</span>00<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="str">"font-size:11px;opacity:.5;letter-spacing:.1em"</span><span class="tag">&gt;</span>HRS<span class="tag">&lt;/p&gt;&lt;/div&gt;</span>
+    <span class="tag">&lt;div&gt;&lt;span</span> <span class="attr">id</span>=<span class="str">"cd-m"</span> <span class="attr">style</span>=<span class="str">"font-size:3rem;font-weight:800"</span><span class="tag">&gt;</span>00<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="str">"font-size:11px;opacity:.5;letter-spacing:.1em"</span><span class="tag">&gt;</span>MIN<span class="tag">&lt;/p&gt;&lt;/div&gt;</span>
+    <span class="tag">&lt;div&gt;&lt;span</span> <span class="attr">id</span>=<span class="str">"cd-s"</span> <span class="attr">style</span>=<span class="str">"font-size:3rem;font-weight:800;color:#6c63ff"</span><span class="tag">&gt;</span>00<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="str">"font-size:11px;opacity:.5;letter-spacing:.1em"</span><span class="tag">&gt;</span>SEC<span class="tag">&lt;/p&gt;&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+  var target = new Date(<span class="str">'2026-01-01T00:00:00'</span>);
+  function update() {
+    var now = new Date(), diff = target - now;
+    if (diff &lt;= 0) { document.getElementById(<span class="str">'countdown'</span>).innerHTML = <span class="str">'&lt;h2&gt;🎉 We\'re Live!&lt;/h2&gt;'</span>; return; }
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    document.getElementById(<span class="str">'cd-d'</span>).textContent = String(d).padStart(2,<span class="str">'0'</span>);
+    document.getElementById(<span class="str">'cd-h'</span>).textContent = String(h).padStart(2,<span class="str">'0'</span>);
+    document.getElementById(<span class="str">'cd-m'</span>).textContent = String(m).padStart(2,<span class="str">'0'</span>);
+    document.getElementById(<span class="str">'cd-s'</span>).textContent = String(s).padStart(2,<span class="str">'0'</span>);
+  }
+  update(); setInterval(update, 1000);
+<span class="tag">&lt;/script&gt;</span></pre>
+
+  <h3>Example 2 — Custom HTML Notification Bar</h3>
+  <div class="code-label">Custom HTML Section — Sticky Announcement Bar</div>
+  <pre><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="str">"background:#6c63ff;color:#fff;text-align:center;padding:10px 20px;font-size:14px;font-weight:600;position:sticky;top:0;z-index:99"</span><span class="tag">&gt;</span>
+  🎉 Limited time offer — <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#pricing"</span> <span class="attr">style</span>=<span class="str">"color:#fff;text-decoration:underline"</span><span class="tag">&gt;</span>Get 50% off today only!<span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="str">"this.parentElement.style.display='none'"</span>
+    <span class="attr">style</span>=<span class="str">"float:right;background:none;border:none;color:#fff;font-size:18px;cursor:pointer;line-height:1"</span><span class="tag">&gt;</span>×<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span></pre>
+
+  <h3>Example 3 — REST API Usage (Server Mode)</h3>
+  <p>When running the collaboration server (<code>node server.js</code>), you can interact with rooms via REST API:</p>
+  <div class="code-label">JavaScript — API client example</div>
+  <pre><span class="comment">// Add a section to a room via API</span>
+const response = await fetch(<span class="str">'http://localhost:3000/api/v1/rooms/my-room/sections'</span>, {
+  method: <span class="str">'POST'</span>,
+  headers: {
+    <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span>,
+    <span class="str">'X-API-Key'</span>: <span class="str">'pc_dev_your_key_here'</span>
+  },
+  body: JSON.stringify({
+    type: <span class="str">'hero'</span>,
+    props: {
+      headline: <span class="str">'Hello from API!'</span>,
+      bgColor: <span class="str">'#0f172a'</span>,
+      textColor: <span class="str">'#ffffff'</span>
+    }
+  })
+});
+const data = await response.json();
+console.log(data); <span class="comment">// { ok: true, section: { id: 's123_api', type: 'hero', ... } }</span></pre>
+
+  <div class="code-label">JavaScript — List all rooms</div>
+  <pre>const rooms = await fetch(<span class="str">'http://localhost:3000/api/v1/rooms'</span>, {
+  headers: { <span class="str">'X-API-Key'</span>: <span class="str">'pc_dev_your_key'</span> }
+}).then(r => r.json());
+
+<span class="comment">// rooms.rooms = [{ id, title, users, sections }, ...]</span></pre>
+
+  <h3>Example 4 — Socket.io Real-time Collaboration</h3>
+  <div class="code-label">JavaScript — Join a collaborative room</div>
+  <pre>const socket = io(<span class="str">'http://localhost:3000'</span>);
+
+<span class="comment">// Join a room</span>
+socket.emit(<span class="str">'join'</span>, {
+  roomId: <span class="str">'project-xyz'</span>,
+  user: { name: <span class="str">'Alice'</span>, avatar: <span class="str">'https://...'</span> }
+});
+
+<span class="comment">// Receive current state</span>
+socket.on(<span class="str">'room:joined'</span>, ({ state, users, you }) => {
+  console.log(<span class="str">'Sections:'</span>, state.sections);
+  console.log(<span class="str">'Online users:'</span>, users);
+});
+
+<span class="comment">// Listen for section changes from others</span>
+socket.on(<span class="str">'section:update'</span>, ({ sectionId, key, value, fromUser }) => {
+  console.log(<span class="str">`User ${fromUser} changed ${key} to ${value}`</span>);
+});</pre>
+
+  <h3>Example 5 — Webhook Integration</h3>
+  <p>Form submissions can be sent to any HTTPS endpoint. Example handler in Node.js:</p>
+  <div class="code-label">Node.js — Express webhook receiver</div>
+  <pre>const express = require(<span class="str">'express'</span>);
+const app = express();
+app.use(express.json());
+
+app.post(<span class="str">'/webhook/form'</span>, (req, res) => {
+  const submission = req.body;
+  console.log(<span class="str">'New form submission:'</span>, submission);
+
+  <span class="comment">// submission._submittedAt — ISO timestamp</span>
+  <span class="comment">// submission._sectionId   — which form section</span>
+  <span class="comment">// submission.name, submission.email — field values</span>
+
+  <span class="comment">// Send email, save to DB, notify Slack, etc.</span>
+  res.json({ received: <span class="num">true</span> });
+});
+
+app.listen(<span class="num">3001</span>);</pre>
+</div>
+</div>
+
+<!-- ══ 16. SHORTCUTS ══ -->
+<div class="doc-section page-break" id="s16">
+<div class="container">
+  <div class="section-header">
+    <div class="section-icon" style="background:#64748b22">⌨️</div>
+    <div><div class="section-num">16</div><h1 class="section-title">Keyboard Shortcuts</h1><div class="section-desc">All keyboard shortcuts for faster editing</div></div>
+  </div>
+
+  <h3>General</h3>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Undo last action</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Redo action</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save project</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>Toggle Edit / Preview mode</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd></td><td>Run visual tests</td></tr>
+    <tr><td><kbd>Escape</kbd></td><td>Deselect section / close modals</td></tr>
+  </table>
+
+  <h3>Canvas</h3>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>Click a section</td><td>Select it (shows controls + opens Edit Panel)</td></tr>
+    <tr><td>Double-click text</td><td>Start inline editing</td></tr>
+    <tr><td>Drag <kbd>⠿</kbd> handle</td><td>Reorder sections</td></tr>
+    <tr><td>↑ / ↓ buttons</td><td>Move section up or down</td></tr>
+    <tr><td>⧉ button</td><td>Duplicate section</td></tr>
+    <tr><td>★ button</td><td>Save as reusable component</td></tr>
+    <tr><td>✕ button</td><td>Delete section</td></tr>
+  </table>
+
+  <h3>Quick Tips</h3>
+  <div class="tip tip-success"><div class="tip-icon">✅</div><div class="tip-body"><strong>Quick color edit:</strong> Click any color swatch in the Style tab to open the native color picker immediately.</div></div>
+  <div class="tip tip-success"><div class="tip-icon">✅</div><div class="tip-body"><strong>Duplicate a page:</strong> In the Pages tab, click ⧉ on any page to create a copy — useful for A/B testing layouts.</div></div>
+  <div class="tip tip-success"><div class="tip-icon">✅</div><div class="tip-body"><strong>Undo anything:</strong> Every action is tracked in history — feel free to experiment. Click ↩ or press Ctrl+Z to go back.</div></div>
+  <div class="tip tip-info"><div class="tip-icon">💡</div><div class="tip-body"><strong>Preview before export:</strong> Switch to Preview mode (Ctrl+P) to see your page exactly as visitors will see it — no UI chrome.</div></div>
+  <div class="tip tip-warn"><div class="tip-icon">⚠️</div><div class="tip-body"><strong>Save often:</strong> Projects are saved in localStorage. Use <code>💾</code> or Ctrl+S to save your work. Export as JSON for a backup file.</div></div>
+</div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<div class="guide-footer">
+  <div style="font-size:40px;margin-bottom:12px">⚡</div>
+  <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:6px"><strong>PageCraft</strong> — Website Builder</div>
+  <div style="margin-bottom:16px">Complete Guide v1.0 · 2025</div>
+  <div>Built with ❤️ · <strong>pagecraft.dev</strong></div>
+</div>
+
+<!-- Print Button -->
+<div class="no-print" style="position:fixed;bottom:24px;right:24px;z-index:999">
+  <button onclick="window.print()"
+    style="padding:12px 24px;background:#6c63ff;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(108,99,255,.4)">
+    🖨️ Print / Save as PDF
+  </button>
+</div>
+
+</body>
+</html>

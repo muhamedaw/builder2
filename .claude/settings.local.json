@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls /c/Users/Muhammed/Desktop/github/bulider/*.md)",
+      "Bash(node build.js)",
+      "Bash(node -e \"console.log\\(process.version\\)\")",
+      "Bash(node cli.js help)",
+      "Bash(node cli.js export)",
+      "Bash(node --check c:/Users/Muhammed/Desktop/github/bulider/builder.html)"
+    ]
+  }
+}

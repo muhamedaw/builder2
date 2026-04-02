@@ -1,0 +1,38 @@
+{
+  "name": "pagecraft-server",
+  "version": "1.0.0",
+  "description": "PageCraft real-time collaboration server",
+  "main": "server.js",
+  "bin": {
+    "pagecraft": "./cli.js"
+  },
+  "scripts": {
+    "start":              "node server.js",
+    "dev":                "npx nodemon server.js",
+    "build":              "node build.js",
+    "build:watch":        "node build.js --watch",
+    "build:report":       "node build.js --report",
+    "clean":              "node build.js --clean",
+    "serve":              "node dist/server.js",
+    "test:visual":        "playwright test",
+    "test:visual:update": "UPDATE_SNAPSHOTS=1 playwright test",
+    "test:visual:report": "playwright show-report tests/visual/report",
+    "test:visual:ui":     "playwright test --ui",
+    "cli":                "node cli.js",
+    "cli:init":           "node cli.js init",
+    "cli:serve":          "node cli.js serve",
+    "cli:status":         "node cli.js status",
+    "cli:deploy":         "node cli.js deploy",
+    "cli:keys":           "node cli.js keys list"
+  },
+  "dependencies": {
+    "express":   "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
