@@ -1,0 +1,410 @@
+{
+  "version": "2.0",
+  "name": "PageCraft Test Project",
+  "savedAt": "2025-04-04T12:00:00.000Z",
+  "activePageId": "page_home",
+  "sections": [],
+  "pages": [
+    {
+      "id": "page_home",
+      "name": "Home",
+      "sections": [
+        {
+          "id": "s_hero_01",
+          "type": "hero",
+          "props": {
+            "headline": "Build Stunning Websites in Minutes",
+            "subheadline": "PageCraft gives you the tools to design, build, and launch — without writing a single line of code.",
+            "ctaText": "Start Building Free",
+            "ctaLink": "#pricing",
+            "ctaSecText": "Watch Demo",
+            "ctaSecLink": "#",
+            "align": "center",
+            "minHeight": "600",
+            "bgColor": "#0f172a",
+            "textColor": "#ffffff",
+            "bgImage": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600&q=80",
+            "videoEnabled": "false",
+            "videoType": "youtube",
+            "videoUrl": "",
+            "overlayColor": "#0f172a",
+            "overlayOpacity": "0.7"
+          }
+        },
+        {
+          "id": "s_features_01",
+          "type": "features",
+          "props": {
+            "heading": "Everything You Need to Succeed",
+            "subheading": "Packed with powerful features that help you build faster and smarter.",
+            "feat1Icon": "⚡",
+            "feat1Title": "Lightning Fast",
+            "feat1Desc": "Optimised for performance. Your pages load in under 1 second — every time.",
+            "feat2Icon": "🎨",
+            "feat2Title": "Beautiful Designs",
+            "feat2Desc": "50+ professionally designed templates. Fully customisable with zero coding required.",
+            "feat3Icon": "📱",
+            "feat3Title": "Fully Responsive",
+            "feat3Desc": "Your site looks perfect on every device — from mobile phones to 4K displays.",
+            "bgColor": "#ffffff",
+            "textColor": "#0f172a",
+            "accentColor": "#6c63ff"
+          }
+        },
+        {
+          "id": "s_about_01",
+          "type": "about",
+          "props": {
+            "heading": "We Build Tools Builders Love",
+            "subheading": "Our mission is simple",
+            "body": "PageCraft was born from frustration with tools that are either too simple or too complex. We believe website building should be fast, intuitive, and powerful — all at once.\n\nToday, over 50,000 creators, freelancers, and businesses use PageCraft to build their online presence.",
+            "highlight": "50,000+ websites built — and counting.",
+            "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+            "imagePos": "right",
+            "bgColor": "#f8fafc",
+            "textColor": "#0f172a",
+            "accentColor": "#6c63ff"
+          }
+        },
+        {
+          "id": "s_testimonial_01",
+          "type": "testimonial",
+          "props": {
+            "quote": "PageCraft saved us 3 weeks of development time. We launched our product landing page in a single afternoon — and the conversion rate beat our old custom-built site.",
+            "author": "Ahmed Al-Rashid",
+            "role": "Founder & CEO, Launchpad MENA",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+            "rating": "5",
+            "bgColor": "#0f172a",
+            "textColor": "#ffffff",
+            "accentColor": "#a78bfa"
+          }
+        },
+        {
+          "id": "s_pricing_01",
+          "type": "pricing",
+          "props": {
+            "heading": "Simple, Transparent Pricing",
+            "subheading": "Start free. Scale as you grow. No hidden fees ever.",
+            "toggleMonthly": "Monthly",
+            "toggleAnnual": "Annual",
+            "annualDiscount": "Save 30%",
+            "t1Name": "Free",
+            "t1Desc": "Perfect for personal projects and experimenting.",
+            "t1PriceMonthly": "0",
+            "t1PriceAnnual": "0",
+            "t1Currency": "$",
+            "t1Period": "/month",
+            "t1Cta": "Get Started Free",
+            "t1CtaLink": "#",
+            "t1f1": "3 pages",
+            "t1f2": "PageCraft subdomain",
+            "t1f3": "Basic templates",
+            "t1f4": "Community support",
+            "t1f5": "",
+            "t1f6": "",
+            "t1featured": "false",
+            "t2Name": "Pro",
+            "t2Desc": "For freelancers and growing businesses.",
+            "t2PriceMonthly": "19",
+            "t2PriceAnnual": "13",
+            "t2Currency": "$",
+            "t2Period": "/month",
+            "t2Cta": "Start 14-Day Free Trial",
+            "t2CtaLink": "#",
+            "t2f1": "Unlimited pages",
+            "t2f2": "Custom domain",
+            "t2f3": "All templates",
+            "t2f4": "AI content generator",
+            "t2f5": "SEO tools",
+            "t2f6": "Priority support",
+            "t2featured": "true",
+            "t3Name": "Agency",
+            "t3Desc": "For teams managing multiple client websites.",
+            "t3PriceMonthly": "79",
+            "t3PriceAnnual": "55",
+            "t3Currency": "$",
+            "t3Period": "/month",
+            "t3Cta": "Contact Sales",
+            "t3CtaLink": "#",
+            "t3f1": "50 websites",
+            "t3f2": "White-label branding",
+            "t3f3": "Client billing",
+            "t3f4": "Team collaboration",
+            "t3f5": "API access",
+            "t3f6": "Dedicated support",
+            "t3featured": "false",
+            "bgColor": "#f8fafc",
+            "textColor": "#0f172a",
+            "accentColor": "#0ea5e9"
+          }
+        },
+        {
+          "id": "s_faq_01",
+          "type": "faq",
+          "props": {
+            "heading": "Frequently Asked Questions",
+            "subheading": "Got questions? We have answers. Can't find what you're looking for? Chat with our team.",
+            "q1": "Do I need to know how to code?",
+            "a1": "Absolutely not. PageCraft is built for everyone — from complete beginners to experienced developers. Our visual editor lets you drag, drop, and customise without touching a single line of code.",
+            "q2": "Can I use my own domain name?",
+            "a2": "Yes! With any paid plan, you can connect your own custom domain (e.g. yourbrand.com). We provide step-by-step instructions, and our support team is always here to help with the setup.",
+            "q3": "What happens to my site if I cancel?",
+            "a3": "You keep full ownership of your content. Before cancelling, you can export your entire website as clean HTML/CSS files that you can host anywhere — forever.",
+            "q4": "Is there a free plan?",
+            "a4": "Yes! Our free plan lets you build up to 3 pages with a PageCraft subdomain. It's a great way to try everything before upgrading. No credit card required to start.",
+            "q5": "How does the AI content generator work?",
+            "a5": "Our AI uses Groq's Llama model to generate headlines, descriptions, and CTAs based on your section type and tone preference. It's free to use with your own Groq API key.",
+            "q6": "Can I export my site?",
+            "a6": "Absolutely. Export as clean HTML (single file or multi-page ZIP), React JSX components, or a JSON project backup. Your code is production-ready and fully portable.",
+            "bgColor": "#ffffff",
+            "textColor": "#0f172a",
+            "accentColor": "#f59e0b"
+          }
+        },
+        {
+          "id": "s_gallery_01",
+          "type": "gallery",
+          "props": {
+            "heading": "Built with PageCraft",
+            "subheading": "Real websites made by real people — in hours, not weeks.",
+            "layout": "masonry",
+            "cols": "3",
+            "img1": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+            "cap1": "SaaS Dashboard",
+            "img2": "https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&q=80",
+            "cap2": "Agency Website",
+            "img3": "https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=800&q=80",
+            "cap3": "E-commerce Store",
+            "img4": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80",
+            "cap4": "Portfolio Site",
+            "img5": "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&q=80",
+            "cap5": "Tech Blog",
+            "img6": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&q=80",
+            "cap6": "Product Landing",
+            "bgColor": "#0f172a",
+            "textColor": "#ffffff",
+            "accentColor": "#6c63ff"
+          }
+        },
+        {
+          "id": "s_footer_01",
+          "type": "footer",
+          "props": {
+            "brand": "PageCraft",
+            "tagline": "Build anything. Launch today.",
+            "copyright": "© 2025 PageCraft. All rights reserved.",
+            "link1Label": "Privacy Policy",
+            "link1Href": "#",
+            "link2Label": "Terms of Service",
+            "link2Href": "#",
+            "link3Label": "Contact Us",
+            "link3Href": "#contact",
+            "bgColor": "#0f172a",
+            "textColor": "#64748b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_about",
+      "name": "About",
+      "sections": [
+        {
+          "id": "s_hero_02",
+          "type": "hero",
+          "props": {
+            "headline": "Our Story",
+            "subheadline": "We started with a simple question: why does building a website still take so long?",
+            "ctaText": "Join Our Team",
+            "ctaLink": "#contact",
+            "ctaSecText": "Read Our Story",
+            "ctaSecLink": "#about",
+            "align": "center",
+            "minHeight": "460",
+            "bgColor": "#1e1b4b",
+            "textColor": "#ffffff",
+            "bgImage": "",
+            "videoEnabled": "false",
+            "videoType": "youtube",
+            "videoUrl": "",
+            "overlayColor": "#000000",
+            "overlayOpacity": "0.3"
+          }
+        },
+        {
+          "id": "s_about_02",
+          "type": "about",
+          "props": {
+            "heading": "Founded on a Mission",
+            "subheading": "A team of builders, for builders",
+            "body": "PageCraft was founded in 2023 by a small team of designers and engineers who were tired of choosing between ease-of-use and power.\n\nWe built PageCraft to be both — a tool you can pick up in minutes, yet powerful enough to build any website you can imagine.\n\nToday our team of 12 works remotely across 6 countries, united by the belief that great tools should be accessible to everyone.",
+            "highlight": "12 people. 6 countries. One mission.",
+            "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
+            "imagePos": "left",
+            "bgColor": "#ffffff",
+            "textColor": "#0f172a",
+            "accentColor": "#6c63ff"
+          }
+        },
+        {
+          "id": "s_features_02",
+          "type": "features",
+          "props": {
+            "heading": "Our Values",
+            "subheading": "These principles guide everything we build.",
+            "feat1Icon": "🎯",
+            "feat1Title": "Simplicity First",
+            "feat1Desc": "Every feature must be intuitive enough that a first-time user understands it without documentation.",
+            "feat2Icon": "💪",
+            "feat2Title": "Empower Creators",
+            "feat2Desc": "We build tools that give people independence — not lock-in. Your content, your code, your freedom.",
+            "feat3Icon": "🔍",
+            "feat3Title": "Radical Transparency",
+            "feat3Desc": "Fair pricing, clear terms, open roadmap. No dark patterns, ever.",
+            "bgColor": "#f8fafc",
+            "textColor": "#0f172a",
+            "accentColor": "#10b981"
+          }
+        },
+        {
+          "id": "s_testimonial_02",
+          "type": "testimonial",
+          "props": {
+            "quote": "I built my entire consultancy website in one Sunday afternoon. The AI content generator alone saved me hours of copywriting. Absolutely worth it.",
+            "author": "Fatima Al-Zahrawi",
+            "role": "Independent Consultant",
+            "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80",
+            "rating": "5",
+            "bgColor": "#6c63ff",
+            "textColor": "#ffffff",
+            "accentColor": "#c4b5fd"
+          }
+        },
+        {
+          "id": "s_contact_01",
+          "type": "contact",
+          "props": {
+            "heading": "Get In Touch",
+            "subheading": "Whether you have a question, feedback, or partnership idea — we'd love to hear from you.",
+            "email": "hello@pagecraft.dev",
+            "phone": "+1 (555) 123-4567",
+            "address": "Remote-first — Worldwide",
+            "showMap": "false",
+            "bgColor": "#f8fafc",
+            "textColor": "#0f172a",
+            "accentColor": "#6c63ff"
+          }
+        },
+        {
+          "id": "s_footer_02",
+          "type": "footer",
+          "props": {
+            "brand": "PageCraft",
+            "tagline": "Build anything. Launch today.",
+            "copyright": "© 2025 PageCraft. All rights reserved.",
+            "link1Label": "Home",
+            "link1Href": "index.html",
+            "link2Label": "Pricing",
+            "link2Href": "index.html#pricing",
+            "link3Label": "Contact",
+            "link3Href": "#contact",
+            "bgColor": "#0f172a",
+            "textColor": "#64748b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "page_components",
+      "name": "Components Demo",
+      "sections": [
+        {
+          "id": "s_vh_01",
+          "type": "video-hero",
+          "props": {
+            "headline": "See It In Action",
+            "subheadline": "Experience the power of full-screen video backgrounds.",
+            "ctaText": "Get Started",
+            "ctaLink": "#",
+            "ctaSecText": "Learn More",
+            "ctaSecLink": "#",
+            "align": "center",
+            "minHeight": "600",
+            "videoType": "youtube",
+            "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            "videoLocal": "",
+            "autoplay": "true",
+            "loop": "true",
+            "muted": "true",
+            "overlayColor": "#000000",
+            "overlayOpacity": "0.55",
+            "posterImage": "",
+            "textColor": "#ffffff",
+            "accentColor": "#6c63ff"
+          }
+        },
+        {
+          "id": "s_pg_01",
+          "type": "product-grid",
+          "props": {
+            "heading": "Featured Products",
+            "subheading": "Handpicked items from our collection",
+            "cols": "3",
+            "currency": "$",
+            "showDesc": "true",
+            "showPrice": "true",
+            "showBadge": "true",
+            "bgColor": "#ffffff",
+            "textColor": "#0f172a",
+            "accentColor": "#6c63ff",
+            "cardBg": "#f8fafc"
+          }
+        },
+        {
+          "id": "s_custom_01",
+          "type": "custom-html",
+          "props": {
+            "minHeight": "200",
+            "code": "<div style=\"background:linear-gradient(135deg,#6c63ff,#a78bfa);padding:48px 32px;text-align:center;border-radius:16px;margin:20px\">\n  <h2 style=\"color:#fff;font-size:28px;font-weight:800;margin-bottom:12px\">⚡ Custom HTML Block</h2>\n  <p style=\"color:rgba(255,255,255,.8);font-size:16px;margin-bottom:20px\">This section renders any HTML, CSS, or JavaScript you write. Full power in your hands.</p>\n  <button onclick=\"alert('Custom JS works!')\" style=\"background:#fff;color:#6c63ff;border:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer\">Click Me</button>\n</div>"
+          }
+        },
+        {
+          "id": "s_particles_01",
+          "type": "scene-particles",
+          "props": {
+            "headline": "Built for the Future",
+            "subheadline": "An immersive 3D experience powered by real-time WebGL rendering.",
+            "ctaText": "Explore Now",
+            "ctaLink": "#",
+            "particleCount": "2500",
+            "particleColor": "#818cf8",
+            "particleSize": "0.8",
+            "speed": "0.3",
+            "bgColor": "#030712",
+            "textColor": "#ffffff",
+            "accentColor": "#6366f1",
+            "minHeight": "600"
+          }
+        },
+        {
+          "id": "s_footer_03",
+          "type": "footer",
+          "props": {
+            "brand": "PageCraft",
+            "tagline": "The future of website building.",
+            "copyright": "© 2025 PageCraft.",
+            "link1Label": "Home",
+            "link1Href": "index.html",
+            "link2Label": "About",
+            "link2Href": "about.html",
+            "link3Label": "Pricing",
+            "link3Href": "index.html#pricing",
+            "bgColor": "#030712",
+            "textColor": "#475569"
+          }
+        }
+      ]
+    }
+  ]
+}

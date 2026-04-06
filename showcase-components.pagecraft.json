@@ -1,0 +1,337 @@
+{
+  "format": "pagecraft-components-v1",
+  "exportedAt": "2026-04-04T12:00:00.000Z",
+  "count": 12,
+  "components": [
+
+    {
+      "id": "sc_001_hero",
+      "name": "🚀 Dark SaaS Hero",
+      "desc": "High-converting hero for SaaS — deep purple gradient + dual CTA",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Ship Faster. Scale Smarter.",
+        "subheadline": "The all-in-one platform that replaces your entire stack. Design, build, and launch in minutes — not months.",
+        "ctaText": "Start Building Free",
+        "ctaLink": "#pricing",
+        "ctaSecText": "Watch 2-min Demo →",
+        "ctaSecLink": "#demo",
+        "align": "center",
+        "minHeight": "640",
+        "bgColor": "#0d0d1a",
+        "textColor": "#f0eeff",
+        "bgImage": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0d0d1a",
+        "overlayOpacity": "0.82"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_002_hero",
+      "name": "🌅 Gradient Minimal Hero",
+      "desc": "Clean, bold hero with warm gradient — perfect for agencies & portfolios",
+      "sectionType": "hero",
+      "props": {
+        "headline": "We Design. We Build. We Launch.",
+        "subheadline": "Award-winning digital experiences crafted for brands that refuse to blend in.",
+        "ctaText": "See Our Work",
+        "ctaLink": "#gallery",
+        "ctaSecText": "Let's Talk",
+        "ctaSecLink": "#contact",
+        "align": "left",
+        "minHeight": "580",
+        "bgColor": "#ff6b35",
+        "textColor": "#ffffff",
+        "bgImage": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#c2410c",
+        "overlayOpacity": "0.75"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_003_features",
+      "name": "⚡ Power Features Grid",
+      "desc": "6-icon feature highlights with bold dark bg — SaaS/tech style",
+      "sectionType": "features",
+      "props": {
+        "heading": "Built Different. Built Better.",
+        "subheading": "Every feature is designed around one goal: saving you time and making you money.",
+        "feat1Icon": "⚡",
+        "feat1Title": "10× Faster Builds",
+        "feat1Desc": "Deploy in seconds, not hours. Our optimised pipeline cuts build times by 90% compared to legacy tools.",
+        "feat2Icon": "🧠",
+        "feat2Title": "AI-Powered Editor",
+        "feat2Desc": "Generate headlines, write copy, and suggest layouts — all powered by Groq's Llama AI at zero extra cost.",
+        "feat3Icon": "🛡️",
+        "feat3Title": "Enterprise Security",
+        "feat3Desc": "SOC 2 Type II certified. AES-256 encryption at rest and in transit. GDPR & CCPA compliant out of the box.",
+        "bgColor": "#0f172a",
+        "textColor": "#e2e8f0",
+        "accentColor": "#818cf8"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_004_about",
+      "name": "🏆 Bold Brand Story",
+      "desc": "Left-image about section with strong mission statement — converts visitors to believers",
+      "sectionType": "about",
+      "props": {
+        "heading": "We're Not an Agency. We're Your Growth Partner.",
+        "subheading": "A decade of building what matters",
+        "body": "In 2014, we started with a single belief: that great software should be within reach of every business, not just the Fortune 500.\n\nOver the past decade, we've helped 12,000+ companies — from solo founders to global enterprises — build their digital presence, automate their ops, and grow revenue without burning out their teams.\n\nWe don't just build products. We build trust.",
+        "highlight": "12,000+ companies trust us. 98% renew every year.",
+        "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&q=80",
+        "imagePos": "left",
+        "bgColor": "#ffffff",
+        "textColor": "#0f172a",
+        "accentColor": "#6c63ff"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_005_testimonial",
+      "name": "💬 CEO Testimonial — Dark",
+      "desc": "Full-width dark testimonial with 5-star rating and avatar — high trust signal",
+      "sectionType": "testimonial",
+      "props": {
+        "quote": "We evaluated 14 platforms before choosing this one. Nothing else came close. Within 6 weeks of going live, our conversion rate jumped 34% and our bounce rate dropped by half. ROI was clear within the first month.",
+        "author": "Layla Al-Mansouri",
+        "role": "CEO & Co-Founder, NexaScale",
+        "avatar": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80",
+        "rating": "5",
+        "bgColor": "#0d0d1a",
+        "textColor": "#f0eeff",
+        "accentColor": "#818cf8"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_006_pricing",
+      "name": "💎 SaaS Pricing — 3 Tiers",
+      "desc": "Monthly/annual toggle pricing with Pro highlighted — optimised for conversions",
+      "sectionType": "pricing",
+      "props": {
+        "heading": "Pricing That Grows With You",
+        "subheading": "Start free. No credit card. Cancel anytime.",
+        "toggleMonthly": "Monthly",
+        "toggleAnnual": "Annual",
+        "annualDiscount": "Save 40%",
+        "t1Name": "Starter",
+        "t1Desc": "Perfect for freelancers and side projects.",
+        "t1PriceMonthly": "0",
+        "t1PriceAnnual": "0",
+        "t1Currency": "$",
+        "t1Period": "/month",
+        "t1Cta": "Get Started Free",
+        "t1CtaLink": "#",
+        "t1f1": "3 websites",
+        "t1f2": "5 GB bandwidth",
+        "t1f3": "Basic templates",
+        "t1f4": "Community support",
+        "t1f5": "",
+        "t1f6": "",
+        "t1featured": "false",
+        "t2Name": "Pro",
+        "t2Desc": "For growing businesses that need more.",
+        "t2PriceMonthly": "49",
+        "t2PriceAnnual": "29",
+        "t2Currency": "$",
+        "t2Period": "/month",
+        "t2Cta": "Start 14-Day Free Trial",
+        "t2CtaLink": "#",
+        "t2f1": "Unlimited websites",
+        "t2f2": "500 GB bandwidth",
+        "t2f3": "AI content generator",
+        "t2f4": "Custom domains",
+        "t2f5": "Priority support",
+        "t2f6": "Advanced analytics",
+        "t2featured": "true",
+        "t3Name": "Agency",
+        "t3Desc": "White-label & multi-client management.",
+        "t3PriceMonthly": "149",
+        "t3PriceAnnual": "89",
+        "t3Currency": "$",
+        "t3Period": "/month",
+        "t3Cta": "Contact Sales",
+        "t3CtaLink": "#contact",
+        "t3f1": "Everything in Pro",
+        "t3f2": "Unlimited bandwidth",
+        "t3f3": "White-label branding",
+        "t3f4": "Client billing portal",
+        "t3f5": "Team seats (20)",
+        "t3f6": "Dedicated account manager",
+        "t3featured": "false",
+        "bgColor": "#f8fafc",
+        "textColor": "#0f172a",
+        "accentColor": "#6c63ff"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_007_faq",
+      "name": "❓ Dark FAQ — 6 Questions",
+      "desc": "Accordion FAQ with dark bg — covers trial, cancellation, security, and billing",
+      "sectionType": "faq",
+      "props": {
+        "heading": "Questions? We've Got Answers.",
+        "subheading": "If you don't find what you're looking for, our team typically replies within 2 hours.",
+        "q1": "Do I need a credit card to start?",
+        "a1": "No. Your free plan is free forever — no credit card required. You only enter payment details when you choose to upgrade to a paid plan.",
+        "q2": "How does the 14-day trial work?",
+        "a2": "When you upgrade, you get 14 days free with full access to all Pro features. If you're not 100% satisfied, cancel before day 14 and you won't be charged — guaranteed.",
+        "q3": "Can I export my website if I leave?",
+        "a3": "Absolutely. You own your content. Export everything as clean, production-ready HTML, React components, or a JSON backup — any time, with one click.",
+        "q4": "Is my data secure?",
+        "a4": "Yes. We use AES-256 encryption, daily automated backups, and are SOC 2 Type II certified. Your data is hosted on geo-redundant servers with 99.99% uptime SLA.",
+        "q5": "Do you offer discounts for startups or non-profits?",
+        "a5": "Yes — we offer 50% off for verified startups (under 2 years, under $1M ARR) and non-profit organisations. Reach out to our team with verification and we'll sort it within 24 hours.",
+        "q6": "What happens if I hit my plan limits?",
+        "a6": "We'll notify you at 80% usage and again at 100%. You'll never be hard-blocked — we give you a 7-day grace period to upgrade before any restrictions apply.",
+        "bgColor": "#0f172a",
+        "textColor": "#e2e8f0",
+        "accentColor": "#f59e0b"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_008_gallery",
+      "name": "🖼 Masonry Portfolio Grid",
+      "desc": "6-image masonry gallery with captions — ideal for agencies and photographers",
+      "sectionType": "gallery",
+      "props": {
+        "heading": "Work We're Proud Of",
+        "subheading": "From SaaS dashboards to e-commerce stores — built and launched using PageCraft.",
+        "layout": "masonry",
+        "cols": "3",
+        "img1": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+        "cap1": "SaaS Dashboard UI",
+        "img2": "https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&q=80",
+        "cap2": "Creative Agency Site",
+        "img3": "https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=800&q=80",
+        "cap3": "Tech Startup Landing",
+        "img4": "https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?w=800&q=80",
+        "cap4": "E-commerce Store",
+        "img5": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80",
+        "cap5": "Portfolio Showcase",
+        "img6": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&q=80",
+        "cap6": "Product Launch Page",
+        "bgColor": "#0f172a",
+        "textColor": "#ffffff",
+        "accentColor": "#ec4899"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_009_particles",
+      "name": "✦ Deep Space Particle Hero",
+      "desc": "3D floating particles with deep space aesthetic — immersive tech hero",
+      "sectionType": "scene-particles",
+      "props": {
+        "headline": "The Future is Being Built Right Now.",
+        "subheadline": "Join 50,000+ builders who chose the smarter way to ship their vision.",
+        "ctaText": "Start for Free",
+        "ctaLink": "#",
+        "particleCount": "4000",
+        "particleColor": "#818cf8",
+        "particleSize": "0.7",
+        "speed": "0.3",
+        "bgColor": "#020617",
+        "textColor": "#ffffff",
+        "accentColor": "#6366f1",
+        "minHeight": "680"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_010_waves",
+      "name": "〜 Ocean Wave Hero",
+      "desc": "3D animated wave mesh with blue/teal palette — fluid and modern",
+      "sectionType": "scene-waves",
+      "props": {
+        "heading": "Ride the Wave of Innovation",
+        "subheading": "Real-time 3D geometry that adapts, flows, and lives — just like your brand.",
+        "waveColor1": "#0ea5e9",
+        "waveColor2": "#8b5cf6",
+        "waveSpeed": "1.0",
+        "waveAmplitude": "2.0",
+        "wireframe": "false",
+        "bgColor": "#020617",
+        "textColor": "#ffffff",
+        "accentColor": "#38bdf8",
+        "minHeight": "600"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_011_globe",
+      "name": "🌐 Global Reach Globe",
+      "desc": "3D rotating wireframe globe with emerald colors — perfect for global/tech brands",
+      "sectionType": "scene-globe",
+      "props": {
+        "heading": "Trusted in 140+ Countries",
+        "subheading": "From Silicon Valley to Singapore — teams everywhere rely on us every day.",
+        "globeColor": "#059669",
+        "globeWireColor": "#34d399",
+        "dotColor": "#6ee7b7",
+        "rotateSpeed": "0.4",
+        "bgColor": "#020617",
+        "textColor": "#ffffff",
+        "accentColor": "#34d399",
+        "layout": "right",
+        "minHeight": "600"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_012_footer",
+      "name": "🔻 Dark Pro Footer",
+      "desc": "Clean dark footer with brand, tagline, 3 links, and copyright — production-ready",
+      "sectionType": "footer",
+      "props": {
+        "brand": "PageCraft",
+        "tagline": "Build anything. Launch today. Own everything.",
+        "copyright": "© 2026 PageCraft Inc. All rights reserved.",
+        "link1Label": "Privacy Policy",
+        "link1Href": "#privacy",
+        "link2Label": "Terms of Service",
+        "link2Href": "#terms",
+        "link3Label": "Contact Us",
+        "link3Href": "#contact",
+        "bgColor": "#0d0d1a",
+        "textColor": "#64748b"
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-04T12:00:00.000Z"
+    }
+
+  ]
+}

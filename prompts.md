@@ -1,483 +1,88 @@
-Continue.
-
-Build UX onboarding system.
-
-Requirements:
-
-
-
-First-time user experience
-
-Guided tour inside builder
-
-Highlight important UI parts
-
-Features:
-
-
-
-Step-by-step onboarding
-
-Skip option
-
-Save progress
-
-Output:
-
-
-
-Onboarding UI
-
-Flow logic
-
-
+🟢 STAGE 1 — AI WEBSITE GENERATOR
 
 Continue.
 
-Add smart tooltips system.
+Goal: Build AI system that generates full HTML pages.
 
 Requirements:
 
-
-
-Show hints on hover
-
-Explain features briefly
-
-Context-aware tips
-
-Output:
-
-
-
-Tooltip system
-
-
-
-
+Input prompt
+Call AI API
+Return clean HTML/CSS
+Render in iframe
 
 Continue.
 
-Create guided building mode.
+Goal: Improve AI output quality.
 
 Requirements:
 
-
-
-Step-by-step building flow:
-
-Choose type
-
-Add sections
-
-Customize
-
-Publish
-
-Output:
-
-
-
-Guided mode system
-
-
-
-
+Enforce structure
+Responsive layout
+Clean spacing
+🟢 STAGE 2 — BASIC BUILDER
 
 Continue.
 
-Build one-click website generator.
+Goal: Create simple canvas.
 
 Requirements:
 
-
-
-User clicks one button → full website generated
-
-Auto select:
-
-layout
-
-sections
-
-styles
-
-Output:
-
-
-
-Auto generation system
-
-
-
-
+Display generated site
+Allow basic selection
 
 Continue.
 
-Add smart defaults.
+Goal: Drag & drop system.
 
 Requirements:
 
-
-
-Auto apply spacing, colors, fonts
-
-Avoid empty or broken layouts
-
-Output:
-
-
-
-Default config system
-
-
+Move sections
+Reorder blocks
+🟢 STAGE 3 — EDIT PANEL
 
 Continue.
 
-Add auto content generation.
+Goal: Edit selected element.
 
 Requirements:
 
-
-
-Generate placeholder text
-
-Generate section titles
-
-Improve user speed
-
-Output:
-
-
-
-Content generator logic
-
-
+Text editing
+Color change
+Spacing control
+🟢 STAGE 4 — SHARE SYSTEM
 
 Continue.
 
-Add dynamic pages system.
+Goal: Share generated site.
 
 Requirements:
 
-
-
-Routes like /product/:id
-
-Render dynamic content
-
-Output:
-
-
-
-Dynamic routing system
-
-
+Generate link
+Save project
 
 Continue.
 
-Build collections system.
+Goal: Clone system.
 
 Requirements:
 
-
-
-Create collections:
-
-products
-
-posts
-
-Bind to UI
-
-Output:
-
-
-
-Collections logic
-
-
+Duplicate site
+🟢 STAGE 5 — PUBLISH SYSTEM
 
 Continue.
 
-Add data binding system.
+Goal: Publish website.
 
 Requirements:
 
-
-
-Bind CMS data to components
-
-Dynamic rendering
-
-Output:
-
-
-
-Binding system
-
-
-
-Continue.
-
-Build design intelligence system.
-
-Requirements:
-
-
-
-Auto spacing
-
-Auto alignment
-
-Clean layouts
-
-Output:
-
-
-
-Layout engine
-
-
-
-
-
-Continue.
-
-Add responsive auto-fix.
-
-Requirements:
-
-
-
-Fix layout for mobile automatically
-
-Output:
-
-
-
-Responsive system
-
-
-
-
-
-Continue.
-
-Build performance engine.
-
-Requirements:
-
-
-
-Preload important assets
-
-Lazy load sections
-
-Code splitting
-
-Output:
-
-
-
-Performance system
-
-
-
-Continue.
-
-Improve export system.
-
-Requirements:
-
-
-
-Remove unused code
-
-Optimize output
-
-Output:
-
-
-
-Clean build system
-
-
-
-Continue.
-
-Build templates marketplace.
-
-Requirements:
-
-
-
-Browse templates
-
-Install templates
-
-Output:
-
-
-
-Marketplace UI
-
-
-
-Continue.
-
-Expand plugin system.
-
-Requirements:
-
-
-
-External developers can add plugins
-
-Output:
-
-
-
-Plugin ecosystem
-
-
-
-Continue.
-
-Improve autosave system.
-
-Requirements:
-
-
-
-Save instantly
-
-Prevent data loss
-
-Output:
-
-
-
-Autosave logic
-
-
-
-Continue.
-
-Add crash recovery system.
-
-Requirements:
-
-
-
-Restore last session
-
-Output:
-
-
-
-Recovery logic
-
-
-
-Continue.
-
-Add developer mode.
-
-Requirements:
-
-
-
-Show generated code
-
-Allow editing
-
-Sync with UI
-
-Output:
-
-
-
-Code editor system
-
-
-
-Continue.
-
-Add smart suggestions.
-
-Requirements:
-
-
-
-Suggest sections
-
-Suggest improvements
-
-(No heavy AI)
-
-Output:
-
-
-
-Suggestion system
-
-
-
-Continue.
-
-Build sharing system.
-
-Requirements:
-
-
-
-Share templates
-
-Share websites
-
-Output:
-
-
-
-Share logic
-
-
-
-Continue.
-
-Add clone system.
-
-Requirements:
-
-
-
-Clone any project
-
-Edit it
-
-Output:
-
-
-
-Clone feature
-
-
-
-Continue.
-
-Build public gallery.
-
-Requirements:
-
-
-
-Show public websites
-
-Allow browsing
-
-Output:
-
-
-
-Gallery system
+Public URL
+Basic hosting logic
+🔴 GLOBAL RULE
+
+After each step:
+
+Debug
+Fix
+Optimize
+🚀 END

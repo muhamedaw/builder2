@@ -6,7 +6,14 @@
       "Bash(node -e \"console.log\\(process.version\\)\")",
       "Bash(node cli.js help)",
       "Bash(node cli.js export)",
-      "Bash(node --check c:/Users/Muhammed/Desktop/github/bulider/builder.html)"
+      "Bash(node --check c:/Users/Muhammed/Desktop/github/bulider/builder.html)",
+      "Bash(node -e \"require\\('./src/config'\\); require\\('./src/services/keyStore'\\); require\\('./src/services/roomService'\\); require\\('./src/middleware/apiKey'\\); require\\('./src/routes/api'\\); require\\('./src/handlers/socketHandlers'\\); console.log\\('✅ All modules load successfully'\\)\")",
+      "Bash(node -e ':*)",
+      "Bash(node -e \"require\\('./src/builder/sectionRegistry.js'\\); console.log\\('✅ SectionRegistry loads OK'\\)\")",
+      "Bash(grep -n \"featuredImg\\\\|entry\\\\.featuredImg\\\\|\\\\${entry\\\\.\" \"c:/Users/Muhammed/Desktop/github/bulider/builder.html\")",
+      "Bash(node --input-type=module)",
+      "Bash(grep -v \"\\\\\\\\\\\\\\\\'\")",
+      "Bash(grep -v '\\\\\\\\'\"'\"'')"
     ]
   }
 }

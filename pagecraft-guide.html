@@ -4,6 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>PageCraft — Complete Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 /* ── Reset & Base ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -163,6 +166,42 @@ kbd{display:inline-flex;align-items:center;padding:3px 8px;background:#f1f5f9;bo
 /* ── TOC Print numbers ── */
 .print-only{display:none}
 @media print{.print-only{display:block}}
+
+/* ── Language Toggle ── */
+.lang-btn{
+  padding:10px 20px;background:#1e293b;color:#a78bfa;border:2px solid rgba(108,99,255,.5);
+  border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 16px rgba(108,99,255,.3);transition:all .2s;letter-spacing:.06em;
+}
+.lang-btn:hover{background:#6c63ff;color:#fff;border-color:#6c63ff}
+.lang-btn.ar-active{background:linear-gradient(135deg,#6c63ff,#a78bfa);color:#fff;border-color:#6c63ff}
+
+/* ── RTL / Arabic mode ── */
+html[lang="ar"] body{
+  font-family:'Tajawal',system-ui,sans-serif;
+  direction:rtl;text-align:right;
+}
+html[lang="ar"] .toc-grid{direction:rtl}
+html[lang="ar"] table{direction:rtl}
+html[lang="ar"] th,html[lang="ar"] td{text-align:right}
+html[lang="ar"] .ann{border-left:none;border-right:3px solid #6c63ff}
+html[lang="ar"] .step::before{margin-left:14px;margin-right:0}
+html[lang="ar"] .tip-icon{margin-left:12px;margin-right:0}
+html[lang="ar"] pre,html[lang="ar"] code{direction:ltr;text-align:left;font-family:'Cascadia Code','Fira Code',monospace}
+html[lang="ar"] .cover-title{font-family:'Tajawal',sans-serif;-webkit-text-fill-color:unset;background:linear-gradient(135deg,#fff 30%,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+html[lang="ar"] .section-header{flex-direction:row-reverse}
+html[lang="ar"] .section-header > div{text-align:right}
+html[lang="ar"] .cards{direction:rtl}
+html[lang="ar"] .map-row{flex-direction:row-reverse}
+html[lang="ar"] .map-items{flex-direction:row-reverse;justify-content:flex-end}
+html[lang="ar"] .sec-grid{direction:rtl}
+html[lang="ar"] .annotations{direction:rtl}
+html[lang="ar"] .steps{direction:rtl}
+html[lang="ar"] .step{flex-direction:row-reverse}
+html[lang="ar"] .step::before{order:99}
+html[lang="ar"] .tip{flex-direction:row-reverse}
+html[lang="ar"] .toc-section{border-left:none;border-right:3px solid transparent}
+html[lang="ar"] .toc-section:hover{border-right-color:#6c63ff;border-left:none}
 </style>
 </head>
 <body>
@@ -1010,13 +1049,360 @@ app.listen(<span class="num">3001</span>);</pre>
   <div>Built with ❤️ · <strong>pagecraft.dev</strong></div>
 </div>
 
-<!-- Print Button -->
-<div class="no-print" style="position:fixed;bottom:24px;right:24px;z-index:999">
+<!-- Language Toggle + Print -->
+<div class="no-print" style="position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+  <button id="langToggleBtn" class="lang-btn" onclick="LangSwitch.toggle()">🌐 العربية</button>
   <button onclick="window.print()"
     style="padding:12px 24px;background:#6c63ff;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(108,99,255,.4)">
     🖨️ Print / Save as PDF
   </button>
 </div>
+
+<script>
+/* ══════════════════════════════════════════════════
+   PageCraft Guide — Arabic / English Language Switch
+   ══════════════════════════════════════════════════ */
+const LangSwitch = (() => {
+  let _lang = 'en'
+  const _originals = {}   // save original EN HTML per container selector
+
+  /* ── Arabic Translations ── */
+  const AR = {
+
+    /* ── Cover ── */
+    '.cover-content': `
+      <div class="cover-logo">⚡</div>
+      <h1 class="cover-title">PageCraft<br/>الدليل الكامل</h1>
+      <p class="cover-sub">التوثيق الكامل · خريطة الميزات · أمثلة الكود<br/>كل ما تحتاجه لبناء مواقع مذهلة</p>
+      <div class="cover-badges">
+        <span class="badge badge-purple">✦ 8 ميزات أساسية</span>
+        <span class="badge badge-green">🛠 30+ نوع قسم</span>
+        <span class="badge badge-blue">💡 أمثلة الكود</span>
+      </div>`,
+
+    /* ── TOC ── */
+    '.toc-page .toc-title': '📋 فهرس المحتويات',
+    '.toc-page .toc-grid': `
+      <a class="toc-section" href="#s1"><div class="toc-num">01</div><div class="toc-name">خريطة الواجهة</div><div class="toc-desc">شرح بصري لجميع مناطق الواجهة</div></a>
+      <a class="toc-section" href="#s2"><div class="toc-num">02</div><div class="toc-name">مرجع شريط الأدوات</div><div class="toc-desc">كل زر في شريط الأدوات</div></a>
+      <a class="toc-section" href="#s3"><div class="toc-num">03</div><div class="toc-name">الشريط الجانبي الأيسر</div><div class="toc-desc">الكتل · المكونات · الطبقات · الصفحات</div></a>
+      <a class="toc-section" href="#s4"><div class="toc-num">04</div><div class="toc-name">أنواع الأقسام</div><div class="toc-desc">جميع أنواع الأقسام 15+ مع خصائصها</div></a>
+      <a class="toc-section" href="#s5"><div class="toc-num">05</div><div class="toc-name">لوحة التحرير</div><div class="toc-desc">الخصائص · النمط · الرسوم المتحركة</div></a>
+      <a class="toc-section" href="#s6"><div class="toc-num">06</div><div class="toc-name">متعدد الصفحات</div><div class="toc-desc">إدارة الصفحات المتعددة</div></a>
+      <a class="toc-section" href="#s7"><div class="toc-num">07</div><div class="toc-name">مكتبة الوسائط</div><div class="toc-desc">رفع وإدارة الملفات</div></a>
+      <a class="toc-section" href="#s8"><div class="toc-num">08</div><div class="toc-name">بناء النماذج</div><div class="toc-desc">نماذج بالسحب والإفلات</div></a>
+      <a class="toc-section" href="#s9"><div class="toc-num">09</div><div class="toc-name">الأنماط العامة</div><div class="toc-desc">نظام التصميم الشامل للموقع</div></a>
+      <a class="toc-section" href="#s10"><div class="toc-num">10</div><div class="toc-name">التجارة الإلكترونية</div><div class="toc-desc">المنتجات · السلة · الدفع</div></a>
+      <a class="toc-section" href="#s11"><div class="toc-num">11</div><div class="toc-name">مولد AI</div><div class="toc-desc">توليد المحتوى بـ Groq AI</div></a>
+      <a class="toc-section" href="#s12"><div class="toc-num">12</div><div class="toc-name">مدير SEO</div><div class="toc-desc">تحسين SEO لكل صفحة</div></a>
+      <a class="toc-section" href="#s13"><div class="toc-num">13</div><div class="toc-name">خلفيات الفيديو</div><div class="toc-desc">يوتيوب · فيميو · فيديو محلي</div></a>
+      <a class="toc-section" href="#s14"><div class="toc-num">14</div><div class="toc-name">التصدير والنشر</div><div class="toc-desc">HTML · React · خيارات النشر</div></a>
+      <a class="toc-section" href="#s15"><div class="toc-num">15</div><div class="toc-name">أمثلة الكود</div><div class="toc-desc">HTML مخصص · JSON · API</div></a>
+      <a class="toc-section" href="#s16"><div class="toc-num">16</div><div class="toc-name">اختصارات لوحة المفاتيح</div><div class="toc-desc">جميع الاختصارات المرجعية</div></a>`,
+
+    /* ── S1 Interface Map ── */
+    '#s1 .section-num': '01',
+    '#s1 h1.section-title': 'خريطة الواجهة',
+    '#s1 .section-desc': 'فهم كل منطقة في محرر PageCraft',
+    '#s1 .annotations': `
+      <div class="ann"><div class="ann-num">①</div><div class="ann-text"><span class="ann-title">الشريط الجانبي الأيسر</span>يحتوي على جميع أنواع الأقسام في تبويبات: الكتل (أساسية)، المكونات (متقدمة)، الطبقات (الترتيب)، الصفحات (متعدد الصفحات)، الاقتراحات (أفكار تخطيط AI)</div></div>
+      <div class="ann"><div class="ann-num">②</div><div class="ann-text"><span class="ann-title">الكانفاس</span>المحرر المرئي الذي ترى فيه صفحتك مباشرة. انقر على أي قسم لتحديده. اسحب مقبض ⠿ لإعادة الترتيب. انقر نقرًا مزدوجًا لتحرير النص مباشرة.</div></div>
+      <div class="ann"><div class="ann-num">③</div><div class="ann-text"><span class="ann-title">لوحة التحرير اليمنى</span>تعرض خصائص القسم المحدد. ثلاثة تبويبات: تحرير (المحتوى)، النمط (الألوان)، الرسوم المتحركة (تأثيرات التمرير).</div></div>
+      <div class="ann"><div class="ann-num">④</div><div class="ann-text"><span class="ann-title">شريط الأدوات</span>جميع الإجراءات الرئيسية: تراجع/إعادة، تبديل الوضع (تحرير/معاينة)، وجميع أزرار الميزات (تصدير، نشر، AI، SEO، متجر، إلخ)</div></div>`,
+    '#s1 h3:first-of-type': 'خريطة ميزات الموقع',
+
+    /* ── S2 Topbar ── */
+    '#s2 .section-num': '02',
+    '#s2 h1.section-title': 'مرجع شريط الأدوات',
+    '#s2 .section-desc': 'الدليل الكامل لكل زر في شريط الأدوات',
+    '#s2 table': `<table>
+      <tr><th>الزر</th><th>الإجراء</th><th>الاختصار</th><th>الوصف</th></tr>
+      <tr><td><kbd>↩ تراجع</kbd></td><td>التراجع عن آخر إجراء</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>يتراجع عن آخر تغيير في الكانفاس. يُحفظ السجل في الذاكرة فقط.</td></tr>
+      <tr><td><kbd>↪ إعادة</kbd></td><td>إعادة الإجراء</td><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>يعيد تطبيق إجراء تم التراجع عنه.</td></tr>
+      <tr><td><code>تحرير / معاينة</code></td><td>تبديل الوضع</td><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>وضع التحرير يظهر أدوات التحكم. وضع المعاينة يظهر الصفحة بدون واجهة المحرر.</td></tr>
+      <tr><td><code>عنوان الصفحة</code></td><td>إعادة تسمية الصفحة</td><td>—</td><td>حقل النص في وسط شريط الأدوات — يحدد اسم الصفحة الحالية.</td></tr>
+      <tr><td><code>📐 القوالب</code></td><td>تصفح القوالب</td><td>—</td><td>تخطيطات صفحات جاهزة. انقر على أي منها لتحميله في الكانفاس.</td></tr>
+      <tr><td><code>📁 المشاريع</code></td><td>حفظ/تحميل المشاريع</td><td>—</td><td>جميع المشاريع محفوظة في localStorage. حمّل، احفظ، انسخ، أو احذف المشاريع.</td></tr>
+      <tr><td><code>🤖 AI</code></td><td>مولد محتوى AI</td><td>—</td><td>توليد عناوين ووصف وأزرار CTA بـ Groq (AI مجاني). يتطلب مفتاح API.</td></tr>
+      <tr><td><code>🛍 المتجر</code></td><td>إدارة المنتجات</td><td>—</td><td>إضافة/تعديل/حذف المنتجات. إدارة الطلبات. إعداد مفتاح Stripe للدفع.</td></tr>
+      <tr><td><code>🎨 الأنماط</code></td><td>نظام التصميم العام</td><td>—</td><td>تعيين خطوط وألوان ومسافات على مستوى الموقع. التغييرات تطبق على جميع الأقسام فورًا.</td></tr>
+      <tr><td><code>🖼 الوسائط</code></td><td>مكتبة الوسائط</td><td>—</td><td>رفع الصور. إعادة استخدامها عبر الأقسام. حتى 8MB لكل صورة.</td></tr>
+      <tr><td><code>📋 الإرسالات</code></td><td>إرسالات النماذج</td><td>—</td><td>عرض جميع مدخلات النماذج. تصدير كـ CSV. تصفية حسب القسم.</td></tr>
+      <tr><td><code>🔍 SEO</code></td><td>مدير SEO</td><td>—</td><td>لكل صفحة: عنوان meta، وصف، علامات OG، بطاقات Twitter، JSON-LD، درجة SEO.</td></tr>
+      <tr><td><code>✨ تحريك</code></td><td>رسوم التمرير</td><td>—</td><td>إضافة رسوم متحركة بالتمرير لأي قسم (تلاشي، انزلاق، تكبير، إلخ).</td></tr>
+      <tr><td><code>📱 تجاوب</code></td><td>قواعد التجاوب</td><td>—</td><td>تعيين قواعد CSS مخصصة لنقاط توقف الموبايل والتابلت وسطح المكتب.</td></tr>
+      <tr><td><code>⬇ تصدير</code></td><td>تصدير الموقع</td><td>—</td><td>التنزيل كملف HTML. خيارات: ضغط، خطوط، تحليلات، جميع الصفحات.</td></tr>
+      <tr><td><code>🚀 نشر</code></td><td>نشر الموقع</td><td>—</td><td>النشر على الاستضافة الثابتة (Netlify، GitHub Pages، مخصص).</td></tr>
+      <tr><td><code>💾</code></td><td>حفظ المشروع</td><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>يحفظ المشروع الحالي في تخزين المتصفح.</td></tr>
+      <tr><td><code>📂</code></td><td>تحميل مشروع</td><td>—</td><td>استيراد ملف مشروع .json.</td></tr>
+      <tr><td><code>🚩</code></td><td>أعلام الميزات</td><td>—</td><td>تفعيل/تعطيل الميزات التجريبية.</td></tr>
+      <tr><td><code>🗄️</code></td><td>النسخ الاحتياطية</td><td>—</td><td>نظام النسخ الاحتياطي التلقائي مع نقاط الاسترداد.</td></tr>
+      <tr><td><code>🔑</code></td><td>مفاتيح API</td><td>—</td><td>إدارة مفاتيح API لخادم التعاون.</td></tr>
+    </table>`,
+
+    /* ── S3 Sidebar ── */
+    '#s3 .section-num': '03',
+    '#s3 h1.section-title': 'الشريط الجانبي الأيسر',
+    '#s3 .section-desc': 'الكتل، المكونات، الطبقات، الصفحات، والاقتراحات',
+    '#s3 h3:nth-of-type(1)': 'نظرة عامة على تبويبات الشريط الجانبي',
+    '#s3 .cards': `
+      <div class="card"><div class="card-icon">🧱</div><div class="card-title">الكتل</div><div class="card-desc">أنواع الأقسام الأساسية: Hero، About، Features، Testimonial، Contact، Footer. اسحبها إلى الكانفاس أو انقر لإضافتها.</div></div>
+      <div class="card"><div class="card-icon">🧩</div><div class="card-title">المكونات</div><div class="card-desc">أقسام تفاعلية متقدمة: Pricing، FAQ، Gallery، Forms، مشاهد 3D، شبكة المنتجات، Video Hero، HTML مخصص.</div></div>
+      <div class="card"><div class="card-icon">🗂</div><div class="card-title">الطبقات</div><div class="card-desc">جميع الأقسام مرتبة بالترتيب. انقر لتحديد، اسحب لإعادة الترتيب، شاهد عدد الأقسام.</div></div>
+      <div class="card"><div class="card-icon">📄</div><div class="card-title">الصفحات</div><div class="card-desc">أنشئ صفحات متعددة. كل صفحة لها أقسامها الخاصة. أعد التسمية، انسخ، احذف، أعد ترتيب الصفحات.</div></div>
+      <div class="card"><div class="card-icon">💡</div><div class="card-title">اقتراحات</div><div class="card-desc">اقتراحات تخطيط AI بناءً على نوع صفحتك. انقر على أي اقتراح لإضافة الأقسام تلقائيًا.</div></div>`,
+    '#s3 h3:nth-of-type(2)': 'إضافة الأقسام — 3 طرق',
+    '#s3 .steps:nth-of-type(1)': `
+      <div class="step"><div class="step-content"><strong>السحب والإفلات:</strong> اسحب أي بطاقة كتلة من الشريط الجانبي وأفلتها في الموضع المطلوب على الكانفاس. يظهر خط أزرق لتحديد موضع الإضافة.</div></div>
+      <div class="step"><div class="step-content"><strong>النقر للإضافة:</strong> انقر فقط على بطاقة الكتلة — تُضاف تلقائيًا في نهاية الكانفاس.</div></div>
+      <div class="step"><div class="step-content"><strong>بين الأقسام:</strong> مرر الماوس بين قسمين على الكانفاس لرؤية منطقة الإفلات، ثم اسحب كتلة إلى هناك.</div></div>`,
+    '#s3 h3:nth-of-type(3)': 'إدارة الصفحات (تبويب الصفحات)',
+    '#s3 .steps:nth-of-type(2)': `
+      <div class="step"><div class="step-content"><strong>إضافة صفحة:</strong> انقر <code>＋ إضافة صفحة جديدة</code> — ينشئ صفحة فارغة وينتقل إليها.</div></div>
+      <div class="step"><div class="step-content"><strong>إعادة التسمية:</strong> انقر نقرًا مزدوجًا على اسم الصفحة أو انقر أيقونة ✏️. عنوان الصفحة النشطة يتزامن مع حقل شريط الأدوات.</div></div>
+      <div class="step"><div class="step-content"><strong>التبديل:</strong> انقر على أي صفحة في القائمة. يُحفظ محتوى الكانفاس تلقائيًا قبل التبديل.</div></div>
+      <div class="step"><div class="step-content"><strong>النسخ:</strong> انقر ⧉ — ينشئ نسخة مع جميع الأقسام. أعد التسمية بعدها.</div></div>
+      <div class="step"><div class="step-content"><strong>الحذف:</strong> انقر ✕ — لا يمكن حذف آخر صفحة متبقية.</div></div>`,
+
+    /* ── S4 Section Types ── */
+    '#s4 .section-num': '04',
+    '#s4 h1.section-title': 'مرجع أنواع الأقسام',
+    '#s4 .section-desc': 'جميع أنواع الأقسام المتاحة وغرضها وخصائصها الرئيسية',
+    '#s4 h3:nth-of-type(1)': 'الكتل الأساسية',
+    '#s4 h3:nth-of-type(2)': 'المكونات',
+    '#s4 h3:nth-of-type(3)': 'مرجع خصائص الأقسام',
+    '#s4 table': `<table>
+      <tr><th>القسم</th><th>الخصائص الرئيسية</th><th>الميزات الخاصة</th></tr>
+      <tr><td><strong>Hero</strong></td><td>headline، subheadline، ctaText، ctaLink، ctaSecText، align، minHeight، bgImage</td><td>خلفية فيديو YouTube/Vimeo اختيارية</td></tr>
+      <tr><td><strong>About</strong></td><td>heading، subheading، body، highlight، image، imagePos</td><td>تبديل تخطيط الصورة يمين/يسار</td></tr>
+      <tr><td><strong>Features</strong></td><td>heading، feat1-3 (icon، title، desc)</td><td>تخطيط شبكة 3 أعمدة</td></tr>
+      <tr><td><strong>Pricing</strong></td><td>3 خطط مع تبديل شهري/سنوي</td><td>تمييز البطاقة المميزة، شارة الخصم السنوي</td></tr>
+      <tr><td><strong>FAQ</strong></td><td>حتى 6 أزواج سؤال وجواب</td><td>أكورديون قابل للتوسيع/الطي</td></tr>
+      <tr><td><strong>Gallery</strong></td><td>حتى 6 صور مع تعليقات</td><td>تخطيطات: شبكة / Masonry / مميز</td></tr>
+      <tr><td><strong>Form Builder</strong></td><td>fields (JSON)، submitText، successMsg، webhook</td><td>لوحة سحب وإفلات مخصصة، 8 أنواع حقول</td></tr>
+      <tr><td><strong>Product Grid</strong></td><td>cols، currency، showPrice، showDesc</td><td>يقرأ من ProductStore العام</td></tr>
+      <tr><td><strong>Video Hero</strong></td><td>videoType، videoUrl، overlayColor، overlayOpacity، posterImage</td><td>YouTube / Vimeo / فيديو محلي</td></tr>
+      <tr><td><strong>3D Scenes</strong></td><td>particleCount، waveSpeed، rotateSpeed (لكل نوع)</td><td>مدعوم WebGL، Three.js — ميزة Pro</td></tr>
+      <tr><td><strong>Custom HTML</strong></td><td>code (HTML/CSS/JS خام)، minHeight</td><td>تنفيذ كامل للـ script، معزول</td></tr>
+    </table>`,
+
+    /* ── S5 Edit Panel ── */
+    '#s5 .section-num': '05',
+    '#s5 h1.section-title': 'لوحة التحرير',
+    '#s5 .section-desc': 'اللوحة اليمنى — تبويبات التحرير والنمط والرسوم المتحركة',
+    '#s5 h3:nth-of-type(1)': 'تبويب التحرير',
+    '#s5 p:nth-of-type(1)': 'يعرض جميع الخصائص القابلة للتعديل للقسم المحدد، مرتبة في مجموعات. أنواع الحقول:',
+    '#s5 table:nth-of-type(1)': `<table>
+      <tr><th>نوع الحقل</th><th>الوصف</th><th>زر AI؟</th></tr>
+      <tr><td><code>text</code></td><td>إدخال أحادي السطر للعناوين والتسميات والروابط</td><td>✅ نعم</td></tr>
+      <tr><td><code>textarea</code></td><td>متعدد الأسطر للأوصاف والمحتوى الطويل</td><td>✅ نعم</td></tr>
+      <tr><td><code>select</code></td><td>قائمة منسدلة لخيارات التخطيط (يسار/وسط، عدد الأعمدة)</td><td>—</td></tr>
+      <tr><td><code>img</code></td><td>منتقي الصور — رفع، رابط URL، مكتبة الوسائط، أو صور ستوك</td><td>—</td></tr>
+    </table>`,
+    '#s5 h3:nth-of-type(2)': 'تبويب النمط',
+    '#s5 p:nth-of-type(2)': 'أدوات التحكم في الألوان لكل قسم. كل قسم يحتوي على الحد الأدنى من:',
+    '#s5 table:nth-of-type(2)': `<table>
+      <tr><th>الخاصية</th><th>التأثير</th></tr>
+      <tr><td><code>bgColor</code></td><td>لون خلفية القسم</td></tr>
+      <tr><td><code>textColor</code></td><td>لون النص الأساسي</td></tr>
+      <tr><td><code>accentColor</code></td><td>الأزرار والتمييزات والروابط — لون العلامة التجارية</td></tr>
+    </table>`,
+    '#s5 p:nth-of-type(3)': 'كل لون يحتوي على مربع لون (انقر لفتح منتقي الألوان) وحقل نص hex.',
+    '#s5 h3:nth-of-type(3)': 'تبويب الرسوم المتحركة',
+    '#s5 p:nth-of-type(4)': 'إضافة رسوم متحركة بالتمرير لأي قسم:',
+    '#s5 table:nth-of-type(3)': `<table>
+      <tr><th>الإعداد</th><th>الخيارات</th></tr>
+      <tr><td>الإعداد المسبق</td><td>بدون، تلاشٍ للأعلى، تلاشٍ، انزلاق يسار/يمين، تكبير، قلب، ارتداد</td></tr>
+      <tr><td>المدة</td><td>0.1 ثانية – 3.0 ثانية (شريط تمرير)</td></tr>
+      <tr><td>التأخير</td><td>0 ثانية – 2 ثانية (شريط تمرير)</td></tr>
+      <tr><td>التخفيف</td><td>ease، ease-in، ease-out، ease-in-out، spring، bounce</td></tr>
+      <tr><td>التتالي</td><td>يطبق الرسوم على العناصر الفرعية واحدًا تلو الآخر</td></tr>
+      <tr><td>العتبة</td><td>مقدار القسم الذي يجب أن يظهر لتشغيل الرسوم (0–1)</td></tr>
+    </table>`,
+
+    /* ── S6 Multi-page ── */
+    '#s6 .section-num': '06',
+    '#s6 h1.section-title': 'دعم متعدد الصفحات',
+    '#s6 .section-desc': 'بناء مواقع كاملة متعددة الصفحات',
+    '#s6 h3:nth-of-type(1)': 'كيف تعمل الصفحات',
+    '#s6 p:nth-of-type(1)': 'كل مشروع يحتوي على صفحة واحدة أو أكثر. لكل صفحة مجموعة مستقلة من الأقسام. التبديل بين الصفحات يحفظ حالة الكانفاس الحالية تلقائيًا.',
+    '#s6 h3:nth-of-type(2)': 'التنقل بين الصفحات في التصدير',
+    '#s6 p:nth-of-type(2)': 'عند تصدير جميع الصفحات، تُضاف شريط تنقل تلقائيًا في أعلى كل صفحة مع روابط لجميع الصفحات الأخرى.',
+    '#s6 h3:nth-of-type(3)': 'هيكل JSON للمشروع',
+
+    /* ── S7 Media Library ── */
+    '#s7 .section-num': '07',
+    '#s7 h1.section-title': 'مكتبة الوسائط',
+    '#s7 .section-desc': 'رفع وإدارة جميع الصور والوسائط',
+
+    /* ── S8 Form Builder ── */
+    '#s8 .section-num': '08',
+    '#s8 h1.section-title': 'بناء النماذج',
+    '#s8 .section-desc': 'نماذج مخصصة بالسحب والإفلات مع تكاملات Webhook',
+
+    /* ── S9 Global Styles ── */
+    '#s9 .section-num': '09',
+    '#s9 h1.section-title': 'الأنماط العامة',
+    '#s9 .section-desc': 'نظام التصميم الشامل للموقع — خطوط وألوان ومسافات',
+
+    /* ── S10 E-commerce ── */
+    '#s10 .section-num': '10',
+    '#s10 h1.section-title': 'التجارة الإلكترونية',
+    '#s10 .section-desc': 'إدارة المنتجات، السلة، وبوابات الدفع',
+
+    /* ── S11 AI Generator ── */
+    '#s11 .section-num': '11',
+    '#s11 h1.section-title': 'مولد AI',
+    '#s11 .section-desc': 'توليد محتوى مجاني بالذكاء الاصطناعي — مدعوم بـ Groq',
+
+    /* ── S12 SEO ── */
+    '#s12 .section-num': '12',
+    '#s12 h1.section-title': 'مدير SEO',
+    '#s12 .section-desc': 'تحسين SEO لكل صفحة — Meta، OG، Twitter، JSON-LD، درجة SEO',
+
+    /* ── S13 Video ── */
+    '#s13 .section-num': '13',
+    '#s13 h1.section-title': 'خلفيات الفيديو',
+    '#s13 .section-desc': 'إضافة فيديو يوتيوب أو فيميو أو فيديو محلي كخلفية كاملة',
+
+    /* ── S14 Export ── */
+    '#s14 .section-num': '14',
+    '#s14 h1.section-title': 'التصدير والنشر',
+    '#s14 .section-desc': 'تصدير كـ HTML أو React JSX، ونشر على الويب',
+
+    /* ── S15 Code Examples ── */
+    '#s15 .section-num': '15',
+    '#s15 h1.section-title': 'أمثلة الكود',
+    '#s15 .section-desc': 'أمثلة عملية للـ Custom HTML، JSON، REST API، Socket.io، Webhooks',
+
+    /* ── S16 Shortcuts ── */
+    '#s16 .section-num': '16',
+    '#s16 h1.section-title': 'اختصارات لوحة المفاتيح',
+    '#s16 .section-desc': 'جميع اختصارات لوحة المفاتيح لتحرير أسرع',
+    '#s16 h3:nth-of-type(1)': 'عام',
+    '#s16 table:nth-of-type(1)': `<table>
+      <tr><th>الاختصار</th><th>الإجراء</th></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>التراجع عن آخر إجراء</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>إعادة الإجراء</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>حفظ المشروع</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>تبديل وضع التحرير / المعاينة</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd></td><td>تشغيل الاختبارات البصرية</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>إلغاء تحديد القسم / إغلاق النوافذ</td></tr>
+    </table>`,
+    '#s16 h3:nth-of-type(2)': 'الكانفاس',
+    '#s16 table:nth-of-type(2)': `<table>
+      <tr><th>الاختصار</th><th>الإجراء</th></tr>
+      <tr><td>النقر على قسم</td><td>تحديده (يظهر أدوات التحكم ويفتح لوحة التحرير)</td></tr>
+      <tr><td>النقر المزدوج على النص</td><td>بدء التحرير المباشر</td></tr>
+      <tr><td>سحب مقبض <kbd>⠿</kbd></td><td>إعادة ترتيب الأقسام</td></tr>
+      <tr><td>أزرار ↑ / ↓</td><td>تحريك القسم لأعلى أو لأسفل</td></tr>
+      <tr><td>زر ⧉</td><td>نسخ القسم</td></tr>
+      <tr><td>زر ★</td><td>حفظ كمكوّن قابل لإعادة الاستخدام</td></tr>
+      <tr><td>زر ✕</td><td>حذف القسم</td></tr>
+    </table>`,
+    '#s16 h3:nth-of-type(3)': 'نصائح سريعة',
+
+    /* ── Cover Meta ── */
+    '.cover-meta': 'PageCraft منشئ المواقع — v1.0 · 2025',
+
+    /* ── Footer ── */
+    '.guide-footer': `
+      <div style="font-size:40px;margin-bottom:12px">⚡</div>
+      <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:6px"><strong>PageCraft</strong> — منشئ المواقع</div>
+      <div style="margin-bottom:16px">الدليل الكامل v1.0 · 2025</div>
+      <div>بُني بـ ❤️ · <strong>pagecraft.dev</strong></div>`,
+  }
+
+  /* ── Apply translations ── */
+  function _apply(lang) {
+    if (lang === 'ar') {
+      // Save originals and apply Arabic
+      Object.keys(AR).forEach(sel => {
+        const els = document.querySelectorAll(sel)
+        if (!els.length) return
+        // Save originals (only first match for unique selectors like #s1 h1)
+        els.forEach((el, i) => {
+          const key = sel + '__' + i
+          if (!_originals[key]) _originals[key] = el.innerHTML
+          el.innerHTML = AR[sel]
+        })
+      })
+      document.documentElement.lang = 'ar'
+      document.title = 'PageCraft — الدليل الكامل'
+      document.getElementById('langToggleBtn').textContent = '🌐 English'
+      document.getElementById('langToggleBtn').classList.add('ar-active')
+    } else {
+      // Restore English
+      Object.keys(AR).forEach(sel => {
+        const els = document.querySelectorAll(sel)
+        els.forEach((el, i) => {
+          const key = sel + '__' + i
+          if (_originals[key] !== undefined) el.innerHTML = _originals[key]
+        })
+      })
+      document.documentElement.lang = 'en'
+      document.title = 'PageCraft — Complete Guide'
+      document.getElementById('langToggleBtn').textContent = '🌐 العربية'
+      document.getElementById('langToggleBtn').classList.remove('ar-active')
+    }
+  }
+
+  /* Fix: for nth-of-type selectors, use querySelectorAll carefully */
+  function _patchSelectors() {
+    // Section-specific nth-of-type headings need special handling
+    const sectionHeadings = {
+      '#s3': { h3: ['نظرة عامة على تبويبات الشريط الجانبي', 'إضافة الأقسام — 3 طرق', 'إدارة الصفحات (تبويب الصفحات)'] },
+      '#s4': { h3: ['الكتل الأساسية', 'المكونات', 'مرجع خصائص الأقسام'] },
+      '#s5': { h3: ['تبويب التحرير', 'تبويب النمط', 'تبويب الرسوم المتحركة'],
+               p:  ['يعرض جميع الخصائص القابلة للتعديل للقسم المحدد، مرتبة في مجموعات. أنواع الحقول:',
+                    'أدوات التحكم في الألوان لكل قسم. كل قسم يحتوي على الحد الأدنى من:',
+                    'كل لون يحتوي على مربع لون (انقر لفتح منتقي الألوان) وحقل نص hex.',
+                    'إضافة رسوم متحركة بالتمرير لأي قسم:'] },
+      '#s6': { h3: ['كيف تعمل الصفحات', 'التنقل بين الصفحات في التصدير', 'هيكل JSON للمشروع'] },
+    }
+    return sectionHeadings
+  }
+
+  function _applyDeep(lang) {
+    _apply(lang)
+    if (lang !== 'ar') return
+    // Apply section headings
+    const patches = _patchSelectors()
+    Object.entries(patches).forEach(([secId, types]) => {
+      const sec = document.querySelector(secId)
+      if (!sec) return
+      Object.entries(types).forEach(([tag, texts]) => {
+        const els = sec.querySelectorAll(tag)
+        texts.forEach((text, i) => {
+          if (els[i]) els[i].textContent = text
+        })
+      })
+    })
+    // Section tips translations
+    const tipPatches = {
+      '#s5 .tip:nth-of-type(1) .tip-body': '<strong>التحرير المباشر:</strong> يمكنك أيضًا النقر المزدوج على أي نص في الكانفاس مباشرة لتحريره — التغييرات تتزامن مع اللوحة تلقائيًا.',
+      '#s5 .tip:nth-of-type(2) .tip-body': '<strong>أزرار AI:</strong> كل حقل نص/textarea له زر صغير <code>✦ AI</code> بجانب تسميته. انقر عليه لفتح مولد AI مُهيَّأ مسبقًا لنوع ذلك الحقل.',
+      '#s6 .tip .tip-body': '<strong>الصفحة الرئيسية = أول صفحة.</strong> عند تصدير جميع الصفحات، تصبح الصفحة الأولى <code>index.html</code>. الصفحات الإضافية تحصل على أسماء مثل <code>about.html</code>، <code>contact.html</code>.',
+      '#s16 .tip:nth-of-type(1) .tip-body': '<strong>تعديل سريع للألوان:</strong> انقر على أي مربع لون في تبويب النمط لفتح منتقي الألوان الأصلي فورًا.',
+      '#s16 .tip:nth-of-type(2) .tip-body': '<strong>نسخ صفحة:</strong> في تبويب الصفحات، انقر ⧉ على أي صفحة لإنشاء نسخة — مفيد لاختبار A/B للتخطيطات.',
+      '#s16 .tip:nth-of-type(3) .tip-body': '<strong>التراجع عن أي شيء:</strong> كل إجراء مُتتبَّع في السجل — لا تتردد في التجربة. انقر ↩ أو اضغط Ctrl+Z للرجوع.',
+      '#s16 .tip:nth-of-type(4) .tip-body': '<strong>معاينة قبل التصدير:</strong> بدّل إلى وضع المعاينة (Ctrl+P) لرؤية صفحتك كما يراها الزوار — بدون واجهة المحرر.',
+      '#s16 .tip:nth-of-type(5) .tip-body': '<strong>احفظ دائمًا:</strong> المشاريع محفوظة في localStorage. استخدم <code>💾</code> أو Ctrl+S لحفظ عملك. صدّر كـ JSON لملف نسخ احتياطية.',
+    }
+    Object.entries(tipPatches).forEach(([sel, html]) => {
+      const el = document.querySelector(sel)
+      if (el) el.innerHTML = html
+    })
+  }
+
+  return {
+    toggle() {
+      _lang = _lang === 'en' ? 'ar' : 'en'
+      _applyDeep(_lang)
+    }
+  }
+})()
+</script>
 
 </body>
 </html>
