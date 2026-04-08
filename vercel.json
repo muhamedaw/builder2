@@ -1,9 +1,3 @@
-{
-  "version": 2,
-  "public": true,
-  "cleanUrls": true,
-  "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/", "destination": "/builder.html" }
-  ]
+"scripts": {
+  "build": "node build.js"
 }
