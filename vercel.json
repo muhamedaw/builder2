@@ -1,8 +1,8 @@
 {
   "version": 2,
   "public": true,
-  "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/builder.html" }
+    { "source": "/(.*)", "destination": "/dist/$1" },
+    { "source": "/", "destination": "/dist/builder.html" }
   ]
 }
