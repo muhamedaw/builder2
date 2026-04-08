@@ -2,7 +2,6 @@
   "version": 2,
   "public": true,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/dist/$1" },
-    { "source": "/", "destination": "/dist/builder.html" }
+    { "source": "/", "destination": "/builder.html" }
   ]
 }
