@@ -1,0 +1,66 @@
+<!-- cms.html Phase 3 -->
+<!-- CMS OVERLAY -->
+<div id="cms-overlay">
+  <!-- CMS topbar -->
+  <div class="cms-bar">
+    <div class="cms-bar-logo">✏️ PageCraft <span>CMS</span></div>
+    <div class="cms-bar-sep"></div>
+    <span id="cms-bar-breadcrumb" style="font-size:12px;color:var(--muted)">Dashboard</span>
+    <button class="cms-bar-back" onclick="closeCMS()">← Back to Builder</button>
+  </div>
+
+  <!-- CMS body -->
+  <div class="cms-layout">
+
+    <!-- Sidebar -->
+    <div class="cms-sidebar">
+      <div class="cms-sidebar-head">
+        <div class="cms-sidebar-title">Content</div>
+      </div>
+      <div style="padding:8px 0;flex:1">
+        <button class="cms-nav-item active" id="cnav-dashboard" onclick="cmsNav('dashboard')">
+          <span class="cms-nav-icon">📊</span> Dashboard
+        </button>
+        <button class="cms-nav-item" id="cnav-posts" onclick="cmsNav('posts')">
+          <span class="cms-nav-icon">📝</span> Blog Posts
+          <span class="cms-nav-count" id="cnav-posts-count">0</span>
+        </button>
+        <button class="cms-nav-item" id="cnav-pages" onclick="cmsNav('pages')">
+          <span class="cms-nav-icon">📄</span> Pages
+          <span class="cms-nav-count" id="cnav-pages-count">0</span>
+        </button>
+        <button class="cms-nav-item" id="cnav-collections" onclick="cmsNav('collections')">
+          <span class="cms-nav-icon">🗃</span> Collections
+          <span class="cms-nav-count" id="cnav-collections-count">0</span>
+        </button>
+        <button class="cms-nav-item" id="cnav-scheduled" onclick="cmsNav('scheduled')">
+          <span class="cms-nav-icon">🕐</span> Scheduled
+          <span class="cms-nav-count" id="cnav-scheduled-count">0</span>
+        </button>
+        <div class="cms-nav-sep"></div>
+        <div style="padding:8px 16px">
+          <div class="cms-sidebar-title">Assets</div>
+        </div>
+        <button class="cms-nav-item" id="cnav-media" onclick="cmsNav('media')">
+          <span class="cms-nav-icon">🖼</span> Media Library
+        </button>
+        <div class="cms-nav-sep"></div>
+        <div style="padding:8px 16px">
+          <div class="cms-sidebar-title">System</div>
+        </div>
+        <button class="cms-nav-item" id="cnav-models" onclick="cmsNav('models')">
+          <span class="cms-nav-icon">🗂</span> Content Models
+        </button>
+        <button class="cms-nav-item" id="cnav-settings" onclick="cmsNav('settings')">
+          <span class="cms-nav-icon">⚙️</span> Settings
+        </button>
+      </div>
+    </div>
+
+    <!-- Main content area -->
+    <div class="cms-main" id="cms-main-area">
+      <div style="padding:40px;color:var(--muted);text-align:center">Loading…</div>
+    </div>
+
+  </div>
+</div>

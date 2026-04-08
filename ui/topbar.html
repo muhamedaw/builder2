@@ -1,0 +1,187 @@
+<!-- topbar.html Phase 3 -->
+<header class="topbar">
+  <!-- Logo -->
+  <div class="logo"><div class="logo-mark">⚡</div>PageCraft</div>
+  <div class="sep"></div>
+
+  <!-- Menu Bar -->
+  <nav class="tb-menu-bar" id="tb-menu-bar">
+
+    <!-- File -->
+    <div class="tb-menu" id="tbm-file">
+      <button class="tb-menu-btn" onclick="tbToggle('file')">File <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown" id="tbd-file">
+        <button class="tb-item" onclick="openProjects();tbClose()"><span class="tb-item-icon">📁</span><span class="tb-item-label">Projects</span></button>
+        <button class="tb-item" onclick="openTemplates();tbClose()"><span class="tb-item-icon">📐</span><span class="tb-item-label">Templates</span></button>
+        <div class="tb-sep-line"></div>
+        <div class="tb-group-label">Save & Load</div>
+        <button class="tb-item" onclick="saveProject();tbClose()"><span class="tb-item-icon">💾</span><span class="tb-item-label">Save JSON</span><span class="tb-item-shortcut">Ctrl+S</span></button>
+        <button class="tb-item" onclick="document.getElementById('load-input').click();tbClose()"><span class="tb-item-icon">📂</span><span class="tb-item-label">Load JSON</span></button>
+        <input type="file" id="load-input" accept=".json" style="display:none" onchange="loadProject(this)"/>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item" onclick="ComponentImporter.open();tbClose()"><span class="tb-item-icon">🧩</span><span class="tb-item-label">Import Component</span></button>
+        <button class="tb-item" onclick="MagicMigrator.open();tbClose()"><span class="tb-item-icon">🪄</span><span class="tb-item-label">Import HTML</span></button>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item" onclick="openExport();tbClose()"><span class="tb-item-icon">⬇</span><span class="tb-item-label">Export</span></button>
+        <button class="tb-item" onclick="openDeploy();tbClose()"><span class="tb-item-icon">🚀</span><span class="tb-item-label">Deploy</span></button>
+      </div>
+    </div>
+
+    <!-- Edit -->
+    <div class="tb-menu" id="tbm-edit">
+      <button class="tb-menu-btn" onclick="tbToggle('edit')">Edit <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown" id="tbd-edit">
+        <button class="tb-item" onclick="undo();tbClose()" id="tbm-undo"><span class="tb-item-icon">↩</span><span class="tb-item-label">Undo</span><span class="tb-item-shortcut">Ctrl+Z</span></button>
+        <button class="tb-item" onclick="redo();tbClose()" id="tbm-redo"><span class="tb-item-icon">↪</span><span class="tb-item-label">Redo</span><span class="tb-item-shortcut">Ctrl+Y</span></button>
+        <button class="tb-item" onclick="toggleHistoryPanel();tbClose()"><span class="tb-item-icon">⏱</span><span class="tb-item-label">History</span></button>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item" onclick="BulkActions.toggleMode();tbClose()"><span class="tb-item-icon">⊡</span><span class="tb-item-label">Bulk Select</span><span class="tb-item-shortcut">Shift+Click</span></button>
+        <button class="tb-item" onclick="ValidationEngine.validate();tbClose()"><span class="tb-item-icon">✅</span><span class="tb-item-label">Validate Page</span></button>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item danger" onclick="clearAll();tbClose()"><span class="tb-item-icon">🗑</span><span class="tb-item-label">Clear Page</span></button>
+      </div>
+    </div>
+
+    <!-- View -->
+    <div class="tb-menu" id="tbm-view">
+      <button class="tb-menu-btn" onclick="tbToggle('view')">View <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown" id="tbd-view">
+        <div class="tb-group-label">Canvas Mode</div>
+        <button class="tb-item" onclick="setMode('edit');tbClose()"><span class="tb-item-icon">✏️</span><span class="tb-item-label">Edit Mode</span></button>
+        <button class="tb-item" onclick="setMode('preview');tbClose()"><span class="tb-item-icon">👁</span><span class="tb-item-label">Preview Mode</span></button>
+        <div class="tb-sep-line"></div>
+        <div class="tb-group-label">Device Preview</div>
+        <button class="tb-item" onclick="setDevice('desktop');tbClose()"><span class="tb-item-icon">🖥</span><span class="tb-item-label">Desktop</span></button>
+        <button class="tb-item" onclick="setDevice('tablet');tbClose()"><span class="tb-item-icon">📱</span><span class="tb-item-label">Tablet</span></button>
+        <button class="tb-item" onclick="setDevice('mobile');tbClose()"><span class="tb-item-icon">📲</span><span class="tb-item-label">Mobile</span></button>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item" onclick="openAnimPanel();tbClose()"><span class="tb-item-icon">✨</span><span class="tb-item-label">Animations</span></button>
+        <button class="tb-item" onclick="openResponsive();tbClose()"><span class="tb-item-icon">📐</span><span class="tb-item-label">Responsive Editor</span></button>
+        <button class="tb-item" onclick="openGlobalStyles();tbClose()"><span class="tb-item-icon">🎨</span><span class="tb-item-label">Global Styles</span></button>
+        <button class="tb-item" onclick="DevMode.toggle();tbClose()"><span class="tb-item-icon">{ }</span><span class="tb-item-label">Developer Mode</span></button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="tb-menu" id="tbm-content">
+      <button class="tb-menu-btn" onclick="tbToggle('content')">Content <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown" id="tbd-content">
+        <button class="tb-item" onclick="openCMS();tbClose()"><span class="tb-item-icon">✏️</span><span class="tb-item-label">CMS</span></button>
+        <button class="tb-item" onclick="openMediaLib();tbClose()"><span class="tb-item-icon">🖼</span><span class="tb-item-label">Media Library</span></button>
+        <button class="tb-item" onclick="openPM();tbClose()"><span class="tb-item-icon">🛍</span><span class="tb-item-label">Shop / Products</span></button>
+        <button class="tb-item" onclick="openFormSubmissions();tbClose()"><span class="tb-item-icon">📋</span><span class="tb-item-label">Form Submissions</span></button>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item" onclick="openSEO();tbClose()"><span class="tb-item-icon">🔍</span><span class="tb-item-label">SEO Manager</span></button>
+        <button class="tb-item" onclick="openAnalytics();tbClose()"><span class="tb-item-icon">📊</span><span class="tb-item-label">Analytics</span></button>
+        <button class="tb-item" onclick="ContentMesh.open();tbClose()"><span class="tb-item-icon">🧬</span><span class="tb-item-label">Content Mesh</span></button>
+        <button class="tb-item" onclick="ImageOptimizer.analyze();tbClose()"><span class="tb-item-icon">⚡</span><span class="tb-item-label">Optimize Images</span></button>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div class="tb-menu" id="tbm-ai">
+      <button class="tb-menu-btn" onclick="tbToggle('ai')" style="color:#a78bfa">AI <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown" id="tbd-ai">
+        <button class="tb-item ai-item" onclick="QuickGen.open();tbClose()"><span class="tb-item-icon">⚡</span><span class="tb-item-label">Generate Page</span><span class="tb-item-badge">AI</span></button>
+        <button class="tb-item ai-item" onclick="openAI();tbClose()"><span class="tb-item-icon">🤖</span><span class="tb-item-label">AI Content Writer</span></button>
+        <button class="tb-item ai-item" onclick="AIAutoFix.scan();tbClose()"><span class="tb-item-icon">🔧</span><span class="tb-item-label">Auto-Fix Issues</span></button>
+        <div class="tb-sep-line"></div>
+        <div class="tb-group-label">Growth</div>
+        <button class="tb-item" onclick="ABTest.open();tbClose()"><span class="tb-item-icon">🧪</span><span class="tb-item-label">A/B Testing</span></button>
+        <button class="tb-item" onclick="GrowthInsights.open();tbClose()"><span class="tb-item-icon">📈</span><span class="tb-item-label">Growth Insights</span></button>
+        <button class="tb-item" onclick="ReferralSystem.open();tbClose()"><span class="tb-item-icon">🔗</span><span class="tb-item-label">Referral System</span></button>
+        <button class="tb-item" onclick="CRMSystem.open();tbClose()"><span class="tb-item-icon">👥</span><span class="tb-item-label">CRM</span></button>
+        <button class="tb-item" onclick="EmailAuto.open();tbClose()"><span class="tb-item-icon">✉</span><span class="tb-item-label">Email Automation</span></button>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item" onclick="ViralSystem.toggleShare();tbClose()"><span class="tb-item-icon">🔗</span><span class="tb-item-label">Share & Clone</span></button>
+        <button class="tb-item" onclick="ViralSystem.openGallery();tbClose()"><span class="tb-item-icon">🌐</span><span class="tb-item-label">Community Gallery</span></button>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="tb-menu" id="tbm-settings">
+      <button class="tb-menu-btn" onclick="tbToggle('settings')">Settings <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown right" id="tbd-settings">
+        <button class="tb-item" onclick="openWorkspace();tbClose()"><span class="tb-item-icon">🏢</span><span class="tb-item-label">Workspace</span></button>
+        <button class="tb-item" onclick="openTeam();tbClose()"><span class="tb-item-icon">👥</span><span class="tb-item-label">Team</span></button>
+        <button class="tb-item" onclick="SiteDash.open();tbClose()"><span class="tb-item-icon">🏗</span><span class="tb-item-label">All Sites</span></button>
+        <button class="tb-item" onclick="openPlugins();tbClose()"><span class="tb-item-icon">🧩</span><span class="tb-item-label">Plugins</span></button>
+        <button class="tb-item" onclick="openIntegrations();tbClose()"><span class="tb-item-icon">🔌</span><span class="tb-item-label">Integrations</span></button>
+        <div class="tb-sep-line"></div>
+        <div class="tb-group-label">Developer</div>
+        <button class="tb-item" onclick="ApiKeys.openUI();tbClose()"><span class="tb-item-icon">🔑</span><span class="tb-item-label">API Keys</span></button>
+        <button class="tb-item" onclick="FeatureFlags.openUI();tbClose()"><span class="tb-item-icon">🚩</span><span class="tb-item-label">Feature Flags</span></button>
+        <button class="tb-item" onclick="BackupSystem.openUI();tbClose()"><span class="tb-item-icon">🗄️</span><span class="tb-item-label">Backups</span></button>
+        <button class="tb-item" onclick="WhiteLabel.openUI();tbClose()"><span class="tb-item-icon">🏷️</span><span class="tb-item-label">White Label</span></button>
+        <button class="tb-item" id="btn-cli" onclick="openCLIPanel();tbClose()" style="display:none"><span class="tb-item-icon">⌨️</span><span class="tb-item-label">CLI Tool</span></button>
+        <button class="tb-item" onclick="openTests();tbClose()"><span class="tb-item-icon">🧪</span><span class="tb-item-label">Run Tests</span><span class="tb-item-shortcut">Ctrl+Shift+T</span></button>
+        <div class="tb-sep-line"></div>
+        <button class="tb-item" onclick="openBilling();tbClose()"><span class="tb-item-icon">💳</span><span class="tb-item-label">Billing & Plans</span></button>
+      </div>
+    </div>
+
+  </nav>
+
+  <div class="sep"></div>
+  <input class="page-title" id="page-title" value="My Page" placeholder="Page name…"/>
+  <div class="sep"></div>
+
+  <!-- Undo / Redo (always visible) -->
+  <button class="hist-btn" id="btn-undo" onclick="undo()" disabled title="Undo (Ctrl+Z)">↩</button>
+  <button class="hist-btn" id="btn-redo" onclick="redo()" disabled title="Redo (Ctrl+Y)">↪</button>
+  <span class="autosave-badge" id="autosave-badge"></span>
+  <span class="pwa-status-dot online" id="pwa-status-dot" title="Online — PWA active"></span>
+
+  <div class="sep"></div>
+
+  <!-- Device switcher (always visible) -->
+  <div class="device-sw">
+    <button class="dev-btn active" data-d="desktop" onclick="setDevice('desktop')" title="Desktop">🖥</button>
+    <button class="dev-btn" data-d="tablet"  onclick="setDevice('tablet')"  title="Tablet">📱</button>
+    <button class="dev-btn" data-d="mobile"  onclick="setDevice('mobile')"  title="Mobile">📲</button>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Edit / Preview toggle (always visible) -->
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="mode-edit"    onclick="setMode('edit')">Edit</button>
+    <button class="mode-btn"        id="mode-preview" onclick="setMode('preview')">Preview</button>
+  </div>
+
+  <!-- Collab status -->
+  <div class="collab-status" id="collab-status" style="display:none">
+    <span class="collab-dot" id="collab-dot"></span>
+    <span class="collab-label" id="collab-label">Connecting…</span>
+    <div class="collab-avatars" id="collab-avatars"></div>
+  </div>
+
+  <!-- Right: primary actions only -->
+  <div class="topbar-r">
+    <button class="btn btn-share-viral" id="btn-share-viral" onclick="ViralSystem.toggleShare()">🔗 Share</button>
+    <button class="btn btn-upgrade-pill" id="btn-upgrade" onclick="openBilling()" style="display:none">⭐ Upgrade</button>
+    <button class="btn btn-ghost" style="background:linear-gradient(135deg,rgba(108,99,255,.15),rgba(167,139,250,.12));border:1px solid rgba(108,99,255,.4);color:#a78bfa;font-weight:700;border-radius:7px" onclick="QuickGen.open()">⚡ Generate</button>
+    <button class="btn btn-primary" onclick="openPreview()">▶ Preview</button>
+    <!-- Notification bell -->
+    <div class="notif-bell-wrap" id="notif-bell-wrap" style="display:none">
+      <button class="notif-bell-btn" onclick="toggleNotifPanel()" title="Notifications">🔔
+        <span class="notif-badge hidden" id="notif-badge">0</span>
+      </button>
+      <div class="notif-panel" id="notif-panel">
+        <div class="notif-panel-head">
+          <span class="notif-panel-title">Notifications</span>
+          <div class="notif-panel-actions">
+            <button class="notif-mark-all" onclick="NotifSystem.markAllRead();renderNotifPanel()">Mark all read</button>
+          </div>
+        </div>
+        <div class="notif-list" id="notif-list"></div>
+        <div class="notif-panel-foot">
+          <span class="notif-settings-link" onclick="openNotifSettings()">⚙ Email preferences</span>
+          <button class="btn btn-ghost" style="font-size:10px;padding:2px 8px" onclick="NotifSystem.clearAll();renderNotifPanel()">Clear all</button>
+        </div>
+      </div>
+    </div>
+    <!-- User chip — populated by auth system -->
+    <div id="user-chip-wrap"></div>
+  </div>
+</header>

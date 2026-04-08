@@ -1,0 +1,129 @@
+/* styles/canvas.css -- Canvas + drag ghost */
+
+/* ══════════════════════════════════════════════════════
+   CANVAS
+══════════════════════════════════════════════════════ */
+.canvas-wrap{flex:1;background:var(--canvas-bg);overflow:auto;
+  display:flex;justify-content:center;padding:40px 24px 80px;position:relative}
+.canvas-wrap::-webkit-scrollbar{width:6px} .canvas-wrap::-webkit-scrollbar-thumb{background:#b0b0c0;border-radius:4px}
+.canvas-pos{position:relative;width:100%;max-width:920px}
+.canvas-badge{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
+  font-size:11px;color:#888;background:var(--canvas-bg);padding:1px 10px;border-radius:6px;pointer-events:none;white-space:nowrap}
+.canvas-frame{width:100%;background:#fff;min-height:560px;
+  box-shadow:0 2px 32px rgba(0,0,0,.14),0 0 0 1px rgba(0,0,0,.06);
+  border-radius:3px;overflow:visible;transition:max-width .3s;position:relative}
+.canvas-frame.tablet{max-width:768px;margin:0 auto} .canvas-frame.mobile{max-width:375px;margin:0 auto}
+.canvas-frame.preview-mode .section-controls,.canvas-frame.preview-mode .section-label{opacity:0!important;pointer-events:none}
+
+/* Canvas drop-active state */
+.canvas-frame.canvas-drop-active{outline:2px dashed var(--accent);outline-offset:3px}
+
+.canvas-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:500px;gap:14px;color:#94a3b8;user-select:none;pointer-events:none}
+.canvas-empty-icon{width:68px;height:68px;border:2px dashed #cbd5e1;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;font-size:26px}
+.canvas-empty h3{font-size:15px;font-weight:600;color:#64748b} .canvas-empty p{font-size:12px}
+
+/* When canvas-empty is a drop target */
+.canvas-empty-drop{pointer-events:none;cursor:default;transition:all .2s}
+.canvas-empty-drop.drop-active{background:rgba(108,99,255,.06);border-color:var(--accent);color:var(--accent)}
+
+/* Section wrapper */
+.section-wrapper{
+  position:relative;cursor:pointer;
+  outline:2px solid transparent;outline-offset:-1px;transition:outline-color .12s;
+}
+.section-wrapper:hover{outline-color:rgba(108,99,255,.3)} .section-wrapper.selected{outline-color:var(--accent)}
+
+/* Section being dragged on canvas */
+.section-wrapper.sec-dragging{opacity:.35;pointer-events:none}
+
+/* Drop indicator line between sections */
+.drop-line{
+  height:3px;background:var(--dnd-line);border-radius:2px;
+  margin:0;opacity:0;transition:opacity .12s;position:relative;z-index:50;
+  pointer-events:none;
+}
+.drop-line::before,.drop-line::after{
+  content:'';position:absolute;top:50%;transform:translateY(-50%);
+  width:8px;height:8px;border-radius:50%;background:var(--dnd-line);
+}
+.drop-line::before{left:0;transform:translate(-50%,-50%)}
+.drop-line::after{right:0;transform:translate(50%,-50%)}
+.drop-line.show{opacity:1}
+
+/* Drop zone for empty canvas */
+.canvas-drop-zone{
+  position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;pointer-events:none;
+  background:rgba(108,99,255,.04);border:2px dashed var(--accent);border-radius:3px;
+}
+.canvas-drop-zone.show{display:flex;pointer-events:none}
+
+.section-label{position:absolute;top:6px;left:6px;z-index:20;font-size:10px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;background:var(--accent);color:#fff;
+  padding:2px 7px;border-radius:4px;opacity:0;transition:opacity .12s;pointer-events:none}
+.section-wrapper:hover .section-label,.section-wrapper.selected .section-label{opacity:1}
+.section-controls{position:absolute;top:6px;right:6px;z-index:20;display:flex;gap:3px;opacity:0;transition:opacity .12s}
+.section-wrapper:hover .section-controls,.section-wrapper.selected .section-controls{opacity:1}
+.sc-btn{width:26px;height:26px;border:none;border-radius:6px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .15s}
+.sc-btn.mv{background:rgba(255,255,255,.88);color:#374151} .sc-btn.mv:hover{background:#fff}
+.sc-btn.dp{background:rgba(255,255,255,.88);color:#374151} .sc-btn.dp:hover{background:#fff}
+.sc-btn.dl{background:rgba(239,68,68,.15);color:#ef4444} .sc-btn.dl:hover{background:rgba(239,68,68,.3)}
+/* Drag handle on section */
+.sc-btn.dh{background:rgba(255,255,255,.88);color:#374151;cursor:grab} .sc-btn.dh:active{cursor:grabbing}
+.sc-btn.dh:hover{background:#fff}
+
+.edit-hint{position:sticky;bottom:0;left:0;right:0;z-index:100;
+  background:linear-gradient(transparent,rgba(232,232,240,.92) 30%);
+  padding:18px 0 8px;display:flex;justify-content:center;pointer-events:none}
+.hint-pill{background:#1e1e24ee;color:#a0a0b0;font-size:11px;font-weight:500;
+  padding:6px 14px;border-radius:20px;display:flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.08)}
+.hint-pill kbd{background:rgba(255,255,255,.1);border-radius:4px;padding:1px 5px;font-size:10px;color:#fff;font-family:inherit}
+
+/* Inline editing */
+[contenteditable]{cursor:text;outline:none;border-radius:3px;transition:box-shadow .15s,background .15s;min-width:4px}
+[contenteditable]:hover{box-shadow:0 0 0 2px rgba(108,99,255,.35);background:rgba(108,99,255,.04)}
+[contenteditable]:focus{box-shadow:0 0 0 2px var(--accent),0 0 0 4px rgba(108,99,255,.15);background:rgba(108,99,255,.05)}
+.img-editable{position:relative;display:inline-block;width:100%}
+.img-overlay{position:absolute;inset:0;background:rgba(108,99,255,0);display:flex;align-items:center;
+  justify-content:center;opacity:0;transition:all .2s;cursor:pointer;border-radius:inherit}
+.img-editable:hover .img-overlay{background:rgba(108,99,255,.55);opacity:1}
+.img-edit-btn{background:#fff;color:#1e1b4b;font-size:12px;font-weight:700;
+  padding:8px 16px;border-radius:8px;pointer-events:none;display:flex;align-items:center;gap:6px}
+
+/* ══════════════════════════════════════════════════════
+   DRAG GHOST (custom cursor follower)
+══════════════════════════════════════════════════════ */
+#drag-ghost{
+  position:fixed;pointer-events:none;z-index:9999;
+  display:none;transform:translate(-50%,-50%) rotate(2deg) scale(1.04);
+  transition:transform .1s;
+  user-select:none;
+}
+#drag-ghost.show{display:block}
+#drag-ghost.from-library{
+  background:var(--surface);border:1px solid var(--accent);border-radius:10px;
+  padding:10px 16px;display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 32px rgba(108,99,255,.35),0 2px 8px rgba(0,0,0,.3);
+  color:var(--text);font-size:13px;font-weight:600;
+}
+#drag-ghost.from-canvas{
+  background:#fff;border:2px solid var(--accent);border-radius:4px;
+  box-shadow:0 12px 40px rgba(0,0,0,.25),0 0 0 4px rgba(108,99,255,.15);
+  max-width:280px;overflow:hidden;
+}
+#drag-ghost .ghost-section-preview{
+  padding:16px 20px;font-size:12px;color:#64748b;font-family:system-ui,sans-serif;
+  pointer-events:none;user-select:none;max-height:120px;overflow:hidden;position:relative;
+}
+#drag-ghost .ghost-section-preview::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40px;
+  background:linear-gradient(transparent,#fff);
+}
+#drag-ghost .ghost-label{
+  position:absolute;bottom:4px;right:8px;font-size:10px;font-weight:700;
+  background:var(--accent);color:#fff;padding:2px 7px;border-radius:4px;z-index:1;
+}
+

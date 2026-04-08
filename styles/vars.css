@@ -1,0 +1,407 @@
+/* styles/vars.css -- Design tokens, utilities, RTL */
+
+/* ══════════════════════════════════════════════════════
+   DESIGN SYSTEM — PageCraft DS v1
+   ──────────────────────────────────────────────────
+   Sections:
+     1. Color Tokens      — palette + semantic aliases
+     2. Typography System — scale, weights, families
+     3. Spacing System    — 4px-base scale
+     4. Elevation         — shadows + blur
+     5. Border Radius     — scale
+     6. Transitions       — duration + easing presets
+     7. Z-Index           — layering scale
+   ──────────────────────────────────────────────────
+   All original tokens (--bg, --accent …) are KEPT
+   unchanged so nothing breaks.
+══════════════════════════════════════════════════════ */
+:root {
+
+  /* ── 1. COLOR TOKENS ──────────────────────────────
+     Original tokens kept (backward-compat)           */
+  --bg:#0d0d0f; --surface:#17171a; --surface2:#1f1f24; --surface3:#28282e;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13); --border3:rgba(255,255,255,0.22);
+  --text:#e8e8ed; --text2:#a0a0b0; --muted:#5e5e70;
+  --accent:#6c63ff; --accent-h:#5a52e0; --accent2:#a78bfa; --accent-glow:rgba(108,99,255,0.25);
+  --danger:#f87171; --success:#34d399; --canvas-bg:#e8e8f0;
+  --dnd-line:#6c63ff; --dnd-ghost-bg:rgba(108,99,255,0.08);
+
+  /* Violet / Primary palette (50 → 900) */
+  --color-primary-50 :#f5f3ff;
+  --color-primary-100:#ede9fe;
+  --color-primary-200:#ddd6fe;
+  --color-primary-300:#c4b5fd;
+  --color-primary-400:#a78bfa;
+  --color-primary-500:#8b5cf6;
+  --color-primary-600:#6c63ff;   /* = --accent */
+  --color-primary-700:#5a52e0;   /* = --accent-h */
+  --color-primary-800:#4338ca;
+  --color-primary-900:#3730a3;
+
+  /* Gray palette */
+  --color-gray-0  :#ffffff;
+  --color-gray-50 :#f8fafc;
+  --color-gray-100:#f1f5f9;
+  --color-gray-200:#e2e8f0;
+  --color-gray-300:#cbd5e1;
+  --color-gray-400:#94a3b8;
+  --color-gray-500:#64748b;
+  --color-gray-600:#475569;
+  --color-gray-700:#334155;
+  --color-gray-800:#1e293b;
+  --color-gray-900:#0f172a;
+  --color-gray-950:#0d0d0f;  /* = --bg */
+
+  /* Semantic colors */
+  --color-success    :#34d399;
+  --color-success-bg :rgba(52,211,153,0.10);
+  --color-danger     :#f87171;
+  --color-danger-bg  :rgba(248,113,113,0.10);
+  --color-warning    :#fbbf24;
+  --color-warning-bg :rgba(251,191,36,0.10);
+  --color-info       :#38bdf8;
+  --color-info-bg    :rgba(56,189,248,0.10);
+
+  /* Overlay */
+  --color-overlay-sm :rgba(0,0,0,0.35);
+  --color-overlay-md :rgba(0,0,0,0.55);
+  --color-overlay-lg :rgba(0,0,0,0.75);
+
+  /* ── 2. TYPOGRAPHY SYSTEM ─────────────────────── */
+
+  /* Font families */
+  --font-sans   :'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono   :'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-display:'Inter', system-ui, sans-serif;   /* swap for a display face later */
+
+  /* Font-size scale (4-step major second ≈ 1.25×) */
+  --text-2xs  :10px;
+  --text-xs   :11px;
+  --text-sm   :12px;
+  --text-base :13px;   /* base UI size */
+  --text-md   :14px;
+  --text-lg   :16px;
+  --text-xl   :18px;
+  --text-2xl  :22px;
+  --text-3xl  :28px;
+  --text-4xl  :36px;
+  --text-5xl  :48px;
+  --text-6xl  :64px;
+
+  /* Font weights */
+  --fw-light    :300;
+  --fw-regular  :400;
+  --fw-medium   :500;
+  --fw-semibold :600;
+  --fw-bold     :700;
+  --fw-extrabold:800;
+  --fw-black    :900;
+
+  /* Line heights */
+  --lh-none    :1;
+  --lh-tight   :1.25;
+  --lh-snug    :1.375;
+  --lh-normal  :1.5;
+  --lh-relaxed :1.625;
+  --lh-loose   :2;
+
+  /* Letter spacing */
+  --ls-tight  :-0.025em;
+  --ls-normal : 0;
+  --ls-wide   : 0.025em;
+  --ls-wider  : 0.05em;
+  --ls-widest : 0.1em;
+
+  /* ── 3. SPACING SYSTEM ────────────────────────────
+     Base unit = 4px. sp-N = N × 4px                 */
+  --sp-0  :0;
+  --sp-px :1px;
+  --sp-0h :2px;
+  --sp-1  :4px;
+  --sp-2  :8px;
+  --sp-3  :12px;
+  --sp-4  :16px;
+  --sp-5  :20px;
+  --sp-6  :24px;
+  --sp-7  :28px;
+  --sp-8  :32px;
+  --sp-10 :40px;
+  --sp-12 :48px;
+  --sp-14 :56px;
+  --sp-16 :64px;
+  --sp-20 :80px;
+  --sp-24 :96px;
+  --sp-32 :128px;
+
+  /* Named semantic aliases */
+  --sp-xs  :var(--sp-1);    /*  4px */
+  --sp-sm  :var(--sp-2);    /*  8px */
+  --sp-md  :var(--sp-4);    /* 16px */
+  --sp-lg  :var(--sp-6);    /* 24px */
+  --sp-xl  :var(--sp-8);    /* 32px */
+  --sp-2xl :var(--sp-12);   /* 48px */
+  --sp-3xl :var(--sp-16);   /* 64px */
+
+  /* ── 4. ELEVATION / SHADOWS ───────────────────── */
+  --shadow-xs  :0 1px 2px rgba(0,0,0,.35);
+  --shadow-sm  :0 2px 4px rgba(0,0,0,.40);
+  --shadow-md  :0 4px 12px rgba(0,0,0,.45);
+  --shadow-lg  :0 8px 24px rgba(0,0,0,.50);
+  --shadow-xl  :0 16px 40px rgba(0,0,0,.55);
+  --shadow-2xl :0 24px 64px rgba(0,0,0,.60);
+  --shadow-glow:0 0 0 3px var(--accent-glow);
+  --shadow-inset:inset 0 1px 3px rgba(0,0,0,.40);
+
+  /* ── 5. BORDER RADIUS ─────────────────────────── */
+  --r-none :0;
+  --r-xs   :3px;
+  --r-sm   :5px;
+  --r-md   :8px;
+  --r-lg   :12px;
+  --r-xl   :16px;
+  --r-2xl  :20px;
+  --r-3xl  :28px;
+  --r-full :9999px;
+
+  /* ── 6. TRANSITIONS ───────────────────────────── */
+  --ease-in        :cubic-bezier(0.4,0,1,1);
+  --ease-out       :cubic-bezier(0,0,0.2,1);
+  --ease-in-out    :cubic-bezier(0.4,0,0.2,1);
+  --ease-spring    :cubic-bezier(0.34,1.56,0.64,1);
+  --ease-smooth    :cubic-bezier(0.22,0.61,0.36,1);
+
+  --duration-fast  :100ms;
+  --duration-base  :150ms;
+  --duration-slow  :250ms;
+  --duration-slower:400ms;
+
+  --transition-fast:var(--duration-fast) var(--ease-out);
+  --transition-base:var(--duration-base) var(--ease-out);
+  --transition-slow:var(--duration-slow) var(--ease-out);
+
+  /* ── 7. Z-INDEX ───────────────────────────────── */
+  --z-hide     :-1;
+  --z-base     :0;
+  --z-raised   :10;
+  --z-dropdown :100;
+  --z-sticky   :200;
+  --z-overlay  :300;
+  --z-modal    :400;
+  --z-toast    :500;
+  --z-tooltip  :600;
+}
+
+/* ══════════════════════════════════════════════════════
+   DESIGN SYSTEM — UTILITY CLASSES
+   Thin, single-purpose helpers that consume the tokens.
+   Prefixed with `ds-` to avoid collisions.
+══════════════════════════════════════════════════════ */
+
+/* ── Typography utilities ── */
+.ds-text-xs   { font-size:var(--text-xs)   }
+.ds-text-sm   { font-size:var(--text-sm)   }
+.ds-text-base { font-size:var(--text-base) }
+.ds-text-md   { font-size:var(--text-md)   }
+.ds-text-lg   { font-size:var(--text-lg)   }
+.ds-text-xl   { font-size:var(--text-xl)   }
+.ds-text-2xl  { font-size:var(--text-2xl)  }
+.ds-text-3xl  { font-size:var(--text-3xl)  }
+
+.ds-fw-regular  { font-weight:var(--fw-regular)   }
+.ds-fw-medium   { font-weight:var(--fw-medium)    }
+.ds-fw-semibold { font-weight:var(--fw-semibold)  }
+.ds-fw-bold     { font-weight:var(--fw-bold)      }
+.ds-fw-black    { font-weight:var(--fw-black)      }
+
+.ds-lh-tight    { line-height:var(--lh-tight)   }
+.ds-lh-normal   { line-height:var(--lh-normal)  }
+.ds-lh-relaxed  { line-height:var(--lh-relaxed) }
+
+.ds-ls-tight    { letter-spacing:var(--ls-tight)   }
+.ds-ls-wide     { letter-spacing:var(--ls-wide)    }
+.ds-ls-widest   { letter-spacing:var(--ls-widest)  }
+
+.ds-mono        { font-family:var(--font-mono) }
+.ds-truncate    { overflow:hidden;text-overflow:ellipsis;white-space:nowrap }
+.ds-clamp-2     { display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden }
+.ds-clamp-3     { display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden }
+
+/* ── Color utilities ── */
+.ds-text-primary  { color:var(--color-primary-600) }
+.ds-text-muted    { color:var(--muted) }
+.ds-text-success  { color:var(--color-success) }
+.ds-text-danger   { color:var(--color-danger)  }
+.ds-text-warning  { color:var(--color-warning) }
+.ds-text-info     { color:var(--color-info)    }
+
+.ds-bg-surface    { background:var(--surface)  }
+.ds-bg-surface2   { background:var(--surface2) }
+.ds-bg-success    { background:var(--color-success-bg) }
+.ds-bg-danger     { background:var(--color-danger-bg)  }
+.ds-bg-warning    { background:var(--color-warning-bg) }
+.ds-bg-info       { background:var(--color-info-bg)    }
+
+/* ── Spacing utilities (margin / padding) ── */
+.ds-p-sm  { padding:var(--sp-sm)  } .ds-p-md  { padding:var(--sp-md) }
+.ds-p-lg  { padding:var(--sp-lg)  } .ds-p-xl  { padding:var(--sp-xl) }
+.ds-px-sm { padding-inline:var(--sp-sm) } .ds-px-md { padding-inline:var(--sp-md) }
+.ds-px-lg { padding-inline:var(--sp-lg) } .ds-px-xl { padding-inline:var(--sp-xl) }
+.ds-py-sm { padding-block:var(--sp-sm)  } .ds-py-md { padding-block:var(--sp-md)  }
+.ds-py-lg { padding-block:var(--sp-lg)  } .ds-py-xl { padding-block:var(--sp-xl)  }
+
+.ds-gap-xs { gap:var(--sp-xs) } .ds-gap-sm { gap:var(--sp-sm) }
+.ds-gap-md { gap:var(--sp-md) } .ds-gap-lg { gap:var(--sp-lg) }
+
+/* ── Shadow utilities ── */
+.ds-shadow-sm  { box-shadow:var(--shadow-sm)  }
+.ds-shadow-md  { box-shadow:var(--shadow-md)  }
+.ds-shadow-lg  { box-shadow:var(--shadow-lg)  }
+.ds-shadow-glow{ box-shadow:var(--shadow-glow)}
+
+/* ── Radius utilities ── */
+.ds-r-sm   { border-radius:var(--r-sm)   }
+.ds-r-md   { border-radius:var(--r-md)   }
+.ds-r-lg   { border-radius:var(--r-lg)   }
+.ds-r-xl   { border-radius:var(--r-xl)   }
+.ds-r-full { border-radius:var(--r-full) }
+
+/* ── Transition utilities ── */
+.ds-transition      { transition:all var(--transition-base) }
+.ds-transition-fast { transition:all var(--transition-fast) }
+.ds-transition-slow { transition:all var(--transition-slow) }
+
+/* ── Layout utilities ── */
+.ds-flex        { display:flex }
+.ds-flex-col    { display:flex;flex-direction:column }
+.ds-flex-center { display:flex;align-items:center;justify-content:center }
+.ds-flex-between{ display:flex;align-items:center;justify-content:space-between }
+.ds-grid-2      { display:grid;grid-template-columns:repeat(2,1fr) }
+.ds-grid-3      { display:grid;grid-template-columns:repeat(3,1fr) }
+.ds-grid-auto   { display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr)) }
+
+/* ── Reusable UI pattern: Badge ── */
+.ds-badge {
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:var(--r-full);
+  font-size:var(--text-xs);font-weight:var(--fw-semibold);
+  letter-spacing:var(--ls-wide);
+}
+.ds-badge-primary { background:var(--color-primary-900);color:var(--color-primary-300);border:1px solid var(--color-primary-800) }
+.ds-badge-success { background:var(--color-success-bg);color:var(--color-success);border:1px solid rgba(52,211,153,.25) }
+.ds-badge-danger  { background:var(--color-danger-bg); color:var(--color-danger); border:1px solid rgba(248,113,113,.25) }
+.ds-badge-warning { background:var(--color-warning-bg);color:var(--color-warning);border:1px solid rgba(251,191,36,.25) }
+.ds-badge-info    { background:var(--color-info-bg);   color:var(--color-info);   border:1px solid rgba(56,189,248,.25) }
+
+/* ── Reusable UI pattern: Card ── */
+.ds-card {
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:var(--sp-lg);
+  box-shadow:var(--shadow-sm);
+  transition:border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.ds-card:hover { border-color:var(--border2);box-shadow:var(--shadow-md) }
+.ds-card-title {
+  font-size:var(--text-md);font-weight:var(--fw-semibold);
+  color:var(--text);line-height:var(--lh-tight);margin-bottom:var(--sp-1)
+}
+.ds-card-sub {
+  font-size:var(--text-xs);color:var(--muted);line-height:var(--lh-normal)
+}
+
+/* ── Reusable UI pattern: Divider ── */
+.ds-divider {
+  height:1px;background:var(--border);margin:var(--sp-md) 0;
+}
+.ds-divider-label {
+  display:flex;align-items:center;gap:var(--sp-sm);
+  font-size:var(--text-xs);color:var(--muted);letter-spacing:var(--ls-wider);
+  text-transform:uppercase;
+}
+.ds-divider-label::before,.ds-divider-label::after {
+  content:'';flex:1;height:1px;background:var(--border);
+}
+
+/* ── Reusable UI pattern: Form field ── */
+.ds-field { display:flex;flex-direction:column;gap:var(--sp-1) }
+.ds-label {
+  font-size:var(--text-xs);font-weight:var(--fw-medium);
+  color:var(--text2);letter-spacing:var(--ls-wide);
+}
+.ds-input {
+  background:var(--surface2);border:1px solid var(--border2);
+  border-radius:var(--r-md);padding:6px 10px;
+  font-size:var(--text-sm);color:var(--text);font-family:var(--font-sans);
+  outline:none;transition:border-color var(--transition-fast);width:100%;
+}
+.ds-input:focus { border-color:var(--accent);box-shadow:var(--shadow-glow) }
+.ds-input::placeholder { color:var(--muted) }
+
+/* ── Reusable UI pattern: Empty state ── */
+.ds-empty {
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:var(--sp-3);padding:var(--sp-2xl);text-align:center;
+  color:var(--muted);
+}
+.ds-empty-icon { font-size:32px;opacity:.5 }
+.ds-empty-title{ font-size:var(--text-md);font-weight:var(--fw-semibold);color:var(--text2) }
+.ds-empty-sub  { font-size:var(--text-sm);color:var(--muted);max-width:240px;line-height:var(--lh-relaxed) }
+
+/* ── Reusable UI pattern: Skeleton loader ── */
+.ds-skeleton {
+  background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);
+  background-size:200% 100%;
+  animation:ds-shimmer 1.4s infinite;
+  border-radius:var(--r-sm);
+}
+@keyframes ds-shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* ── Reusable UI pattern: Focus ring (a11y) ── */
+.ds-focus-ring:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-radius:var(--r-sm);
+}
+
+/* ══════════════════════════════════════════════════════
+   RTL SUPPORT
+   Triggered by [dir="rtl"] on <html> (set by I18n.boot)
+   Uses logical CSS properties where possible so layout
+   mirrors correctly for Arabic, Hebrew, etc.
+══════════════════════════════════════════════════════ */
+
+/* ── Logical property base — works for both LTR + RTL ── */
+.topbar    { padding-inline: 14px }
+.tab-body  { padding-inline: 10px }
+
+/* ── RTL-specific overrides ── */
+[dir="rtl"] body                  { font-family: 'Segoe UI', Tahoma, var(--font-sans) }
+[dir="rtl"] .topbar-r             { margin-left: unset; margin-right: auto }
+[dir="rtl"] .logo                 { flex-direction: row-reverse }
+[dir="rtl"] .workspace            { flex-direction: row-reverse }
+[dir="rtl"] .sidebar              { border-right: none; border-left: 1px solid var(--border) }
+[dir="rtl"] .panel                { border-left: none; border-right: 1px solid var(--border) }
+[dir="rtl"] .block-card           { flex-direction: row-reverse }
+[dir="rtl"] .bc-drag              { margin-left: unset; margin-right: auto }
+[dir="rtl"] .btn                  { flex-direction: row-reverse }
+[dir="rtl"] .drop-line::before    { left: unset; right: 0; transform: translate(50%, -50%) }
+[dir="rtl"] .drop-line::after     { right: unset; left: 0; transform: translate(-50%, -50%) }
+[dir="rtl"] #toast                { left: unset; right: 50%; transform: translateX(50%) translateY(14px) }
+[dir="rtl"] #toast.show           { transform: translateX(50%) translateY(0) }
+[dir="rtl"] .canvas-badge         { left: unset; right: 50%; transform: translateX(50%) }
+[dir="rtl"] .modal                { text-align: right }
+[dir="rtl"] .modal-head           { flex-direction: row-reverse }
+[dir="rtl"] .tab                  { letter-spacing: 0 }   /* Arabic doesn't need letter-spacing */
+[dir="rtl"] .ds-divider-label     { flex-direction: row-reverse }
+[dir="rtl"] #i18n-menu            { right: unset; left: 0 }
+[dir="rtl"] .hist-btn             { transform: scaleX(-1) } /* flip undo/redo arrows */
+
+/* ── Canvas exported sections — RTL text direction ── */
+[dir="rtl"] .canvas-inner section,
+[dir="rtl"] .canvas-inner div[data-id] { text-align: right }
+
+/* ── Scrollbars — keep on the correct side ── */
+[dir="rtl"] .tab-body::-webkit-scrollbar { width: 3px }
+
+/* ── Language switcher menu position fix for RTL ── */
+[dir="rtl"] #i18n-switcher { flex-direction: row-reverse }
+

@@ -1,88 +1,283 @@
-🟢 STAGE 1 — AI WEBSITE GENERATOR
+# 🚀 WEBSITE BUILDER — EXECUTION PLAN (ELITE MODE)
+
+---
+
+# 🧠 STRATEGY
+
+We DO NOT add features.
+
+We make 3 systems world-class:
+
+1. Performance
+2. Output
+3. AI Experience
+
+---
+
+# 🥇 STAGE 1 — PERFORMANCE ENGINE
+
+Goal:
+Make builder feel instant like Figma
+
+---
+
+## Tasks:
 
 Continue.
 
-Goal: Build AI system that generates full HTML pages.
+Goal:
+Detect full re-render problem
 
-Requirements:
-
-Input prompt
-Call AI API
-Return clean HTML/CSS
-Render in iframe
+---
 
 Continue.
 
-Goal: Improve AI output quality.
+Goal:
+Implement section-level rendering
 
-Requirements:
-
-Enforce structure
-Responsive layout
-Clean spacing
-🟢 STAGE 2 — BASIC BUILDER
+---
 
 Continue.
 
-Goal: Create simple canvas.
+Goal:
+Create diff system (compare old vs new state)
 
-Requirements:
-
-Display generated site
-Allow basic selection
+---
 
 Continue.
 
-Goal: Drag & drop system.
+Goal:
+Update ONLY changed sections
 
-Requirements:
-
-Move sections
-Reorder blocks
-🟢 STAGE 3 — EDIT PANEL
+---
 
 Continue.
 
-Goal: Edit selected element.
+Goal:
+Optimize drag & drop performance
 
-Requirements:
-
-Text editing
-Color change
-Spacing control
-🟢 STAGE 4 — SHARE SYSTEM
+---
 
 Continue.
 
-Goal: Share generated site.
+Goal:
+Prevent unnecessary DOM updates
 
-Requirements:
+---
 
-Generate link
-Save project
+---
 
-Continue.
+# 🥈 STAGE 2 — OUTPUT ENGINE
 
-Goal: Clone system.
+Goal:
+Generate production-level code
 
-Requirements:
-
-Duplicate site
-🟢 STAGE 5 — PUBLISH SYSTEM
+---
 
 Continue.
 
-Goal: Publish website.
+Goal:
+Clean HTML output (no junk)
 
-Requirements:
+---
 
-Public URL
-Basic hosting logic
-🔴 GLOBAL RULE
+Continue.
 
-After each step:
+Goal:
+Remove inline styles
 
-Debug
-Fix
-Optimize
-🚀 END
+---
+
+Continue.
+
+Goal:
+Generate reusable CSS classes
+
+---
+
+Continue.
+
+Goal:
+Ensure SEO-ready structure
+
+---
+
+Continue.
+
+Goal:
+Optimize export size
+
+---
+
+---
+
+# 🥉 STAGE 3 — AI BUILDER
+
+Goal:
+Make AI the main builder
+
+---
+
+Continue.
+
+Goal:
+Build with Chat (user prompt → full page)
+
+---
+
+Continue.
+
+Goal:
+Generate sections automatically
+
+---
+
+Continue.
+
+Goal:
+Generate content (text + layout)
+
+---
+
+Continue.
+
+Goal:
+Add "Fix my design" button
+
+---
+
+Continue.
+
+Goal:
+AI live suggestions while editing
+
+---
+
+---
+
+# 🟡 STAGE 4 — UX SYSTEM
+
+Goal:
+Zero-thinking experience
+
+---
+
+Continue.
+
+Goal:
+Smart onboarding
+
+---
+
+Continue.
+
+Goal:
+Auto-generate starter site
+
+---
+
+Continue.
+
+Goal:
+No empty screens
+
+---
+
+Continue.
+
+Goal:
+Smart defaults everywhere
+
+---
+
+---
+
+# 🔥 STAGE 5 — VIRAL SYSTEM
+
+Goal:
+Users bring users
+
+---
+
+Continue.
+
+Goal:
+Clone website button
+
+---
+
+Continue.
+
+Goal:
+Share template link
+
+---
+
+Continue.
+
+Goal:
+Public gallery page
+
+---
+
+---
+
+# 💰 STAGE 6 — BUSINESS SYSTEM
+
+Goal:
+Monetization
+
+---
+
+Continue.
+
+Goal:
+Plans system
+
+---
+
+Continue.
+
+Goal:
+Usage limits
+
+---
+
+Continue.
+
+Goal:
+Billing integration
+
+---
+
+---
+
+# 💣 GLOBAL RULE
+
+After EVERY step:
+
+Continue.
+
+Now:
+
+- Debug
+- Fix
+- Optimize
+- Refactor
+- Validate
+
+---
+
+# 🚀 END GOAL
+
+A platform that:
+
+- Feels like Figma
+- Builds like AI
+- Exports like Webflow
+
+---
+
+# 🚀 START
+
+👉 Start Performance Engine

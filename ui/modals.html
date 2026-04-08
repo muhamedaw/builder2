@@ -1,0 +1,1475 @@
+<!-- modals.html Phase 3 -->
+<!-- PWA: Offline indicator -->
+<div id="pwa-offline-bar">
+  📡 You're offline — PageCraft is running from cache. Changes will sync when you reconnect.
+</div>
+
+<!-- PWA: Install prompt -->
+<div id="pwa-install-banner">
+  <div class="pwa-install-icon">⚡</div>
+  <div class="pwa-install-text">
+    <div class="pwa-install-title">Install PageCraft</div>
+    <div class="pwa-install-sub">Works offline · No browser UI · Native feel</div>
+  </div>
+  <div class="pwa-install-actions">
+    <button class="pwa-install-btn primary" onclick="pwaInstall()">Install</button>
+    <button class="pwa-install-btn dismiss" onclick="pwaDismiss()">✕</button>
+  </div>
+</div>
+
+<!-- PWA: Update available toast -->
+<div id="pwa-update-toast">
+  <div class="pwa-update-title">🔄 Update Available</div>
+  <div class="pwa-update-sub">A new version of PageCraft is ready. Reload to apply.</div>
+  <button class="pwa-update-btn" onclick="pwaApplyUpdate()">Reload & Update</button>
+</div>
+
+<!-- ANALYTICS MODAL -->
+<div class="analytics-bg hidden" id="analytics-modal">
+  <div class="analytics-modal">
+    <button class="analytics-close" onclick="closeAnalytics()">✕</button>
+    <div class="analytics-head">
+      <div class="analytics-head-icon">📊</div>
+      <div><h2>Analytics Dashboard</h2><p>Page performance, user events, and real-time insights</p></div>
+    </div>
+    <div class="analytics-tabs">
+      <button class="analytics-tab active" id="atab-overview"    onclick="analyticsTab('overview')">📈 Overview</button>
+      <button class="analytics-tab"        id="atab-events"      onclick="analyticsTab('events')">⚡ Events</button>
+      <button class="analytics-tab"        id="atab-performance" onclick="analyticsTab('performance')">🚀 Performance</button>
+      <button class="analytics-tab"        id="atab-audience"    onclick="analyticsTab('audience')">👥 Audience</button>
+      <button class="analytics-tab"        id="atab-realtime"    onclick="analyticsTab('realtime')">🔴 Real-time</button>
+    </div>
+    <div class="analytics-body" id="analytics-body"></div>
+  </div>
+</div>
+
+<!-- DEPLOY MODAL -->
+<div class="deploy-bg hidden" id="deploy-modal">
+  <div class="deploy-modal">
+    <button class="deploy-close" onclick="closeDeploy()">✕</button>
+
+    <div class="deploy-head">
+      <div class="deploy-head-row">
+        <div class="deploy-head-icon">🚀</div>
+        <div>
+          <h2>Edge Deployment</h2>
+          <p>Deploy to CDN-edge globally · Serverless functions · Zero config</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="deploy-tabs">
+      <button class="deploy-tab active" id="dtab-publish" onclick="deployTab('publish')">🌐 Publish</button>
+      <button class="deploy-tab" id="dtab-functions" onclick="deployTab('functions')">⚡ Functions</button>
+      <button class="deploy-tab" id="dtab-cdn"       onclick="deployTab('cdn')">📦 CDN & Cache</button>
+      <button class="deploy-tab" id="dtab-env"       onclick="deployTab('env')">🔑 Env Variables</button>
+      <button class="deploy-tab" id="dtab-history"   onclick="deployTab('history')">📋 History</button>
+    </div>
+
+    <div class="deploy-body" id="deploy-body">
+      <p style="color:var(--muted);text-align:center;padding:40px">Loading…</p>
+    </div>
+  </div>
+</div>
+
+<!-- SAVE AS COMPONENT MODAL -->
+<div class="sac-modal-bg hidden" id="sac-modal">
+  <div class="sac-modal">
+    <div class="sac-head">
+      <div class="sac-head-icon">★</div>
+      <h3>Save as Component</h3>
+      <button onclick="closeSacModal()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:2px 6px">✕</button>
+    </div>
+    <div class="sac-body">
+      <div class="sac-preview" id="sac-preview">
+        <span>Section type:</span>
+        <span class="sac-preview-type" id="sac-preview-type">—</span>
+      </div>
+      <div class="sac-field">
+        <label class="sac-label">Component name *</label>
+        <input class="sac-inp" id="sac-name" placeholder="e.g. Dark Hero, Pricing Table v2…"/>
+      </div>
+      <div class="sac-field">
+        <label class="sac-label">Description</label>
+        <input class="sac-inp" id="sac-desc" placeholder="Brief description…"/>
+      </div>
+      <div class="sac-field">
+        <label class="sac-label">Category</label>
+        <input class="sac-inp" id="sac-category" placeholder="e.g. Hero, Pricing, Layout…"/>
+      </div>
+      <div class="sac-field">
+        <label class="sac-label">Tags (press Enter to add)</label>
+        <div class="sac-tags-wrap" id="sac-tags-wrap">
+          <input class="sac-tag-inp" id="sac-tag-inp" placeholder="Add tag…"
+            onkeydown="sacTagKeydown(event)"/>
+        </div>
+      </div>
+      <div class="sac-row">
+        <button class="sac-btn secondary" onclick="closeSacModal()">Cancel</button>
+        <button class="sac-btn primary" onclick="confirmSaveComponent()">
+          ★ Save Component
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAVED COMPONENTS MANAGER MODAL -->
+<div class="scm-modal-bg hidden" id="scm-modal">
+  <div class="scm-modal">
+    <div class="scm-head">
+      <div class="scm-head-icon">★</div>
+      <div>
+        <h2>My Components</h2>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin-left:auto">
+        <button onclick="scmExportAll()" class="sac-btn secondary" style="padding:5px 12px;font-size:11px;flex:none">⬇ Export</button>
+        <button onclick="scmImportAll()" class="sac-btn secondary" style="padding:5px 12px;font-size:11px;flex:none">📂 Import</button>
+        <button onclick="closeSavedComponents()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:2px 6px">✕</button>
+      </div>
+    </div>
+    <div class="scm-body">
+      <div class="scm-filter">
+        <input class="scm-search" id="scm-search" placeholder="🔍  Search components…"
+          oninput="renderSCMGrid()"/>
+        <select id="scm-cat-filter" onchange="renderSCMGrid()"
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:12px;padding:7px 10px;outline:none">
+          <option value="">All categories</option>
+        </select>
+      </div>
+      <div class="scm-grid" id="scm-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- INTEGRATIONS MODAL -->
+<div class="int-modal-bg hidden" id="int-modal">
+  <div class="int-modal">
+    <button class="int-close" onclick="closeIntegrations()">✕</button>
+    <div class="int-head">
+      <div class="int-head-icon">🔌</div>
+      <div>
+        <h2>Integrations</h2>
+        <p>Connect REST APIs and external services to fetch live data</p>
+      </div>
+    </div>
+    <div class="int-layout">
+      <!-- Sidebar nav -->
+      <div class="int-sidebar">
+        <button class="int-nav active" id="inav-connectors" onclick="intNav('connectors')">
+          <span class="int-nav-icon">🔌</span> Connectors
+        </button>
+        <button class="int-nav" id="inav-active" onclick="intNav('active')">
+          <span class="int-nav-icon">✅</span> Active
+          <span class="int-nav-badge" id="inav-active-count" style="display:none">0</span>
+        </button>
+        <div class="int-nav-sep"></div>
+        <button class="int-nav" id="inav-fetch" onclick="intNav('fetch')">
+          <span class="int-nav-icon">⚡</span> API Tester
+        </button>
+        <button class="int-nav" id="inav-bindings" onclick="intNav('bindings')">
+          <span class="int-nav-icon">🔗</span> Data Bindings
+        </button>
+        <button class="int-nav" id="inav-webhooks" onclick="intNav('webhooks')">
+          <span class="int-nav-icon">📡</span> Webhooks
+        </button>
+        <div class="int-nav-sep"></div>
+        <button class="int-nav" id="inav-logs" onclick="intNav('logs')">
+          <span class="int-nav-icon">📋</span> Request Logs
+        </button>
+      </div>
+      <!-- Main content -->
+      <div class="int-main" id="int-main-area"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom drag ghost element (follows mouse) -->
+<div id="drag-ghost"></div>
+
+<!-- HISTORY / TIME-TRAVEL PANEL -->
+<div class="hist-panel" id="history-panel">
+  <div class="hist-panel-head">
+    <div class="hist-panel-icon">⏱</div>
+    <div class="hist-panel-title">History</div>
+    <button class="hist-panel-close" onclick="closeHistoryPanel()">✕</button>
+  </div>
+  <div class="hist-panel-body">
+    <button class="hist-checkpoint-btn" onclick="saveNamedSnapshot()">
+      ⭐ Save Checkpoint
+    </button>
+    <div id="history-list">
+      <p style="color:var(--muted);font-size:12px;text-align:center;padding:28px 0">No history yet</p>
+    </div>
+  </div>
+</div>
+
+<!-- ANIMATION PANEL (slide-in drawer) -->
+<div class="anim-panel" id="anim-panel">
+  <div class="anim-panel-head">
+    <div class="anim-panel-head-icon">✨</div>
+    <div class="anim-panel-title">Animations</div>
+    <button class="anim-panel-close" onclick="closeAnimPanel()">✕</button>
+  </div>
+  <div class="anim-panel-body">
+
+    <!-- Global enable -->
+    <div class="anim-global-row">
+      <div>
+        <div class="anim-global-label">Enable Animations</div>
+        <div class="anim-global-sub">Scroll-triggered on published page</div>
+      </div>
+      <button class="anim-switch" id="anim-global-switch" onclick="toggleAnimGlobal()"></button>
+    </div>
+
+    <!-- Apply preset to all -->
+    <div style="margin-bottom:10px">
+      <div class="anim-ctrl-label">Apply to all sections</div>
+      <div class="anim-preset-grid" id="anim-global-presets"></div>
+    </div>
+
+    <!-- Per-section list -->
+    <div class="anim-ctrl-label" style="margin-top:14px">Per-section settings</div>
+    <div id="anim-sections-list"></div>
+
+    <button class="anim-apply-all" onclick="previewAllAnimations()">▶ Preview All Animations</button>
+    <button class="anim-reset-all" onclick="resetAllAnimations()">↺ Reset All</button>
+
+  </div>
+</div>
+
+<!-- RESPONSIVE PANEL (slide-in drawer) -->
+<div class="resp-panel" id="resp-panel">
+  <div class="resp-panel-head">
+    <div class="resp-panel-icon">📱</div>
+    <div class="resp-panel-title">Responsive Design</div>
+    <button class="resp-panel-close" onclick="closeResponsive()">✕</button>
+  </div>
+  <div class="resp-panel-body">
+
+    <!-- Device presets -->
+    <div class="device-presets" id="resp-device-presets">
+      <button class="dp-btn active" data-d="desktop" onclick="setDevice('desktop');respSyncActive()">
+        <span class="dp-btn-icon">🖥</span>
+        <span class="dp-btn-label">Desktop</span>
+        <span class="dp-btn-size">920px</span>
+      </button>
+      <button class="dp-btn" data-d="tablet" onclick="setDevice('tablet');respSyncActive()">
+        <span class="dp-btn-icon">📱</span>
+        <span class="dp-btn-label">Tablet</span>
+        <span class="dp-btn-size">768px</span>
+      </button>
+      <button class="dp-btn" data-d="mobile" onclick="setDevice('mobile');respSyncActive()">
+        <span class="dp-btn-icon">📲</span>
+        <span class="dp-btn-label">Mobile</span>
+        <span class="dp-btn-size">375px</span>
+      </button>
+    </div>
+
+    <!-- Custom width -->
+    <div class="custom-width-row">
+      <input type="number" id="custom-width-inp" min="320" max="2560" value="920" placeholder="Custom px…"/>
+      <button onclick="applyCustomWidth()">→</button>
+    </div>
+
+    <!-- Breakpoints overview -->
+    <div class="bp-section-label">Breakpoints</div>
+    <div id="resp-bp-list"></div>
+
+    <!-- Global responsive overrides -->
+    <div class="bp-section-label" style="margin-top:16px">Global overrides</div>
+    <div id="resp-global-overrides"></div>
+
+    <!-- Per-section overrides -->
+    <div class="bp-section-label" style="margin-top:16px">Per-section overrides</div>
+    <div id="resp-sections-list"></div>
+
+    <button class="resp-apply-btn" onclick="applyResponsiveAll()">✓ Apply &amp; Regenerate CSS</button>
+
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="exp-modal-bg hidden" id="exp-modal">
+  <div class="exp-modal">
+
+    <!-- Header -->
+    <div class="exp-head">
+      <div class="exp-head-icon">⬇</div>
+      <div>
+        <h2>Export Page</h2>
+        <p>Choose format, set SEO metadata, and download</p>
+      </div>
+      <button class="exp-close" onclick="closeExport()">✕</button>
+    </div>
+
+    <div class="exp-body">
+
+      <!-- Page stats -->
+      <div class="exp-stats">
+        <div class="exp-stat"><div class="exp-stat-val" id="exp-stat-sec">0</div><div class="exp-stat-lbl">Sections</div></div>
+        <div class="exp-stat"><div class="exp-stat-val" id="exp-stat-words">0</div><div class="exp-stat-lbl">Words</div></div>
+        <div class="exp-stat"><div class="exp-stat-val" id="exp-stat-imgs">0</div><div class="exp-stat-lbl">Images</div></div>
+        <div class="exp-stat"><div class="exp-stat-val" id="exp-stat-size">0kb</div><div class="exp-stat-lbl">Est. size</div></div>
+      </div>
+
+      <!-- Format selector -->
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Export Format</div>
+        <div class="exp-formats" style="grid-template-columns:repeat(auto-fill,minmax(110px,1fr))">
+          <div class="exp-fmt active" id="fmt-html" onclick="selectFmt('html')">
+            <div class="exp-fmt-icon">🌐</div>
+            <div class="exp-fmt-name">HTML</div>
+            <div class="exp-fmt-desc">Single file, works anywhere</div>
+          </div>
+          <div class="exp-fmt" id="fmt-json" onclick="selectFmt('json')">
+            <div class="exp-fmt-icon">📦</div>
+            <div class="exp-fmt-name">JSON</div>
+            <div class="exp-fmt-desc">Save &amp; reload later</div>
+          </div>
+          <div class="exp-fmt" id="fmt-react" onclick="selectFmt('react')">
+            <div class="exp-fmt-icon">⚛️</div>
+            <div class="exp-fmt-name">React JSX</div>
+            <div class="exp-fmt-desc">Drop into React app</div>
+          </div>
+          <div class="exp-fmt" id="fmt-ts" onclick="selectFmt('ts')">
+            <div class="exp-fmt-icon">💙</div>
+            <div class="exp-fmt-name">TypeScript</div>
+            <div class="exp-fmt-desc">React + TS component</div>
+          </div>
+          <div class="exp-fmt" id="fmt-vue" onclick="selectFmt('vue')">
+            <div class="exp-fmt-icon">💚</div>
+            <div class="exp-fmt-name">Vue 3</div>
+            <div class="exp-fmt-desc">Single File Component</div>
+          </div>
+          <div class="exp-fmt" id="fmt-svelte" onclick="selectFmt('svelte')">
+            <div class="exp-fmt-icon">🔥</div>
+            <div class="exp-fmt-name">Svelte</div>
+            <div class="exp-fmt-desc">Svelte component</div>
+          </div>
+          <div class="exp-fmt" id="fmt-esm" onclick="selectFmt('esm')">
+            <div class="exp-fmt-icon">📦</div>
+            <div class="exp-fmt-name">ESM</div>
+            <div class="exp-fmt-desc">ES Module, import anywhere</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEO panel (shown for HTML + React) -->
+      <div id="exp-seo-panel">
+        <div class="exp-seo">
+          <div class="exp-seo-title">SEO &amp; Metadata</div>
+          <div>
+            <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">Page Title <span id="exp-title-count" class="exp-char-count"></span></label>
+            <input class="exp-inp" id="exp-seo-title" placeholder="My Awesome Page" maxlength="60"
+              oninput="updateCharCount('exp-seo-title','exp-title-count',60)"/>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">Meta Description <span id="exp-desc-count" class="exp-char-count"></span></label>
+            <textarea class="exp-inp" id="exp-seo-desc" placeholder="A short description of your page for search engines…" maxlength="160" rows="2" style="resize:none"
+              oninput="updateCharCount('exp-seo-desc','exp-desc-count',160)"></textarea>
+          </div>
+          <div class="exp-inp-row">
+            <div>
+              <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">OG Image URL</label>
+              <input class="exp-inp" id="exp-og-img" placeholder="https://…/og-image.jpg"/>
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">Page URL (canonical)</label>
+              <input class="exp-inp" id="exp-canonical" placeholder="https://yoursite.com/page"/>
+            </div>
+          </div>
+          <div class="exp-inp-row">
+            <div>
+              <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">Author</label>
+              <input class="exp-inp" id="exp-author" placeholder="Your name"/>
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">Language</label>
+              <input class="exp-inp" id="exp-lang" value="en" placeholder="en"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export options -->
+      <div id="exp-opts-panel">
+        <div class="exp-opts">
+          <label class="exp-opt">
+            <input type="checkbox" id="opt-minify" checked/>
+            <div><div class="exp-opt-text">Minify output</div><div class="exp-opt-sub">Remove whitespace — smaller file size</div></div>
+          </label>
+          <label class="exp-opt">
+            <input type="checkbox" id="opt-responsive" checked/>
+            <div><div class="exp-opt-text">Responsive CSS</div><div class="exp-opt-sub">Auto-stack columns on mobile (&lt;768px)</div></div>
+          </label>
+          <label class="exp-opt" id="opt-font-row">
+            <input type="checkbox" id="opt-fonts" checked/>
+            <div><div class="exp-opt-text">Embed Google Font</div><div class="exp-opt-sub">Inter — matches builder preview</div></div>
+          </label>
+          <label class="exp-opt" id="opt-analytics-row">
+            <input type="checkbox" id="opt-analytics"/>
+            <div><div class="exp-opt-text">Add analytics snippet</div><div class="exp-opt-sub">Paste your GA4 / Plausible ID below</div></div>
+          </label>
+          <input class="exp-inp" id="opt-analytics-id" placeholder="G-XXXXXXXXXX or plausible domain" style="display:none;margin-top:-6px"/>
+        </div>
+      </div>
+
+      <!-- HTML preview snippet -->
+      <div id="exp-preview-pane">
+        <div class="exp-preview-label">Output preview</div>
+        <div class="exp-preview" id="exp-preview-code"></div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="exp-footer">
+      <div class="exp-footer-hint" id="exp-footer-hint">HTML · ~0kb</div>
+      <div class="exp-actions">
+        <button class="exp-cancel" onclick="closeExport()">Cancel</button>
+        <button class="exp-go" onclick="doExport()"><span id="exp-go-icon">⬇</span> <span id="exp-go-label">Download HTML</span></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BILLING / STRIPE MODAL -->
+<div class="billing-bg hidden" id="billing-modal">
+  <div class="billing-modal" style="position:relative">
+    <button class="billing-close-x" onclick="closeBilling()">✕</button>
+
+    <!-- Header -->
+    <div class="billing-head">
+      <h2>Choose Your Plan</h2>
+      <p>Unlock the full power of PageCraft. Cancel anytime.</p>
+
+      <!-- Monthly / Annual toggle -->
+      <div class="billing-toggle">
+        <span class="billing-toggle-label">Monthly</span>
+        <button class="billing-toggle-switch" id="billing-period-toggle" onclick="toggleBillingPeriod()"></button>
+        <span class="billing-toggle-label">Annual</span>
+        <span class="billing-save-badge" id="billing-save-badge" style="display:none">Save 33%</span>
+      </div>
+    </div>
+
+    <!-- Current plan banner -->
+    <div class="current-plan-banner free" id="current-plan-banner">
+      <div class="cpb-dot" id="cpb-dot" style="background:#6c63ff"></div>
+      <div class="cpb-info">
+        <div class="cpb-name" id="cpb-name">Free Plan</div>
+        <div class="cpb-detail" id="cpb-detail">3 projects · Basic blocks · Community support</div>
+      </div>
+      <button class="cpb-manage" id="cpb-manage-btn" onclick="showBillingLog()" style="display:none">
+        Manage Subscription
+      </button>
+    </div>
+
+    <!-- Plan cards -->
+    <div class="billing-plans" id="billing-plans"></div>
+
+    <!-- Stripe payment form (shown after plan selection) -->
+    <div class="billing-stripe-section" id="stripe-form-section">
+      <div class="billing-stripe-head">
+        <span>💳 Payment Details</span>
+        <span class="stripe-powered">🔒 Powered by <strong style="color:#635bff">Stripe</strong></span>
+      </div>
+
+      <!-- Billing name + email -->
+      <div class="stripe-billing-row" style="margin-bottom:10px">
+        <div class="stripe-inp-wrap">
+          <label class="stripe-inp-label">Cardholder Name</label>
+          <input class="stripe-inp" id="stripe-name" placeholder="Full name"/>
+        </div>
+        <div class="stripe-inp-wrap">
+          <label class="stripe-inp-label">Billing Email</label>
+          <input class="stripe-inp" id="stripe-email" placeholder="you@example.com"/>
+        </div>
+      </div>
+
+      <!-- Stripe Elements card input -->
+      <div class="stripe-card-wrap" id="stripe-card-wrap">
+        <div id="stripe-card-element">
+          <!-- Stripe Elements mounts here -->
+          <!-- In demo mode: shows a styled card input simulation -->
+          <div id="stripe-card-demo" style="display:flex;gap:10px;align-items:center">
+            <input class="stripe-inp" id="demo-card-number" placeholder="4242 4242 4242 4242"
+              style="flex:2;border:none;background:none;padding:0;font-size:14px"
+              oninput="formatCardNum(this)" maxlength="19"/>
+            <input class="stripe-inp" id="demo-card-exp" placeholder="MM/YY"
+              style="flex:1;border:none;background:none;padding:0;font-size:14px;max-width:70px"
+              oninput="formatExpiry(this)" maxlength="5"/>
+            <input class="stripe-inp" id="demo-card-cvc" placeholder="CVC"
+              style="flex:1;border:none;background:none;padding:0;font-size:14px;max-width:50px"
+              maxlength="4"/>
+          </div>
+        </div>
+      </div>
+      <div class="stripe-card-error" id="stripe-card-error"></div>
+
+      <button class="stripe-submit" id="stripe-submit-btn" onclick="processPayment()">
+        <span class="btn-spin" id="stripe-spinner" style="display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite"></span>
+        <span id="stripe-submit-label">Subscribe — $29/month</span>
+      </button>
+
+      <div class="stripe-security">
+        🔒 Secured by Stripe · 256-bit SSL · Cancel anytime
+      </div>
+    </div>
+
+    <!-- Subscription log -->
+    <div class="billing-log-section" id="billing-log-section" style="display:none">
+      <div class="log-head">
+        Billing History
+        <button class="log-export-btn" onclick="exportBillingLog()">⬇ Export CSV</button>
+      </div>
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>Date</th><th>Description</th><th>Amount</th><th>Status</th><th>Invoice</th>
+          </tr>
+        </thead>
+        <tbody id="billing-log-body">
+          <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">No billing history yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- PROJECTS MODAL -->
+<div class="proj-modal-bg hidden" id="proj-modal">
+  <div class="proj-modal">
+
+    <!-- Header -->
+    <div class="proj-head">
+      <div class="proj-head-icon">📁</div>
+      <div>
+        <h2>My Projects</h2>
+        <p>Save, organise and reload your pages</p>
+      </div>
+      <div class="proj-head-actions">
+        <button class="btn btn-primary" style="font-size:12px;padding:6px 14px" onclick="projQuickSave()">
+          + Save Current
+        </button>
+        <button class="proj-close" onclick="closeProjects()">✕</button>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="proj-body">
+
+      <!-- Sidebar nav -->
+      <div class="proj-sidebar">
+        <button class="proj-nav-btn active" id="pnav-all"    onclick="projNav('all')">
+          <span class="proj-nav-icon">📁</span> All Projects
+          <span class="proj-nav-badge" id="pnav-badge">0</span>
+        </button>
+        <button class="proj-nav-btn" id="pnav-recent" onclick="projNav('recent')">
+          <span class="proj-nav-icon">🕐</span> Recent
+        </button>
+        <button class="proj-nav-btn" id="pnav-save"   onclick="projNav('save')">
+          <span class="proj-nav-icon">💾</span> Save As
+        </button>
+        <div style="flex:1"></div>
+        <button class="proj-nav-btn" id="pnav-import" onclick="projNav('import')" style="margin-top:auto">
+          <span class="proj-nav-icon">📂</span> Import JSON
+        </button>
+        <button class="proj-nav-btn" id="pnav-export" onclick="projExportAll()">
+          <span class="proj-nav-icon">⬇</span> Export All
+        </button>
+      </div>
+
+      <!-- Main content -->
+      <div class="proj-content" id="proj-content">
+        <p style="color:var(--muted);font-size:12px;padding:40px 0;text-align:center">Loading…</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TEMPLATES MODAL -->
+<div class="tpl-modal-bg hidden" id="tpl-modal">
+  <div class="tpl-modal">
+
+    <!-- Header -->
+    <div class="tpl-head">
+      <div class="tpl-head-icon">📐</div>
+      <div class="tpl-head-text">
+        <h2>Choose a Template</h2>
+        <p>Pick a starting point — you can customise everything</p>
+      </div>
+      <button class="tpl-close" onclick="closeTemplates()">✕</button>
+    </div>
+
+    <!-- Body -->
+    <div class="tpl-body">
+
+      <!-- Template list -->
+      <div class="tpl-sidebar" id="tpl-sidebar"></div>
+
+      <!-- Preview panel -->
+      <div class="tpl-preview-panel">
+
+        <div class="tpl-preview-header">
+          <div class="tpl-preview-name" id="tpl-preview-name">—</div>
+          <div class="tpl-preview-meta" id="tpl-preview-meta"></div>
+        </div>
+
+        <div class="tpl-sections-strip" id="tpl-sections-strip"></div>
+
+        <div class="tpl-preview-wrap">
+          <iframe class="tpl-iframe" id="tpl-iframe" srcdoc=""></iframe>
+          <div class="tpl-preview-overlay">
+            <div class="tpl-preview-overlay-btn" onclick="loadSelectedTemplate()">
+              ✓ Load This Template
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="tpl-footer">
+      <div class="tpl-footer-info" id="tpl-footer-info">Select a template to preview it</div>
+      <div class="tpl-actions">
+        <button class="tpl-btn-cancel" onclick="TemplateMarket.saveCurrentAsTemplate()" style="border-color:var(--accent);color:var(--accent)" title="Save current canvas as a reusable template">💾 Save as Template</button>
+        <button class="tpl-btn-cancel" onclick="closeTemplates()">Cancel</button>
+        <button class="tpl-btn-load"   onclick="loadSelectedTemplate()" id="tpl-load-btn" disabled>
+          <span>✦</span> Load Template
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STAGE 8: Save As Template Modal -->
+<div class="modal-bg hidden" id="save-tpl-modal" style="z-index:3000" onclick="if(event.target===this)document.getElementById('save-tpl-modal').classList.add('hidden')">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-head">
+      <div class="modal-title">💾 Save as Template</div>
+      <button class="modal-x" onclick="document.getElementById('save-tpl-modal').classList.add('hidden')">✕</button>
+    </div>
+    <div class="modal-scroll" style="padding:16px">
+      <div class="save-tpl-form">
+        <div class="save-tpl-field">
+          <label>Template Name *</label>
+          <input id="stpl-name" placeholder="e.g. My Portfolio" maxlength="60"/>
+        </div>
+        <div class="save-tpl-field">
+          <label>Category</label>
+          <select id="stpl-cat">
+            <option>Business</option><option>Portfolio</option><option>Landing Page</option>
+            <option>E-commerce</option><option>Blog</option><option>Personal</option><option>Other</option>
+          </select>
+        </div>
+        <div class="save-tpl-field">
+          <label>Description</label>
+          <textarea id="stpl-desc" rows="2" placeholder="What is this template for?"></textarea>
+        </div>
+        <div class="save-tpl-field">
+          <label>Thumbnail emoji</label>
+          <input id="stpl-thumb" placeholder="🏢" maxlength="4" style="width:80px"/>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px">
+          <button class="btn btn-ghost" onclick="document.getElementById('save-tpl-modal').classList.add('hidden')">Cancel</button>
+          <button class="btn" onclick="TemplateMarket.confirmSave()">Save Template</button>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px">IMPORT / EXPORT</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline" style="flex:1;font-size:11px" onclick="TemplateMarket.exportTemplate()">⬇ Export JSON</button>
+            <label class="btn btn-outline" style="flex:1;font-size:11px;cursor:pointer">
+              ⬆ Import JSON
+              <input type="file" accept=".json" style="display:none" onchange="TemplateMarket.importTemplate(this)"/>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="modal-bg hidden" id="img-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">🖼 Replace Image</div>
+      <button class="modal-x" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-scroll">
+      <!-- Tabs -->
+      <div class="img-modal-tabs">
+        <div class="img-modal-tab active" onclick="switchImgTab('upload',this)">Upload</div>
+        <div class="img-modal-tab"        onclick="switchImgTab('media',this)">📁 My Media</div>
+        <div class="img-modal-tab"        onclick="switchImgTab('url',this)">🔗 URL</div>
+        <div class="img-modal-tab"        onclick="switchImgTab('stock',this)">✦ Stock</div>
+      </div>
+      <!-- Upload pane -->
+      <div class="img-tab-pane active" id="img-pane-upload">
+        <div class="drop-zone" id="drop-zone"
+          ondragover="event.preventDefault();this.classList.add('da')"
+          ondragleave="this.classList.remove('da')"
+          ondrop="onImgFileDrop(event)">
+          <input type="file" accept="image/*" onchange="onImgFileInput(this)"/>
+          <div class="drop-icon">📂</div>
+          <div class="drop-title">Drop image or click to browse</div>
+          <div class="drop-sub">PNG · JPG · WEBP · GIF · max 10MB</div>
+        </div>
+      </div>
+      <!-- My Media pane -->
+      <div class="img-tab-pane" id="img-pane-media">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <input class="ml-search" style="width:auto;flex:1;margin-right:8px" id="iml-search" placeholder="Search…" oninput="MediaLib.renderInlinePicker()"/>
+          <label style="padding:5px 10px;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);border-radius:5px;font-size:11px;font-weight:600;color:var(--accent);cursor:pointer">
+            ＋ Upload<input type="file" accept="image/*" multiple style="display:none" onchange="MediaLib.uploadFiles(this.files);this.value=''"/>
+          </label>
+        </div>
+        <div id="iml-grid" class="iml-grid"></div>
+      </div>
+      <!-- URL pane -->
+      <div class="img-tab-pane" id="img-pane-url">
+        <div class="sec-label-sm">Paste image URL</div>
+        <div class="url-row">
+          <input class="url-inp" id="url-inp" placeholder="https://example.com/image.jpg" onkeydown="if(event.key==='Enter')applyURL()"/>
+          <button class="url-apply" onclick="applyURL()">Apply</button>
+        </div>
+      </div>
+      <!-- Stock pane -->
+      <div class="img-tab-pane" id="img-pane-stock">
+        <div class="sec-label-sm">Quick stock photos</div>
+        <div class="stock-grid" id="stock-grid"></div>
+      </div>
+      <!-- Preview row (shared across tabs) -->
+      <div class="modal-prev" id="modal-prev">
+        <img id="modal-prev-img" src="" alt=""/>
+        <div class="modal-prev-actions">
+          <button class="mcncl" onclick="cancelPrev()">Cancel</button>
+          <button class="mpply" onclick="applyImg()">Use This Image ✓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ E-COMMERCE: Cart Drawer ══ -->
+<div class="cart-drawer-backdrop" id="cart-backdrop" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-head">
+    <span class="cart-title">🛒 Cart <span class="cart-count-badge" id="cart-count-badge">0</span></span>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
+    <div class="cart-total"><span>Total</span><span id="cart-total">$0.00</span></div>
+    <button class="cart-checkout-btn" id="cart-checkout-btn" onclick="openCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
+<button class="cart-float-btn" id="cart-float-btn" onclick="toggleCart()">
+  🛒<span class="cart-float-count" id="cart-float-count">0</span>
+</button>
+
+<!-- ══ E-COMMERCE: Checkout Modal ══ -->
+<div class="modal-bg hidden" id="checkout-modal" onclick="if(event.target===this)closeCheckout()">
+  <div class="modal checkout-modal">
+    <div class="modal-head">
+      <div class="modal-title">💳 Checkout</div>
+      <button class="modal-x" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="checkout-grid">
+      <div class="checkout-left">
+        <div class="checkout-section-title">Contact</div>
+        <input class="checkout-inp" id="co-email"    type="email"  placeholder="Email address*"/>
+        <div class="checkout-section-title" style="margin-top:16px">Shipping</div>
+        <input class="checkout-inp" id="co-name"     type="text"   placeholder="Full name*"/>
+        <input class="checkout-inp" id="co-address"  type="text"   placeholder="Address*"/>
+        <div class="checkout-inp-row">
+          <input class="checkout-inp" id="co-city"   type="text"   placeholder="City*"/>
+          <input class="checkout-inp" id="co-zip"    type="text"   placeholder="ZIP / Postcode*"/>
+        </div>
+        <input class="checkout-inp" id="co-country"  type="text"   placeholder="Country*"/>
+        <div class="checkout-section-title" style="margin-top:16px">Payment</div>
+        <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px">
+          <div id="stripe-card-element" style="min-height:24px">
+            <!-- Stripe card element mounts here -->
+            <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)">
+              <span>💳</span>
+              <input class="checkout-inp" id="co-card" placeholder="Card number (Stripe test: 4242 4242 4242 4242)" style="margin:0;background:transparent;border:none;padding:0" />
+            </div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);text-align:center;margin-bottom:12px">🔒 Secure payment via Stripe (test mode)</div>
+        <div id="co-stripe-key-warn" style="display:none;font-size:11px;color:var(--warning);background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:5px;padding:8px 10px;margin-bottom:8px">
+          ⚠️ No Stripe key configured. Open Settings → Stripe Key to enable real payments.
+        </div>
+        <button class="checkout-pay-btn" id="co-pay-btn" onclick="processCheckout()">Place Order →</button>
+      </div>
+      <div class="checkout-right">
+        <div class="checkout-section-title">Order Summary</div>
+        <div id="co-order-items"></div>
+        <div style="margin-top:12px">
+          <div class="checkout-total-row"><span>Subtotal</span><span id="co-subtotal">$0.00</span></div>
+          <div class="checkout-total-row"><span>Shipping</span><span>Free</span></div>
+          <div class="checkout-total-row grand"><span>Total</span><span id="co-total">$0.00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ E-COMMERCE: Product Management Modal ══ -->
+<div class="modal-bg hidden" id="pm-modal" onclick="if(event.target===this)closePM()">
+  <div class="modal pm-modal" style="position:relative;overflow:hidden">
+    <div class="modal-head">
+      <div class="modal-title">📦 Products</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-left:auto;margin-right:8px">
+        <span id="pm-stats" style="font-size:11px;color:var(--muted)"></span>
+        <button onclick="openOrders()" style="padding:5px 10px;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.3);border-radius:5px;color:var(--accent);font-size:11px;font-weight:600;cursor:pointer">📋 Orders</button>
+        <input class="ml-search" id="pm-search" placeholder="Search products…" style="width:180px" oninput="renderPMGrid()"/>
+      </div>
+      <button class="modal-x" onclick="closePM()">✕</button>
+    </div>
+    <div class="pm-toolbar">
+      <button onclick="openPMEditor()" style="padding:7px 16px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">＋ Add Product</button>
+      <div style="margin-left:auto;font-size:11px;color:var(--muted)">💡 Click a section to show products on the canvas</div>
+    </div>
+    <div id="pm-grid" class="pm-grid"></div>
+    <!-- Product editor drawer (slides in) -->
+    <div class="pm-editor" id="pm-editor">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--text)" id="pm-editor-title">New Product</div>
+        <button onclick="closePMEditor()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px">✕</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto">
+        <div class="fb-editor-row"><div class="fb-editor-label">Product Name *</div><input class="checkout-inp" id="pme-name" placeholder="e.g. Blue T-Shirt" style="margin:0"/></div>
+        <div class="fb-editor-row"><div class="fb-editor-label">Price (USD) *</div><input class="checkout-inp" id="pme-price" type="number" min="0" step="0.01" placeholder="29.99" style="margin:0"/></div>
+        <div class="fb-editor-row"><div class="fb-editor-label">Description</div><textarea class="checkout-inp" id="pme-desc" rows="3" placeholder="Short description…" style="margin:0;resize:vertical"></textarea></div>
+        <div class="fb-editor-row"><div class="fb-editor-label">Image URL or Upload</div>
+          <div style="display:flex;gap:6px">
+            <input class="checkout-inp" id="pme-image" placeholder="https://… or upload →" style="margin:0;flex:1"/>
+            <label style="padding:6px 10px;background:var(--surface3);border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:11px;color:var(--text2);white-space:nowrap">📂<input type="file" accept="image/*" style="display:none" onchange="pmUploadImg(this)"/></label>
+          </div>
+          <div id="pme-img-preview" style="margin-top:6px;display:none"><img id="pme-img-prev-el" style="width:100%;height:120px;object-fit:cover;border-radius:6px;border:1px solid var(--border)" src="" alt=""/></div>
+        </div>
+        <div class="fb-editor-row"><div class="fb-editor-label">Stock / Quantity</div><input class="checkout-inp" id="pme-stock" type="number" min="0" placeholder="100" style="margin:0"/></div>
+        <div class="fb-editor-row"><div class="fb-editor-label">SKU</div><input class="checkout-inp" id="pme-sku" placeholder="PROD-001" style="margin:0"/></div>
+        <div class="fb-editor-row"><div class="fb-editor-label">Stripe Price ID (optional)</div><input class="checkout-inp" id="pme-stripe-id" placeholder="price_xxx" style="margin:0"/></div>
+        <input type="hidden" id="pme-id"/>
+        <button onclick="savePMProduct()" style="width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;margin-top:8px">💾 Save Product</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ E-COMMERCE: Orders Modal ══ -->
+<div class="modal-bg hidden" id="orders-modal" onclick="if(event.target===this)closeOrders()">
+  <div class="modal orders-modal">
+    <div class="modal-head">
+      <div class="modal-title">📋 Orders</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-left:auto;margin-right:8px">
+        <span id="orders-count" style="font-size:11px;color:var(--muted)"></span>
+        <button onclick="exportOrdersCSV()" style="padding:5px 10px;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.3);border-radius:5px;color:var(--accent);font-size:11px;font-weight:600;cursor:pointer">⬇ CSV</button>
+      </div>
+      <button class="modal-x" onclick="closeOrders()">✕</button>
+    </div>
+    <div style="flex:1;overflow:auto;padding:0 20px 16px"><div id="orders-content"></div></div>
+  </div>
+</div>
+
+<!-- ══ AI CONTENT GENERATOR Modal ══ -->
+<div class="modal-bg hidden" id="ai-modal" onclick="if(event.target===this)closeAI()">
+  <div class="modal ai-modal">
+    <div class="modal-head">
+      <div class="modal-title">🤖 AI Content Generator</div>
+      <button class="modal-x" onclick="closeAI()">✕</button>
+    </div>
+    <!-- API Key row -->
+    <div class="ai-key-row">
+      <span style="font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap">Groq API Key:</span>
+      <input class="ai-key-input" id="ai-key-input" type="password" placeholder="gsk_… (Groq — free)" oninput="AIGen.saveKey(this.value)"/>
+      <button class="ai-key-save" onclick="AIGen.saveKey(document.getElementById('ai-key-input').value);toast('API key saved','🔑')">Save</button>
+      <a href="https://console.groq.com/keys" target="_blank" rel="noopener" style="font-size:10px;color:var(--accent);white-space:nowrap">Free key ↗</a>
+    </div>
+    <!-- Prompt row -->
+    <div class="ai-top">
+      <div class="ai-prompt-wrap">
+        <div class="ai-prompt-label">Your prompt (optional context)</div>
+        <textarea class="ai-prompt-input" id="ai-prompt-input" rows="2" placeholder="e.g. SaaS landing page for a project management tool…"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.06em">VARIATIONS</span>
+        <select id="ai-count" style="padding:8px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-size:12px">
+          <option value="1">1</option>
+          <option value="3" selected>3</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <button onclick="AIGen.generate()" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;align-self:flex-end">✦ Generate</button>
+      <button onclick="AILayoutRefiner.showTips()" style="padding:10px 14px;background:rgba(108,99,255,.15);color:var(--accent);border:1px solid rgba(108,99,255,.3);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;align-self:flex-end" title="AI Layout Suggestions">🏗 Layout Tips</button>
+    </div>
+    <!-- Content type chips -->
+    <div class="ai-type-row">
+      <span class="ai-tone-label">Type:</span>
+      <button class="ai-type-chip active" data-aitype="headline" onclick="AIGen.setType('headline',this)">Headline</button>
+      <button class="ai-type-chip" data-aitype="subheadline" onclick="AIGen.setType('subheadline',this)">Sub-headline</button>
+      <button class="ai-type-chip" data-aitype="description" onclick="AIGen.setType('description',this)">Description</button>
+      <button class="ai-type-chip" data-aitype="cta" onclick="AIGen.setType('cta',this)">CTA Button</button>
+      <button class="ai-type-chip" data-aitype="tagline" onclick="AIGen.setType('tagline',this)">Tagline</button>
+      <button class="ai-type-chip" data-aitype="feature" onclick="AIGen.setType('feature',this)">Feature Title</button>
+      <button class="ai-type-chip" data-aitype="testimonial" onclick="AIGen.setType('testimonial',this)">Testimonial</button>
+      <button class="ai-type-chip" data-aitype="section" onclick="AIGen.setType('section',this)">Full Section</button>
+    </div>
+    <!-- Tone chips -->
+    <div class="ai-tone-row">
+      <span class="ai-tone-label">Tone:</span>
+      <button class="ai-tone-chip active" data-tone="professional" onclick="AIGen.setTone('professional',this)">Professional</button>
+      <button class="ai-tone-chip" data-tone="casual" onclick="AIGen.setTone('casual',this)">Casual</button>
+      <button class="ai-tone-chip" data-tone="friendly" onclick="AIGen.setTone('friendly',this)">Friendly</button>
+      <button class="ai-tone-chip" data-tone="bold" onclick="AIGen.setTone('bold',this)">Bold</button>
+      <button class="ai-tone-chip" data-tone="funny" onclick="AIGen.setTone('funny',this)">Funny</button>
+      <button class="ai-tone-chip" data-tone="luxury" onclick="AIGen.setTone('luxury',this)">Luxury</button>
+    </div>
+    <!-- Results -->
+    <div class="ai-results" id="ai-results">
+      <div class="ai-empty">
+        <div class="ai-empty-icon">✦</div>
+        <p>Choose a content type, set your tone, and click <strong>Generate</strong></p>
+        <p style="font-size:11px;margin-top:6px;opacity:.6">Powered by Groq — Llama 3.1 (free)</p>
+      </div>
+    </div>
+    <!-- History -->
+    <div class="ai-history" id="ai-history" style="display:none">
+      <span style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-right:4px">RECENT:</span>
+      <div id="ai-history-chips" style="display:flex;gap:5px;flex-wrap:wrap"></div>
+      <button onclick="AIGen.clearHistory()" style="margin-left:auto;background:none;border:none;color:var(--muted);font-size:10px;cursor:pointer">Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SEO PANEL Modal ══ -->
+<div class="modal-bg hidden" id="seo-modal" onclick="if(event.target===this)closeSEO()">
+  <div class="modal seo-modal">
+    <div class="modal-head">
+      <div class="modal-title">🔍 SEO Manager</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-left:auto;margin-right:8px">
+        <button class="seo-sitemap-btn" onclick="SEOManager.exportSitemap()">🗺 Export Sitemap</button>
+      </div>
+      <button class="modal-x" onclick="closeSEO()">✕</button>
+    </div>
+    <!-- Page selector pills -->
+    <div style="display:flex;gap:6px;padding:10px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center">
+      <span style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-right:4px">PAGE:</span>
+      <div id="seo-page-pills" style="display:flex;gap:5px;flex-wrap:wrap"></div>
+    </div>
+    <!-- Tabs -->
+    <div class="seo-tabs">
+      <div class="seo-tab active" onclick="switchSEOTab('meta',this)">📝 Meta Tags</div>
+      <div class="seo-tab" onclick="switchSEOTab('og',this)">📣 Open Graph</div>
+      <div class="seo-tab" onclick="switchSEOTab('twitter',this)">🐦 Twitter Card</div>
+      <div class="seo-tab" onclick="switchSEOTab('schema',this)">🔧 Structured Data</div>
+      <div class="seo-tab" onclick="switchSEOTab('score',this)">📊 SEO Score</div>
+    </div>
+    <div class="seo-body" id="seo-body"></div>
+  </div>
+</div>
+
+<!-- ══ GLOBAL STYLES Modal ══ -->
+<div class="modal-bg hidden" id="gs-modal" onclick="if(event.target===this)closeGlobalStyles()">
+  <div class="modal gs-modal">
+    <div class="modal-head">
+      <div class="modal-title">🎨 Global Styles</div>
+      <button class="modal-x" onclick="closeGlobalStyles()">✕</button>
+    </div>
+    <div class="gs-tabs">
+      <div class="gs-tab active" onclick="switchGSTab('colors',this)">🎨 Colors</div>
+      <div class="gs-tab" onclick="switchGSTab('typography',this)">🔤 Typography</div>
+      <div class="gs-tab" onclick="switchGSTab('spacing',this)">📐 Spacing</div>
+      <div class="gs-tab" onclick="switchGSTab('presets',this)">✦ Presets</div>
+    </div>
+    <div class="gs-body" id="gs-body"></div>
+    <div class="gs-footer">
+      <span class="gs-live-badge"><span class="gs-live-dot"></span>Live preview</span>
+      <button onclick="DesignIntel.smartApply()" style="padding:6px 14px;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);border-radius:6px;color:var(--accent);font-size:11px;font-weight:700;cursor:pointer">⚡ Smart Apply to All</button>
+      <button onclick="GlobalStyles.applyToAllSections()" style="padding:6px 14px;background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer">Apply Colors (flat)</button>
+      <button onclick="GlobalStyles.reset()" style="padding:6px 14px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:6px;color:var(--danger);font-size:11px;font-weight:600;cursor:pointer">↺ Reset to Defaults</button>
+      <button onclick="closeGlobalStyles()" style="padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer">✓ Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FORM SUBMISSIONS Modal ══ -->
+<div class="modal-bg hidden" id="subs-modal" onclick="if(event.target===this)closeFormSubmissions()">
+  <div class="modal subs-modal">
+    <div class="modal-head">
+      <div class="modal-title">📋 Form Submissions</div>
+      <div style="display:flex;gap:8px;align-items:center;margin-left:auto;margin-right:8px">
+        <span id="subs-count" style="font-size:11px;color:var(--muted)"></span>
+        <button onclick="exportSubmissionsCSV()" style="padding:5px 10px;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.3);border-radius:5px;color:var(--accent);font-size:11px;font-weight:600;cursor:pointer">⬇ CSV</button>
+        <button onclick="clearFormSubmissions()" style="padding:5px 10px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:5px;color:var(--danger);font-size:11px;font-weight:600;cursor:pointer">🗑 Clear All</button>
+      </div>
+      <button class="modal-x" onclick="closeFormSubmissions()">✕</button>
+    </div>
+    <div style="flex:1;overflow:auto;padding:0 20px 16px">
+      <div id="subs-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MEDIA LIBRARY Modal ══ -->
+<div class="modal-bg hidden" id="ml-modal" onclick="if(event.target===this)closeMediaLib()">
+  <div class="modal ml-modal">
+    <div class="modal-head">
+      <div class="modal-title">🖼 Media Library</div>
+      <button class="modal-x" onclick="closeMediaLib()">✕</button>
+    </div>
+    <div class="ml-head-bar">
+      <input class="ml-search" id="ml-search" placeholder="Search by filename…" oninput="MediaLib.renderGrid()"/>
+      <div class="ml-filter-btns">
+        <button class="ml-filter-btn active" data-ml-filter="all"   onclick="MediaLib.setFilter('all',this)">All</button>
+        <button class="ml-filter-btn"        data-ml-filter="image" onclick="MediaLib.setFilter('image',this)">Images</button>
+      </div>
+      <label class="ml-upload-btn">
+        ＋ Upload
+        <input type="file" accept="image/*" multiple style="display:none" onchange="MediaLib.uploadFiles(this.files);this.value=''"/>
+      </label>
+    </div>
+    <div class="ml-body">
+      <div class="ml-drop-zone" id="ml-drop-zone"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="MediaLib.onDrop(event)">
+        <div class="ml-drop-zone-icon">📂</div>
+        <div class="ml-drop-zone-text">Drop images here to upload</div>
+        <div class="ml-drop-zone-sub">PNG · JPG · WEBP · GIF — max 8MB each</div>
+      </div>
+      <div id="ml-grid" class="ml-grid"></div>
+    </div>
+    <div class="ml-footer">
+      <span id="ml-stats">0 assets</span>
+      <button class="ml-footer-use" id="ml-use-btn" onclick="MediaLib.useSelected()">Use Selected Image ✓</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- STAGE 13: CRM Modal -->
+<div class="modal-bg hidden" id="crm-modal" onclick="if(event.target===this)CRMSystem.close()">
+  <div class="modal" style="max-width:820px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">👥 CRM — Contacts & Leads</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" style="font-size:11px" onclick="CRMSystem.showAddForm()">+ Add Contact</button>
+        <button class="btn btn-outline" style="font-size:11px" onclick="CRMSystem.exportCSV()">⬇ Export CSV</button>
+        <button class="modal-x" onclick="CRMSystem.close()">✕</button>
+      </div>
+    </div>
+    <div class="crm-tabs">
+      <button class="crm-tab active" onclick="CRMSystem.switchTab('contacts',this)">Contacts</button>
+      <button class="crm-tab" onclick="CRMSystem.switchTab('leads',this)">Leads</button>
+      <button class="crm-tab" onclick="CRMSystem.switchTab('orders',this)">Orders</button>
+    </div>
+    <div class="crm-body" id="crm-body"></div>
+  </div>
+</div>
+
+<!-- STAGE 15: Content Mesh Modal -->
+<div class="modal-bg hidden" id="mesh-modal" onclick="if(event.target===this)ContentMesh.close()">
+  <div class="modal" style="max-width:680px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">🧬 Content Mesh — Global Components</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" style="font-size:11px" onclick="ContentMesh.saveCurrentSection()">+ Save Section as Component</button>
+        <button class="modal-x" onclick="ContentMesh.close()">✕</button>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:16px" id="mesh-body"></div>
+  </div>
+</div>
+
+<!-- STAGE 15: Magic Migrator Modal -->
+<div class="modal-bg hidden" id="migrator-modal" onclick="if(event.target===this)MagicMigrator.close()">
+  <div class="modal" style="max-width:680px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">🪄 Magic Migrator — Import from HTML</div>
+      <button class="modal-x" onclick="MagicMigrator.close()">✕</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:20px" id="migrator-body"></div>
+  </div>
+</div>
+
+<!-- STAGE 15: AI Auto-fix Panel (inline, no modal) -->
+<div id="autofix-banner" style="display:none;position:fixed;bottom:140px;right:20px;background:linear-gradient(135deg,rgba(108,99,255,.95),rgba(167,139,250,.9));border-radius:14px;padding:14px 18px;max-width:280px;z-index:1200;box-shadow:0 8px 32px rgba(108,99,255,.4);color:#fff">
+  <div style="font-size:13px;font-weight:800;margin-bottom:6px">🤖 AI Auto-fix Ready</div>
+  <div id="autofix-msg" style="font-size:11px;opacity:.85;margin-bottom:12px;line-height:1.5"></div>
+  <div style="display:flex;gap:8px">
+    <button onclick="AIAutoFix.runAll()" style="flex:1;padding:7px;border-radius:8px;border:none;background:#fff;color:var(--accent);font-size:11px;font-weight:800;cursor:pointer">⚡ Fix All Now</button>
+    <button onclick="AIAutoFix.dismiss()" style="padding:7px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:none;color:#fff;font-size:11px;cursor:pointer">Later</button>
+  </div>
+</div>
+
+<!-- STAGE 15: Bulk Actions Bar (floating) -->
+<div class="bulk-bar" id="bulk-bar" style="display:none">
+  <span class="bulk-bar-count" id="bulk-count">0 selected</span>
+  <div class="bulk-bar-sep"></div>
+  <button class="bulk-btn" onclick="BulkActions.duplicate()">⧉ Duplicate</button>
+  <button class="bulk-btn" onclick="BulkActions.moveUp()">↑ Up</button>
+  <button class="bulk-btn" onclick="BulkActions.moveDown()">↓ Down</button>
+  <button class="bulk-btn" onclick="BulkActions.saveAsMesh()">🧬 Save to Mesh</button>
+  <div class="bulk-bar-sep"></div>
+  <button class="bulk-btn danger" onclick="BulkActions.deleteSelected()">🗑 Delete</button>
+  <button class="bulk-btn" onclick="BulkActions.clearSelection()" style="color:var(--muted)">✕ Clear</button>
+</div>
+
+<!-- STAGE 14: A/B Testing Modal -->
+<div class="modal-bg hidden" id="abtest-modal" onclick="if(event.target===this)ABTest.close()">
+  <div class="modal" style="max-width:640px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">🧪 A/B Testing</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" style="font-size:11px" onclick="ABTest.newTest()">+ New Test</button>
+        <button class="modal-x" onclick="ABTest.close()">✕</button>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:16px" id="abtest-body"></div>
+  </div>
+</div>
+
+<!-- STAGE 14: Growth Insights Modal -->
+<div class="modal-bg hidden" id="growth-modal" onclick="if(event.target===this)GrowthInsights.close()">
+  <div class="modal" style="max-width:660px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">📈 Growth Insights</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" style="font-size:11px" onclick="GrowthInsights.refresh()">↻ Refresh</button>
+        <button class="modal-x" onclick="GrowthInsights.close()">✕</button>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:16px" id="growth-body"></div>
+  </div>
+</div>
+
+<!-- STAGE 14: Referral System Modal -->
+<div class="modal-bg hidden" id="referral-modal" onclick="if(event.target===this)ReferralSystem.close()">
+  <div class="modal" style="max-width:560px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">🔗 Referral System</div>
+      <button class="modal-x" onclick="ReferralSystem.close()">✕</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:20px" id="referral-body"></div>
+  </div>
+</div>
+
+<!-- STAGE 13: Email Automation Modal -->
+<div class="modal-bg hidden" id="email-modal" onclick="if(event.target===this)EmailAuto.close()">
+  <div class="modal" style="max-width:680px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">✉ Email Automation</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" style="font-size:11px" onclick="EmailAuto.addStep()">+ Add Email</button>
+        <button class="modal-x" onclick="EmailAuto.close()">✕</button>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:16px" id="email-body"></div>
+  </div>
+</div>
+
+<!-- STAGE 12: Multi-site Dashboard Modal -->
+<div class="modal-bg hidden" id="msd-modal" onclick="if(event.target===this)document.getElementById('msd-modal').classList.add('hidden')">
+  <div class="modal" style="max-width:760px;max-height:88vh">
+    <div class="modal-head">
+      <div class="modal-title">🏗 My Sites</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" style="font-size:11px" onclick="SiteDash.createNew()">+ New Site</button>
+        <button class="modal-x" onclick="document.getElementById('msd-modal').classList.add('hidden')">✕</button>
+      </div>
+    </div>
+    <div class="msd-stat-bar" id="msd-stat-bar"></div>
+    <div style="overflow-y:auto;flex:1">
+      <div class="msd-grid" id="msd-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STAGE 12: Validation Toast -->
+<div class="val-toast" id="val-toast"></div>
+
+<!-- STAGE 11: Share Panel -->
+<div class="share-panel" id="viral-share-panel">
+  <div class="share-panel-head">
+    <div class="share-panel-title">🔗 Share Design</div>
+    <button onclick="ViralSystem.closeShare()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 6px">✕</button>
+  </div>
+  <!-- Link row -->
+  <div class="share-link-section">
+    <div class="share-link-label">Shareable clone link</div>
+    <div class="share-row">
+      <input class="share-input" id="viral-share-url" readonly value="Click Generate to create a link"/>
+      <button class="share-copy-btn" onclick="ViralSystem.copyLink()">📋</button>
+    </div>
+    <button class="share-gen-btn" onclick="ViralSystem.generateLink()">⚡ Generate Link</button>
+  </div>
+  <!-- Social share -->
+  <div class="share-social-row">
+    <button class="share-social-btn twitter" onclick="ViralSystem.shareToTwitter()" title="Share on X/Twitter">𝕏</button>
+    <button class="share-social-btn linkedin" onclick="ViralSystem.shareToLinkedIn()" title="Share on LinkedIn">in</button>
+    <button class="share-social-btn qr" onclick="ViralSystem.exportQR()" title="QR Code">📱</button>
+  </div>
+  <!-- Actions -->
+  <div class="share-actions">
+    <button class="share-action-btn" onclick="ViralSystem.clonePage()">⧉ Duplicate to Projects</button>
+    <button class="share-action-btn" onclick="ViralSystem.saveToGallery()">⭐ Save to Gallery</button>
+    <button class="share-action-btn" onclick="ViralSystem.openGallery();ViralSystem.closeShare()">🌐 Browse Gallery</button>
+  </div>
+  <div class="share-tip" id="viral-share-tip">Anyone with the link can clone your page design.</div>
+</div>
+
+<!-- STAGE 11: Public Gallery Modal -->
+<div class="modal-bg hidden" id="gallery-modal" onclick="if(event.target===this)document.getElementById('gallery-modal').classList.add('hidden')">
+  <div class="modal" style="max-width:680px;max-height:86vh">
+    <div class="modal-head">
+      <div class="modal-title">🌐 Community Gallery</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-outline" style="font-size:11px" onclick="ViralSystem.saveToGallery()">+ Share My Page</button>
+        <button class="modal-x" onclick="document.getElementById('gallery-modal').classList.add('hidden')">✕</button>
+      </div>
+    </div>
+    <div class="gallery-modal-body">
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Upsell / upgrade modal -->
+<div class="modal-bg hidden" id="upsell-modal" onclick="if(event.target===this)UsageLimits.closeUpsell()">
+  <div class="modal upsell-modal">
+    <button class="modal-x" onclick="UsageLimits.closeUpsell()" style="position:absolute;top:14px;right:14px">✕</button>
+    <div class="upsell-glow"></div>
+    <div class="upsell-icon" id="upsell-icon">⭐</div>
+    <div class="upsell-title" id="upsell-title">Upgrade to Pro</div>
+    <div class="upsell-desc" id="upsell-desc">Unlock the full power of PageCraft.</div>
+    <div class="upsell-benefit-pill" id="upsell-benefit">✓ All Pro features</div>
+    <div class="upsell-plan-row">
+      <div class="upsell-plan-card featured">
+        <div class="upsell-plan-name">Pro</div>
+        <div class="upsell-plan-price"><span>$</span>29<span class="upsell-plan-period">/mo</span></div>
+        <div class="upsell-plan-note">or $19/mo billed annually</div>
+      </div>
+    </div>
+    <div class="upsell-actions">
+      <button class="btn btn-primary upsell-cta" onclick="UsageLimits.closeUpsell();openBilling()">⭐ Upgrade to Pro</button>
+      <button class="btn upsell-trial-btn" id="upsell-trial-btn" onclick="UsageLimits.startTrial()">Try free for 7 days →</button>
+    </div>
+    <div class="upsell-foot">No credit card required for trial · Cancel anytime</div>
+  </div>
+</div>
+
+<!-- Clone landing modal -->
+<div class="modal-bg hidden" id="clone-landing-modal">
+  <div class="modal clone-landing-modal">
+    <div class="cln-badge">⧉ Template</div>
+    <div class="cln-icon" id="cln-icon">🚀</div>
+    <div class="cln-title" id="cln-title">Loading…</div>
+    <div class="cln-meta" id="cln-meta"></div>
+    <div class="cln-preview" id="cln-preview"></div>
+    <div class="cln-actions">
+      <button class="btn btn-primary cln-btn-use" id="cln-btn-use">⧉ Use this template</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('clone-landing-modal').classList.add('hidden');history.replaceState({},'',location.pathname)">Cancel</button>
+    </div>
+    <div class="cln-foot">Built with <strong>PageCraft</strong> — <a href="#" onclick="event.preventDefault();document.getElementById('clone-landing-modal').classList.add('hidden')">Build your own →</a></div>
+  </div>
+</div>
+
+<!-- STAGE 10: Developer Mode FAB + Panel -->
+<button class="devmode-fab" id="devmode-fab" onclick="DevMode.toggle()" title="Developer Mode">{ }</button>
+<div class="devmode-panel" id="devmode-panel">
+  <div class="dm-topbar">
+    <button class="dm-tab active" data-tab="html"  onclick="DevMode.switchTab('html')">HTML</button>
+    <button class="dm-tab"        data-tab="json"  onclick="DevMode.switchTab('json')">JSON</button>
+    <button class="dm-tab"        data-tab="debug" onclick="DevMode.switchTab('debug')">Debug</button>
+    <div class="dm-actions">
+      <span class="dm-sync-status" id="dm-sync-status"></span>
+      <button class="dm-action-btn" onclick="DevMode.copyCode()">📋 Copy</button>
+      <button class="dm-action-btn" onclick="DevMode.refresh()">↺ Refresh</button>
+      <button class="dm-close-btn"  onclick="DevMode.close()">✕</button>
+    </div>
+  </div>
+  <textarea id="dm-editor" spellcheck="false" oninput="DevMode.onEditorChange()" placeholder="Select a section on the canvas…"></textarea>
+  <div id="dm-debug-out" class="dm-debug-out" style="display:none"></div>
+</div>
+
+<!-- STAGE 9: Crash Recovery Banner -->
+<div class="crash-banner" id="crash-banner">
+  <div class="crash-banner-msg">
+    ⚠️ <span id="crash-banner-msg">PageCraft recovered from an unexpected error. Restore your last session?</span>
+  </div>
+  <div class="crash-banner-actions">
+    <button class="crash-btn restore"  onclick="Reliability.restoreCrash()">↺ Restore</button>
+    <button class="crash-btn dismiss"  onclick="Reliability.dismissCrash()">✕ Dismiss</button>
+  </div>
+</div>
+
+<!-- STAGE 6: Design Audit FAB + Panel -->
+<button class="da-fab" id="da-fab" onclick="DesignIntel.toggleAudit()" title="Design Audit">
+  🔍<span class="da-badge" id="da-badge"></span>
+</button>
+<div class="da-panel" id="da-panel" style="display:none">
+  <div class="da-panel-head">
+    <div class="da-panel-title">
+      <span id="da-score-badge" class="da-score good">✓</span>
+      Design Audit
+    </div>
+    <button onclick="DesignIntel.closeAudit()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 6px">✕</button>
+  </div>
+  <div class="da-issues" id="da-issues"></div>
+  <div class="da-footer">
+    <button class="da-btn ghost" onclick="DesignIntel.runAudit()">↺ Re-scan</button>
+    <button class="da-btn primary" onclick="DesignIntel.fixAll()">⚡ Fix All</button>
+  </div>
+</div>
+
+<!-- STAGE 7: Performance Monitor FAB + Panel -->
+<button class="perf-fab" id="perf-fab" onclick="PerfEngine.toggle()" title="Performance Monitor">⚡</button>
+<div class="perf-panel" id="perf-panel">
+  <div class="perf-panel-head">
+    <div class="perf-panel-title">
+      <span id="perf-score-ring" class="perf-score-ring good">100</span>
+      Performance Monitor
+    </div>
+    <button onclick="PerfEngine.close()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 6px">✕</button>
+  </div>
+  <div class="perf-body">
+    <div id="perf-metrics"></div>
+    <div id="perf-tips"></div>
+  </div>
+  <div class="perf-footer">
+    <button class="perf-btn ghost" onclick="PerfEngine.scan()">↺ Re-scan</button>
+    <button class="perf-btn primary" onclick="PerfEngine.autoFix()">⚡ Auto-Fix</button>
+  </div>
+</div>
+
+<!-- STAGE 4: Speed Dial (floating quick-add) -->
+<div id="speed-dial" class="speed-dial" style="display:none">
+  <div id="speed-dial-menu" class="speed-dial-menu" style="display:none"></div>
+  <button class="speed-dial-fab" id="speed-dial-fab" onclick="SpeedDial.toggle()" title="Quick Add Section">+</button>
+</div>
+
+<!-- STAGE 4: QuickGen — One-Click Site Generator -->
+<div class="modal-bg hidden" id="qg-modal" onclick="if(event.target===this)QuickGen.close()">
+  <div class="modal qg-modal">
+    <div class="modal-head" style="flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:16px">⚡</span>
+        <span style="font-size:14px;font-weight:700">Quick Generate</span>
+      </div>
+      <button class="modal-x" onclick="QuickGen.close()">✕</button>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="qg-steps" id="qg-steps">
+      <div class="qg-step-dot active" id="qg-dot-1">1</div>
+      <div class="qg-step-line" id="qg-line-1"></div>
+      <div class="qg-step-dot" id="qg-dot-2">2</div>
+      <div class="qg-step-line" id="qg-line-2"></div>
+      <div class="qg-step-dot" id="qg-dot-3">3</div>
+    </div>
+
+    <!-- Step 1: Name -->
+    <div id="qg-s1" class="qg-step-body">
+      <div class="qg-step-title">What's your business called?</div>
+      <div class="qg-step-sub">We'll use this name throughout your site automatically.</div>
+      <input class="qg-name-input" id="qg-name" placeholder="e.g. Acme Studio, NexaGrowth, The Wanderer Blog…" maxlength="60"
+        onkeydown="if(event.key==='Enter')QuickGen.toStep(2)"/>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted)">Press Enter or click Next to continue</div>
+    </div>
+
+    <!-- Step 2: Industry -->
+    <div id="qg-s2" class="qg-step-body" style="display:none">
+      <div class="qg-step-title">What kind of site?</div>
+      <div class="qg-step-sub">We'll pick the right sections and content for your industry.</div>
+      <div class="qg-industry-grid" id="qg-industry-grid"></div>
+    </div>
+
+    <!-- Step 3: Style -->
+    <div id="qg-s3" class="qg-step-body" style="display:none">
+      <div class="qg-step-title">Pick a visual style</div>
+      <div class="qg-step-sub">You can customise every color later — this sets the starting palette.</div>
+      <div class="qg-style-grid" id="qg-style-grid"></div>
+    </div>
+
+    <!-- Generating state -->
+    <div id="qg-generating" class="qg-generating" style="display:none">
+      <div class="qg-spinner"></div>
+      <div class="qg-gen-status" id="qg-gen-status">Building your site…</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="qg-foot" id="qg-foot">
+      <button class="qg-btn ghost" id="qg-back-btn" onclick="QuickGen.back()" style="display:none">← Back</button>
+      <div style="flex:1"></div>
+      <button class="qg-btn primary" id="qg-next-btn" onclick="QuickGen.toStep(2)">Next →</button>
+      <button class="qg-generate-btn" id="qg-gen-btn" style="display:none" onclick="QuickGen.generate()">
+        <span>⚡</span> Generate My Site
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- STAGE 3: Onboarding overlay (shown to first-time users) -->
+<div id="ob-overlay" class="ob-overlay" style="display:none" onclick="if(event.target===this)Onboarding.dismiss()">
+  <div class="ob-modal" onclick="event.stopPropagation()">
+    <div class="ob-logo">⚡</div>
+    <div class="ob-title">Welcome to PageCraft</div>
+    <div class="ob-sub">Build stunning websites in seconds.<br/>Choose what you're building today:</div>
+    <div class="ob-types" id="ob-types">
+      <div class="ob-type" onclick="Onboarding.selectType('business')" data-type="business">
+        <div class="ob-type-icon">🏢</div>
+        <div class="ob-type-name">Business</div>
+        <div class="ob-type-desc">Company or service website</div>
+      </div>
+      <div class="ob-type" onclick="Onboarding.selectType('portfolio')" data-type="portfolio">
+        <div class="ob-type-icon">🎨</div>
+        <div class="ob-type-name">Portfolio</div>
+        <div class="ob-type-desc">Showcase your work</div>
+      </div>
+      <div class="ob-type" onclick="Onboarding.selectType('landing')" data-type="landing">
+        <div class="ob-type-icon">🎯</div>
+        <div class="ob-type-name">Landing Page</div>
+        <div class="ob-type-desc">Promote a product or offer</div>
+      </div>
+      <div class="ob-type" onclick="Onboarding.selectType('store')" data-type="store">
+        <div class="ob-type-icon">🛍</div>
+        <div class="ob-type-name">Online Store</div>
+        <div class="ob-type-desc">Sell products online</div>
+      </div>
+      <div class="ob-type" onclick="Onboarding.selectType('blog')" data-type="blog">
+        <div class="ob-type-icon">✍️</div>
+        <div class="ob-type-name">Blog</div>
+        <div class="ob-type-desc">Articles and content</div>
+      </div>
+      <div class="ob-type" onclick="Onboarding.selectType('blank')" data-type="blank">
+        <div class="ob-type-icon">📄</div>
+        <div class="ob-type-name">Start Blank</div>
+        <div class="ob-type-desc">Build from scratch</div>
+      </div>
+    </div>
+    <div class="ob-actions">
+      <button class="ob-btn-primary" id="ob-start-btn" onclick="Onboarding.confirm()" disabled
+        style="opacity:.5;cursor:not-allowed">
+        🚀 Start Building
+      </button>
+      <button class="ob-btn-ai" id="ob-ai-btn" onclick="Onboarding.buildWithAI()" disabled
+        style="opacity:.5;cursor:not-allowed">
+        🤖 Build with AI
+      </button>
+      <button class="ob-btn-skip" onclick="Onboarding.dismiss()">Skip for now</button>
+    </div>
+  </div>
+</div>

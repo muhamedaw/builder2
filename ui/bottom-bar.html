@@ -1,0 +1,46 @@
+<!-- bottom-bar.html Phase 3 -->
+<div class="bottom-bar" id="bottom-bar">
+  <!-- Left: Page info -->
+  <div class="bb-group">
+    <div class="bb-item" id="bb-sections">
+      <span style="opacity:.5">📄</span>
+      <span id="bb-sec-count">0</span> sections
+    </div>
+    <div class="bb-divider"></div>
+    <div class="bb-item" id="bb-save-status">
+      <span class="bb-dot green" id="bb-save-dot"></span>
+      <span id="bb-save-label">Saved</span>
+    </div>
+    <div class="bb-divider"></div>
+    <div class="bb-item">
+      <span class="bb-dot green" id="bb-online-dot"></span>
+      <span id="bb-online-label">Online</span>
+    </div>
+  </div>
+
+  <!-- Center: Zoom controls -->
+  <div class="bb-center">
+    <button class="bb-zoom-btn" onclick="bbZoom(-10)" title="Zoom out">−</button>
+    <span class="bb-zoom-val" id="bb-zoom-val" onclick="bbZoomReset()" title="Reset zoom">100%</span>
+    <button class="bb-zoom-btn" onclick="bbZoom(+10)" title="Zoom in">+</button>
+    <div class="bb-divider"></div>
+    <button class="bb-zoom-btn" onclick="bbZoomFit()" title="Fit to screen" style="width:auto;padding:0 6px;font-size:10px;font-weight:600">Fit</button>
+  </div>
+
+  <!-- Right: Performance + plan -->
+  <div class="bb-right">
+    <div class="bb-perf bb-item clickable" onclick="PerfEngine?.open()" title="Performance score">
+      <span style="opacity:.5;font-size:10px">⚡</span>
+      <span class="bb-perf-score good" id="bb-perf-score">—</span>
+      <span style="opacity:.5;font-size:10px">perf</span>
+    </div>
+    <div class="bb-divider"></div>
+    <div class="bb-item clickable" onclick="openSEO()" title="SEO score">
+      <span style="opacity:.5;font-size:10px">🔍</span>
+      <span id="bb-seo-score" style="font-weight:600">—</span>
+      <span style="opacity:.5;font-size:10px">seo</span>
+    </div>
+    <div class="bb-divider"></div>
+    <span class="bb-badge pro" id="bb-plan-badge">FREE</span>
+  </div>
+</div>

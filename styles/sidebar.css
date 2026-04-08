@@ -1,0 +1,102 @@
+/* styles/sidebar.css -- Sidebar */
+
+/* ══════════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════════ */
+.sidebar{width:252px;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+#usage-widget{flex-shrink:0}
+.tabs{display:flex;border-bottom:1px solid var(--border)}
+.tab{flex:1;padding:9px 6px;font-size:11px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);cursor:pointer;text-align:center;
+  border-bottom:2px solid transparent;transition:all .15s;user-select:none}
+.tab.active{color:var(--accent2);border-bottom-color:var(--accent)} .tab:hover:not(.active){color:var(--text)}
+.tab-body{flex:1;overflow-y:auto;padding:10px}
+.tab-body::-webkit-scrollbar{width:3px} .tab-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.tab-panel{display:none} .tab-panel.active{display:block}
+
+/* ── Stage 2: Section Search ── */
+#section-search-wrap{display:none}  /* hidden on layers/pages/suggest tabs */
+.sst-active #section-search-wrap{display:block}
+.block-card.sec-hidden{display:none!important}
+.sec-search-empty{text-align:center;padding:24px 8px;font-size:12px;color:var(--muted)}
+
+/* ── Stage 2: Keyboard-focus ring on selected section ── */
+.section-wrapper.kb-focus{outline:2px solid var(--accent)!important;outline-offset:2px}
+
+/* Block card — draggable */
+.block-card{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;
+  background:var(--surface2);border:1px solid var(--border);border-radius:9px;
+  cursor:grab;margin-bottom:5px;transition:all .15s;user-select:none;
+  position:relative;
+}
+.block-card:hover{border-color:var(--accent);background:rgba(108,99,255,.08)}
+.block-card:active{cursor:grabbing}
+.block-card.dragging-source{opacity:.4;transform:scale(.97)}
+.bci{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;
+  justify-content:center;font-size:15px;flex-shrink:0}
+.bcl{font-size:12px;font-weight:600;color:var(--text)} .bcd{font-size:11px;color:var(--muted);margin-top:1px}
+.bc-drag{font-size:14px;color:var(--muted);flex-shrink:0;margin-left:auto}
+.block-card:hover .bc-drag{color:var(--accent)}
+.drag-badge{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font-size:10px;color:var(--muted);opacity:0;transition:opacity .15s;
+  background:var(--surface3);padding:2px 6px;border-radius:4px;
+}
+.block-card:hover .drag-badge{opacity:1}
+
+/* ── Accordion Category System ─────────────────────────────────────────────── */
+.acc-wrap{padding:6px 8px 12px}
+.acc-cat{border-radius:10px;overflow:hidden;margin-bottom:6px;border:1px solid var(--border);background:var(--surface)}
+.acc-header{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  cursor:pointer;user-select:none;transition:background .15s;
+  background:var(--surface2);
+}
+.acc-header:hover{background:rgba(108,99,255,.08)}
+.acc-cat.open .acc-header{background:rgba(108,99,255,.06);border-bottom:1px solid var(--border)}
+.acc-cat-icon{font-size:16px;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.acc-cat-info{flex:1;min-width:0}
+.acc-cat-name{font-size:12px;font-weight:700;color:var(--text);letter-spacing:.01em}
+.acc-cat-desc{font-size:10px;color:var(--muted);margin-top:1px}
+.acc-cat-meta{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.acc-count{font-size:10px;font-weight:600;color:var(--muted);background:var(--surface3);border-radius:10px;padding:1px 6px}
+.acc-cat.open .acc-count{background:rgba(108,99,255,.2);color:var(--accent)}
+.acc-chevron{font-size:10px;color:var(--muted);transition:transform .25s cubic-bezier(.4,0,.2,1);flex-shrink:0}
+.acc-cat.open .acc-chevron{transform:rotate(180deg);color:var(--accent)}
+.acc-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .3s cubic-bezier(.4,0,.2,1), opacity .25s ease;
+  opacity:0;
+}
+.acc-cat.open .acc-body{max-height:600px;opacity:1}
+.acc-items{padding:8px}
+.acc-items .block-card{margin-bottom:5px}
+.acc-items .block-card:last-child{margin-bottom:0}
+/* Compact preview pills when collapsed — shown in header */
+.acc-previews{display:none}
+.acc-pill{display:none}
+/* Search highlight */
+.block-card.acc-match{}
+.block-card.acc-hidden{display:none!important}
+/* Empty search state */
+.acc-empty{text-align:center;padding:20px 12px;color:var(--muted);font-size:12px}
+
+/* Layer items */
+.layer-item{display:flex;align-items:center;gap:7px;padding:7px 9px;
+  background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  cursor:grab;margin-bottom:4px;transition:all .15s;user-select:none}
+.layer-item:active{cursor:grabbing}
+.layer-item:hover{border-color:var(--border2)} .layer-item.selected{border-color:var(--accent);background:rgba(108,99,255,.1)}
+.layer-item.lyr-ghost{opacity:.4;transform:scale(.97)}
+.layer-item.lyr-above{border-top:2px solid var(--accent);margin-top:-1px}
+.layer-item.lyr-below{border-bottom:2px solid var(--accent);margin-bottom:-1px}
+.li-handle{color:var(--muted);font-size:12px} .li-icon{font-size:13px}
+.li-name{flex:1;font-size:11px;font-weight:600;color:var(--text);min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li-num{font-size:10px;color:var(--muted);background:var(--bg);padding:1px 5px;border-radius:4px}
+.li-del{font-size:12px;color:var(--muted);opacity:0;cursor:pointer;transition:all .15s}
+.layer-item:hover .li-del{opacity:1} .li-del:hover{color:var(--danger)}
+.count-badge{font-size:10px;background:var(--accent);color:#fff;padding:1px 5px;border-radius:8px;margin-left:4px;font-weight:700}
+

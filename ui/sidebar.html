@@ -1,0 +1,77 @@
+<!-- sidebar.html Phase 3 -->
+<aside class="sidebar">
+    <div class="tabs">
+      <div class="tab active" onclick="switchSTab('blocks')">＋ Add</div>
+      <div class="tab" onclick="switchSTab('layers')">Layers<span class="count-badge" id="layer-count">0</span></div>
+      <div class="tab" onclick="switchSTab('pages')">📄 Pages</div>
+      <div class="tab" onclick="switchSTab('suggest')" id="tab-suggest-btn">💡</div>
+    </div>
+    <!-- Section Search -->
+    <div id="section-search-wrap" style="padding:8px 8px 4px;position:sticky;top:0;background:var(--bg);z-index:2;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:5px 10px">
+        <span style="font-size:13px;color:var(--muted)">🔍</span>
+        <input id="section-search-input" type="text" placeholder="Search sections…"
+          oninput="filterSections(this.value)"
+          style="background:none;border:none;outline:none;font-size:12px;color:var(--text);width:100%;font-family:inherit"
+        />
+        <button onclick="filterSections('');this.parentElement.querySelector('input').value=''"
+          id="section-search-clear" style="display:none;background:none;border:none;cursor:pointer;font-size:12px;color:var(--muted);padding:0">✕</button>
+      </div>
+    </div>
+
+    <div class="tab-body">
+      <div id="tab-blocks" class="tab-panel active">
+        <div id="block-list" class="acc-wrap"></div>
+        <!-- legacy hidden list kept for internal compat -->
+        <div id="component-list" style="display:none"></div>
+
+        <!-- My Components — accordion style at the bottom -->
+        <div id="saved-components-section" style="padding:0 8px 12px">
+          <div class="acc-cat" id="acc-cat-saved">
+            <div class="acc-header" onclick="toggleAccordion('saved')" style="justify-content:space-between">
+              <div class="acc-cat-icon" style="background:rgba(168,85,247,.15)">⭐</div>
+              <div class="acc-cat-info">
+                <div class="acc-cat-name">My Components</div>
+                <div class="acc-cat-desc">Your saved sections</div>
+              </div>
+              <div class="acc-cat-meta">
+                <button onclick="event.stopPropagation();openSavedComponents()" title="Manage"
+                  style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;padding:2px 4px;border-radius:4px;transition:color .15s"
+                  onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">⚙</button>
+                <span class="acc-chevron">▼</span>
+              </div>
+            </div>
+            <div class="acc-body">
+              <div class="acc-items" id="acc-items-saved">
+                <div id="saved-component-list" style="padding:0">
+                  <p style="font-size:11px;color:var(--muted);text-align:center;padding:12px 8px">
+                    Select a section → Save as component
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="tab-layers" class="tab-panel">
+        <div id="layers-list">
+          <p style="color:var(--muted);font-size:12px;text-align:center;padding:28px 0">No sections yet</p>
+        </div>
+      </div>
+      <div id="tab-pages" class="tab-panel">
+        <div class="pages-panel-wrap">
+          <button class="pages-add-btn" onclick="addPage()">＋ Add New Page</button>
+          <div id="pages-list" class="pages-list">
+            <!-- Rendered by renderPagesPanel() -->
+          </div>
+        </div>
+      </div>
+      <div id="tab-suggest" class="tab-panel">
+        <div id="suggest-panel-content">
+          <p class="suggest-empty">Add your first section to get suggestions.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Usage meter — populated by UsageLimits.refresh() -->
+    <div id="usage-widget"></div>
+  </aside>

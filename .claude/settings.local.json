@@ -13,7 +13,20 @@
       "Bash(grep -n \"featuredImg\\\\|entry\\\\.featuredImg\\\\|\\\\${entry\\\\.\" \"c:/Users/Muhammed/Desktop/github/bulider/builder.html\")",
       "Bash(node --input-type=module)",
       "Bash(grep -v \"\\\\\\\\\\\\\\\\'\")",
-      "Bash(grep -v '\\\\\\\\'\"'\"'')"
+      "Bash(grep -v '\\\\\\\\'\"'\"'')",
+      "Bash(node extract-css.js)",
+      "Bash(node extract-html.js)",
+      "Bash(node extract-phase2-3.js)",
+      "Bash(node extract-scripts.js)",
+      "Bash(node extract-ui-scripts.js)",
+      "Bash(node extract-all.js)",
+      "Bash(pkill -f \"node server.js\")",
+      "Bash(node server.js)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill /F /PID 22372)",
+      "Bash(cmd //c \"taskkill /F /PID 22372\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/)"
     ]
   }
 }

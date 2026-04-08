@@ -1,0 +1,116 @@
+<!-- canvas.html Phase 3 -->
+<main class="canvas-wrap" id="canvas-wrap">
+    <div class="canvas-pos">
+      <div class="canvas-badge" id="canvas-badge">Desktop — 920px</div>
+      <button class="grid-toggle-btn" id="grid-toggle-btn" onclick="DesignIntel.toggleGrid()" title="Toggle grid overlay">⊞ Grid</button>
+      <div class="canvas-frame" id="canvas-frame">
+
+        <!-- Stage 6: Grid overlay -->
+        <div class="grid-overlay" id="grid-overlay"></div>
+
+        <!-- Empty state / canvas-wide drop target -->
+        <div class="canvas-empty" id="canvas-empty">
+          <div class="canvas-empty-inner">
+            <div class="ce-logo">⚡</div>
+            <h3 class="ce-title">What are you building?</h3>
+            <p class="ce-sub">Pick a starting point — you can change anything after</p>
+
+            <!-- AI Build CTA -->
+            <button class="ce-ai-btn" onclick="if(typeof AIChat!=='undefined'){AIChat.open();setTimeout(()=>{const el=document.getElementById('aichat-input');if(el)el.placeholder='Describe your website…';},100)}">
+              <span class="ce-ai-icon">🤖</span>
+              <span>
+                <strong>Let AI build it</strong>
+                <small>Describe your site in plain English</small>
+              </span>
+              <span class="ce-ai-arrow">→</span>
+            </button>
+
+            <div class="ce-divider"><span>or start from a template</span></div>
+
+            <!-- Quick-start template cards -->
+            <div class="ce-templates" id="ce-templates">
+              <button class="ce-tpl" onclick="UXStarter.launch('saas')" title="SaaS / Product">
+                <div class="ce-tpl-preview">
+                  <div class="ce-tpl-bar hero"></div>
+                  <div class="ce-tpl-row"><div class="ce-tpl-bar feat"></div><div class="ce-tpl-bar feat"></div><div class="ce-tpl-bar feat"></div></div>
+                  <div class="ce-tpl-bar pricing"></div>
+                  <div class="ce-tpl-bar footer"></div>
+                </div>
+                <div class="ce-tpl-name">SaaS / Product</div>
+                <div class="ce-tpl-desc">Hero · Features · Pricing · CTA</div>
+              </button>
+              <button class="ce-tpl" onclick="UXStarter.launch('portfolio')" title="Portfolio">
+                <div class="ce-tpl-preview">
+                  <div class="ce-tpl-bar hero sm"></div>
+                  <div class="ce-tpl-row"><div class="ce-tpl-bar gal"></div><div class="ce-tpl-bar gal"></div></div>
+                  <div class="ce-tpl-bar about"></div>
+                  <div class="ce-tpl-bar footer"></div>
+                </div>
+                <div class="ce-tpl-name">Portfolio</div>
+                <div class="ce-tpl-desc">Hero · Gallery · About · Contact</div>
+              </button>
+              <button class="ce-tpl" onclick="UXStarter.launch('business')" title="Business">
+                <div class="ce-tpl-preview">
+                  <div class="ce-tpl-bar hero"></div>
+                  <div class="ce-tpl-row"><div class="ce-tpl-bar feat"></div><div class="ce-tpl-bar feat"></div></div>
+                  <div class="ce-tpl-bar testi"></div>
+                  <div class="ce-tpl-bar footer"></div>
+                </div>
+                <div class="ce-tpl-name">Business</div>
+                <div class="ce-tpl-desc">Hero · Services · Reviews · Footer</div>
+              </button>
+              <button class="ce-tpl" onclick="UXStarter.launch('blog')" title="Blog">
+                <div class="ce-tpl-preview">
+                  <div class="ce-tpl-bar hero sm"></div>
+                  <div class="ce-tpl-bar about"></div>
+                  <div class="ce-tpl-row"><div class="ce-tpl-bar feat"></div><div class="ce-tpl-bar feat"></div><div class="ce-tpl-bar feat"></div></div>
+                  <div class="ce-tpl-bar footer"></div>
+                </div>
+                <div class="ce-tpl-name">Blog</div>
+                <div class="ce-tpl-desc">Hero · Posts · About · Footer</div>
+              </button>
+              <button class="ce-tpl" onclick="UXStarter.launch('store')" title="Store">
+                <div class="ce-tpl-preview">
+                  <div class="ce-tpl-bar hero sm"></div>
+                  <div class="ce-tpl-row"><div class="ce-tpl-bar gal"></div><div class="ce-tpl-bar gal"></div><div class="ce-tpl-bar gal"></div></div>
+                  <div class="ce-tpl-bar testi"></div>
+                  <div class="ce-tpl-bar footer"></div>
+                </div>
+                <div class="ce-tpl-name">Online Store</div>
+                <div class="ce-tpl-desc">Hero · Products · Reviews · Footer</div>
+              </button>
+              <button class="ce-tpl" onclick="addSection('hero');toast('Start with a Hero!','🦸')" title="Blank">
+                <div class="ce-tpl-preview ce-tpl-blank">
+                  <span>+</span>
+                </div>
+                <div class="ce-tpl-name">Start Blank</div>
+                <div class="ce-tpl-desc">Add sections one by one</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pages navigation strip (shown when multiple pages exist) -->
+        <div id="pages-nav-strip" class="pages-nav-strip" style="display:none"></div>
+
+        <!-- Sections render here -->
+        <div id="sections-root"></div>
+
+        <!-- Invisible full-canvas drop zone shown when dragging from library over empty canvas -->
+        <div class="canvas-drop-zone" id="canvas-drop-zone">
+          <div style="font-size:28px">✦</div>
+          <div style="font-size:14px;font-weight:600;color:var(--accent)">Drop to add section</div>
+        </div>
+
+      </div>
+      <!-- Stage 3: Smart context bar (replaces static edit-hint) -->
+      <div class="ux-context-bar" id="ux-context-bar">
+        <div class="ux-context-pill" id="ux-context-pill">
+          👈 Click any block on the left to add it to your page
+        </div>
+        <div class="ux-next-action" id="ux-next-action" style="display:none" onclick="UXGuide.doNextAction()"></div>
+      </div>
+      <!-- Keep edit-hint hidden (legacy, used by renderCanvas check) -->
+      <div id="edit-hint" style="display:none"></div>
+    </div>
+  </main>

@@ -1,0 +1,96 @@
+<!-- auth.html Phase 3 -->
+<!-- AUTH GATE — shown until user logs in -->
+<div id="auth-gate">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">⚡</div>
+      <h1 class="auth-title">PageCraft</h1>
+      <p class="auth-sub">Sign in to start building</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login"    onclick="authTab('login')">Sign In</button>
+      <button class="auth-tab"        id="tab-register" onclick="authTab('register')">Create Account</button>
+    </div>
+
+    <div class="auth-body">
+      <!-- Error banner -->
+      <div class="auth-error" id="auth-error">
+        <span>⚠</span><span id="auth-error-msg">Something went wrong</span>
+      </div>
+
+      <!-- LOGIN form -->
+      <form class="auth-form" id="form-login" onsubmit="return false">
+        <div class="auth-field">
+          <label>Email</label>
+          <input class="auth-input" id="login-email" type="email"
+            placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <div class="auth-pw-wrap">
+            <input class="auth-input" id="login-pw" type="password"
+              placeholder="••••••••" autocomplete="current-password"/>
+            <button type="button" class="auth-pw-eye" onclick="togglePw('login-pw',this)">👁</button>
+          </div>
+        </div>
+        <button type="submit" class="auth-submit" id="btn-login" onclick="doLogin()">
+          <span class="spin"></span>
+          <span class="btn-text">Sign In →</span>
+        </button>
+        <div class="auth-divider">or</div>
+        <button type="button" class="auth-demo-btn" onclick="doDemo()">
+          ⚡ Continue with Demo Account
+        </button>
+      </form>
+
+      <!-- REGISTER form (hidden initially) -->
+      <form class="auth-form" id="form-register" style="display:none" onsubmit="return false">
+        <div class="auth-field">
+          <label>Full Name</label>
+          <input class="auth-input" id="reg-name" type="text"
+            placeholder="Your name" autocomplete="name"/>
+        </div>
+        <div class="auth-field">
+          <label>Email</label>
+          <input class="auth-input" id="reg-email" type="email"
+            placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <div class="auth-pw-wrap">
+            <input class="auth-input" id="reg-pw" type="password"
+              placeholder="Min 8 characters"
+              oninput="updateStrength(this.value)"
+              autocomplete="new-password"/>
+            <button type="button" class="auth-pw-eye" onclick="togglePw('reg-pw',this)">👁</button>
+          </div>
+          <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+          <div class="strength-label" id="strength-label">Enter a password</div>
+        </div>
+        <div class="auth-field">
+          <label>Confirm Password</label>
+          <div class="auth-pw-wrap">
+            <input class="auth-input" id="reg-pw2" type="password"
+              placeholder="Repeat password" autocomplete="new-password"/>
+            <button type="button" class="auth-pw-eye" onclick="togglePw('reg-pw2',this)">👁</button>
+          </div>
+        </div>
+        <button type="submit" class="auth-submit" id="btn-register" onclick="doRegister()">
+          <span class="spin"></span>
+          <span class="btn-text">Create Account →</span>
+        </button>
+        <div class="auth-divider">or</div>
+        <button type="button" class="auth-demo-btn" onclick="doDemo()">
+          ⚡ Continue with Demo Account
+        </button>
+      </form>
+
+      <div class="auth-footer-link" id="auth-switch-hint">
+        Don't have an account? <span onclick="authTab('register')">Create one free</span>
+      </div>
+
+    </div>
+  </div>
+</div>

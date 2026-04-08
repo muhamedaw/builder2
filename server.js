@@ -63,13 +63,46 @@ app.use(express.json())
 // ── API routes ────────────────────────────────────────────────────────────────
 app.use('/api/v1', createApiRouter(io))
 
+// ── Server-Side Includes (Phase 3/4/5) ───────────────────────────────────────
+// Resolves both HTML and JS @include markers before sending to browser:
+//   <!-- @include ui/file.html -->   (HTML sections)
+//   /* @include scripts/file.js */   (JS modules inside <script>)
+function resolveIncludes(html, baseDir) {
+  // Match ONLY: <!-- @include file --> and /* @include file */
+  // The @include must follow immediately after <!-- or /* (with optional space)
+  const INCLUDE_RE = /(?:<!--\s*@include\s+([\w/.\-]+)\s*-->|\/\*\s*@include\s+([\w/.\-]+)\s*\*\/)/g
+  return html.replace(INCLUDE_RE, (_match, htmlPath, jsPath) => {
+    const relPath  = htmlPath || jsPath
+    const fullPath = path.join(baseDir, relPath)
+    if (!fs.existsSync(fullPath)) {
+      console.warn(`[SSI] Missing include: ${relPath}`)
+      return `/* @include ${relPath} — FILE NOT FOUND */`
+    }
+    return fs.readFileSync(fullPath, 'utf8')
+  })
+}
+
+// ── SSI handler — used for both / and /builder.html ──────────────────────────
+function serveBuilder(_req, res) {
+  const root = cfg.static.root
+  const idx  = path.join(root, 'index.html')
+  const orig = path.join(root, 'builder.html')
+  const src  = fs.existsSync(idx) ? idx : orig
+  try {
+    const html = resolveIncludes(fs.readFileSync(src, 'utf8'), root)
+    res.setHeader('Content-Type', 'text/html; charset=utf-8')
+    res.send(html)
+  } catch (e) {
+    console.error('[SSI] Error processing HTML:', e)
+    res.sendFile(src)
+  }
+}
+
 // ── Static file serving ───────────────────────────────────────────────────────
+// builder.html route MUST come before express.static so @include markers
+// are always resolved (express.static would serve the raw file otherwise)
+app.get(['/', '/builder.html'], serveBuilder)
 app.use(express.static(cfg.static.root))
-app.get('/', (_req, res) => {
-  const idx  = path.join(cfg.static.root, 'index.html')
-  const orig = path.join(cfg.static.root, 'builder.html')
-  res.sendFile(fs.existsSync(idx) ? idx : orig)
-})
 
 // ── Socket.io handlers ────────────────────────────────────────────────────────
 registerSocketHandlers(io)
