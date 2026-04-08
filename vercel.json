@@ -3,6 +3,7 @@
   "public": true,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/builder.html" }
+    { "source": "/", "destination": "/dist/builder.html" },
+    { "source": "/(.*)", "destination": "/dist/$1" }
   ]
 }
