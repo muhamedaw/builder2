@@ -523,11 +523,12 @@ function setMode(m){
 function switchSTab(id){
   // Normalise: 'components' → 'blocks' (merged into Add tab)
   if (id === 'components') id = 'blocks'
-  const all = ['blocks','layers','pages','suggest']
+  const all = ['blocks','layers','pages','suggest','navigator']
   document.querySelectorAll('.tabs .tab').forEach((t,i) => t.classList.toggle('active', all[i] === id))
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + id))
-  if (id === 'suggest') renderSuggestTab()
-  if (id === 'pages')   renderPagesPanel()
+  if (id === 'suggest')   renderSuggestTab()
+  if (id === 'pages')     renderPagesPanel()
+  if (id === 'navigator' && typeof Navigator !== 'undefined') Navigator.refresh()
   // Show search bar only on Add tab
   const sb = document.querySelector('.sidebar')
   if (sb) sb.classList.toggle('sst-active', id === 'blocks')

@@ -59,6 +59,14 @@ function renderAll(hint) {
   if (typeof SpeedDial    !== 'undefined') SpeedDial.update()
   if (typeof UsageLimits  !== 'undefined') UsageLimits.refresh()
 
+  // Navigator: refresh tree when structure or content changes (skip selection-only)
+  if (hint !== 'selection') {
+    const navPanel = document.getElementById('tab-navigator')
+    if (navPanel?.classList.contains('active') && typeof Navigator !== 'undefined') {
+      Navigator.refresh()
+    }
+  }
+
   // Heavy systems: debounced — skip on pure selection changes
   if (hint !== 'selection') _scheduleHeavy()
 }

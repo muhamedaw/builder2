@@ -5,6 +5,7 @@
       <div class="tab" onclick="switchSTab('layers')">Layers<span class="count-badge" id="layer-count">0</span></div>
       <div class="tab" onclick="switchSTab('pages')">📄 Pages</div>
       <div class="tab" onclick="switchSTab('suggest')" id="tab-suggest-btn">💡</div>
+      <div class="tab" onclick="switchSTab('navigator')" title="DOM Navigator">🌳</div>
     </div>
     <!-- Section Search -->
     <div id="section-search-wrap" style="padding:8px 8px 4px;position:sticky;top:0;background:var(--bg);z-index:2;border-bottom:1px solid var(--border)">
@@ -70,6 +71,17 @@
         <div id="suggest-panel-content">
           <p class="suggest-empty">Add your first section to get suggestions.</p>
         </div>
+      </div>
+      <div id="tab-navigator" class="tab-panel">
+        <div class="nav-toolbar">
+          <span class="nav-toolbar-title">🌳 DOM Navigator</span>
+          <div class="nav-toolbar-actions">
+            <button class="nav-tool-btn" onclick="Navigator.refresh()" title="Refresh tree">⟳</button>
+            <button class="nav-tool-btn" onclick="document.querySelectorAll('.nav-sec-body').forEach(b=>b.style.display='none')" title="Collapse all">⊟</button>
+            <button class="nav-tool-btn" onclick="Navigator.refresh()" title="Expand all">⊞</button>
+          </div>
+        </div>
+        <div id="nav-tree"></div>
       </div>
     </div>
     <!-- Usage meter — populated by UsageLimits.refresh() -->
