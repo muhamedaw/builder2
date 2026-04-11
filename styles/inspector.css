@@ -1,0 +1,278 @@
+/* inspector.css — Webflow-Grade Style Inspector
+   Dark Pro theme: #1e1e1e bg, #333 borders, #ccc text, #3b82f6 accent */
+
+/* ── Panel shell ─────────────────────────────────────────────────────────── */
+#pc-inspector {
+  position: fixed;
+  top: 60px;
+  right: 16px;
+  width: 280px;
+  max-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.7);
+  z-index: 9100;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  color: #ccc;
+  overflow: hidden;
+  transition: opacity .2s, transform .2s;
+}
+#pc-inspector.ins-hidden {
+  opacity: 0;
+  transform: translateX(16px);
+  pointer-events: none;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.ins-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 9px;
+  border-bottom: 1px solid #2a2a2a;
+  background: #242424;
+  flex-shrink: 0;
+  user-select: none;
+}
+.ins-el-info { display: flex; align-items: center; gap: 6px; overflow: hidden }
+.ins-el-tag  { font-size: 11px; font-weight: 700; color: #3b82f6; white-space: nowrap }
+.ins-el-id   { font-size: 10px; color: #555; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.ins-deselect {
+  background: none; border: none; color: #555; cursor: pointer;
+  font-size: 14px; padding: 2px 6px; border-radius: 4px; line-height: 1;
+}
+.ins-deselect:hover { color: #ccc; background: rgba(255,255,255,.06) }
+
+/* ── Scrollable body ─────────────────────────────────────────────────────── */
+.ins-body {
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+}
+.ins-body::-webkit-scrollbar       { width: 4px }
+.ins-body::-webkit-scrollbar-track { background: transparent }
+.ins-body::-webkit-scrollbar-thumb { background: #333; border-radius: 4px }
+
+/* ── Collapsible modules ─────────────────────────────────────────────────── */
+.ins-module { border-bottom: 1px solid #2a2a2a }
+.ins-mod-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  background: #222;
+}
+.ins-mod-header:hover { background: #282828 }
+.ins-mod-label { font-size: 11px; font-weight: 700; color: #aaa; letter-spacing: .04em }
+.ins-mod-caret { font-size: 10px; color: #555; transition: transform .18s }
+.ins-mod-caret.ins-open { transform: rotate(0deg) }
+.ins-mod-caret:not(.ins-open) { transform: rotate(-90deg) }
+.ins-mod-body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Rows & columns ──────────────────────────────────────────────────────── */
+.ins-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ins-sub { padding-left: 8px }
+.ins-col { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0 }
+.ins-section-label {
+  font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase;
+  letter-spacing: .06em; margin-top: 4px;
+}
+
+/* ── Label (orange = inherited) ─────────────────────────────────────────── */
+.ins-label {
+  font-size: 11px;
+  color: #777;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.ins-label.ins-inherited { color: #f59e0b }
+
+/* ── Inputs ──────────────────────────────────────────────────────────────── */
+.ins-num,
+.ins-text,
+.ins-select {
+  background: #2a2a2a;
+  border: 1px solid #383838;
+  border-radius: 5px;
+  color: #ccc;
+  font-size: 11px;
+  font-family: inherit;
+  padding: 4px 6px;
+  outline: none;
+  width: 100%;
+  transition: border-color .12s;
+}
+.ins-num   { width: 56px; text-align: center }
+.ins-text  { flex: 1 }
+.ins-num:focus,
+.ins-text:focus,
+.ins-select:focus { border-color: #3b82f6 }
+.ins-num::-webkit-inner-spin-button,
+.ins-num::-webkit-outer-spin-button { opacity: 0 }
+
+/* Draggable number input cursor */
+.ins-num { cursor: ns-resize }
+.ins-num.ins-dragging { cursor: ns-resize; border-color: #3b82f6; background: #1a2a3a }
+
+/* ── Number + unit wrap ──────────────────────────────────────────────────── */
+.ins-num-wrap { display: flex; align-items: center; gap: 2px }
+.ins-unit {
+  background: #222;
+  border: 1px solid #383838;
+  border-radius: 4px;
+  color: #888;
+  font-size: 10px;
+  font-family: inherit;
+  padding: 4px 2px;
+  outline: none;
+  width: 40px;
+  cursor: pointer;
+}
+.ins-unit:focus { border-color: #3b82f6 }
+.ins-unit-fixed {
+  font-size: 10px; color: #555; padding: 4px 4px; white-space: nowrap; flex-shrink: 0;
+}
+
+/* ── Toggle button group ─────────────────────────────────────────────────── */
+.ins-toggle-group { display: flex; gap: 2px; flex-wrap: wrap }
+.ins-toggle-btn {
+  background: #2a2a2a;
+  border: 1px solid #383838;
+  border-radius: 4px;
+  color: #888;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 7px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .1s;
+  line-height: 1.2;
+}
+.ins-toggle-btn:hover  { background: #333; color: #ccc }
+.ins-toggle-btn.active { background: #1d3557; border-color: #3b82f6; color: #60a5fa }
+
+/* ── Color row ───────────────────────────────────────────────────────────── */
+.ins-color-row { display: flex; align-items: center; gap: 6px; flex: 1 }
+.ins-color-swatch {
+  width: 26px; height: 26px; border: 1px solid #444; border-radius: 5px;
+  cursor: pointer; padding: 0; background: none; flex-shrink: 0;
+}
+.ins-color-hex {
+  flex: 1;
+  background: #2a2a2a; border: 1px solid #383838;
+  border-radius: 5px; color: #ccc; font-size: 11px; font-family: monospace;
+  padding: 4px 6px; outline: none;
+}
+.ins-color-hex:focus { border-color: #3b82f6 }
+.ins-font-wrap { flex: 1 }
+
+/* ── Slider ──────────────────────────────────────────────────────────────── */
+.ins-slider-wrap { display: flex; align-items: center; gap: 8px; flex: 1 }
+.ins-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1; height: 4px;
+  background: #333; border-radius: 2px; outline: none; cursor: pointer;
+}
+.ins-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #3b82f6; cursor: pointer;
+}
+.ins-slider-val { font-size: 11px; color: #aaa; min-width: 30px; text-align: right }
+
+/* ── Box Model (Spacing Module) ──────────────────────────────────────────── */
+.ins-box-model {
+  background: #252525;
+  border: 1px solid #2f2f2f;
+  border-radius: 7px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: #555;
+  position: relative;
+}
+.ibm-margin-label,
+.ibm-padding-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .08em;
+  color: #444; text-transform: uppercase; position: absolute;
+}
+.ibm-margin-label  { top: 4px; left: 8px }
+.ibm-padding-label { top: 4px; left: 8px; color: #3b3b3b }
+
+.ibm-row           { display: flex; justify-content: center }
+.ibm-middle-row    { display: flex; align-items: center; gap: 4px; width: 100% }
+.ibm-side          { display: flex; align-items: center }
+.ibm-inner {
+  flex: 1;
+  border: 1px dashed #333;
+  border-radius: 5px;
+  background: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+  position: relative;
+}
+.ibm-dimensions {
+  font-size: 10px; font-weight: 700; color: #3b82f6;
+  padding: 4px 8px; white-space: nowrap;
+}
+.ins-sp-input {
+  width: 40px;
+  background: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #aaa;
+  font-size: 10px;
+  text-align: center;
+  padding: 3px 2px;
+  outline: none;
+  cursor: ns-resize;
+  transition: border-color .12s;
+}
+.ins-sp-input:focus,
+.ins-sp-input.ins-dragging { border-color: #3b82f6; color: #fff }
+.ins-sp-input::-webkit-inner-spin-button,
+.ins-sp-input::-webkit-outer-spin-button { opacity: 0 }
+
+/* ── Pin grid (Position module) ──────────────────────────────────────────── */
+.ins-pin-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 4px;
+  align-items: center;
+  justify-items: center;
+  background: #242424;
+  border: 1px solid #2f2f2f;
+  border-radius: 7px;
+  padding: 8px;
+  margin-top: 4px;
+}
+.ins-pin-center { font-size: 16px; color: #3b82f6 }
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.ins-empty { color: #555; font-size: 11px; padding: 8px 0; text-align: center }

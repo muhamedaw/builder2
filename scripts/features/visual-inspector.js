@@ -64,14 +64,16 @@ const VisualInspector = (() => {
       run(_sec) {
         if (typeof MicroTarget === 'undefined') return
         if (MicroTarget.isActive()) { MicroTarget.deactivate(); return }
-        MicroTarget.activate((el, _sectionId, path) => {
+        MicroTarget.activate((el, _sectionId, path, context) => {
           // Flash picked element outline and show path in AI status
           const status = document.getElementById('vi-ai-status')
           if (status) {
             status.textContent = `Picked: ${path.split(' > ').pop()}`
             setTimeout(() => { if (status) status.textContent = '' }, 3000)
           }
-          // Auto-open AI input focused on this element
+          // Open Style Inspector with full state hydration
+          if (typeof Inspector !== 'undefined') Inspector.select(el, context)
+          // Also open AI input focused on this element
           _toggleAI(true)
           const input = document.getElementById('vi-ai-input')
           if (input) input.placeholder = `Style this ${el.tagName.toLowerCase()}…`
