@@ -147,6 +147,19 @@ const Collab = (() => {
       _applying = false
     })
 
+    // JSON Delta patch — batch prop update from AI edits
+    _socket.on('section:patch', ({ sectionId, patch }) => {
+      if (!patch || typeof patch !== 'object') return
+      _applying = true
+      editorStore.produce(draft => {
+        const sec = draft.sections.find(s => s.id === sectionId)
+        if (sec) Object.assign(sec.props, patch)
+      }, 'collab:section:patch')
+      const sec = editorStore.getState().sections.find(s => s.id === sectionId)
+      if (sec) { RenderEngine.invalidate(sec.id); renderAll('props') }
+      _applying = false
+    })
+
     _socket.on('page:title', ({ title }) => {
       _applying = true
       const titleEl = document.getElementById('page-title')
@@ -154,7 +167,7 @@ const Collab = (() => {
       _applying = false
     })
 
-    _socket.on('cursor:move', ({ socketId, x, y }) => {
+    _socket.on('cursor:move', () => {
       // future: render remote cursors
     })
 
@@ -186,6 +199,15 @@ const Collab = (() => {
     clearTimeout(_propDebounces[dk])
     _propDebounces[dk] = setTimeout(() => {
       if (_socket && _roomId) _socket.emit('section:update', { roomId: _roomId, sectionId, key, value })
+    }, 80)
+  }
+
+  // Batch delta — used by AI edits that change multiple props at once
+  function emitSectionPatch(sectionId, patch) {
+    if (_applying || !_socket || !_roomId || !patch || !Object.keys(patch).length) return
+    clearTimeout(_propDebounces[sectionId + '|__patch__'])
+    _propDebounces[sectionId + '|__patch__'] = setTimeout(() => {
+      if (_socket && _roomId) _socket.emit('section:patch', { roomId: _roomId, sectionId, patch })
     }, 80)
   }
 
@@ -245,6 +267,7 @@ const Collab = (() => {
     emitSectionAdd,
     emitSectionRemove,
     emitSectionUpdate,
+    emitSectionPatch,
     emitSectionMove,
     emitSectionDup,
     emitPageTitle,
@@ -268,7 +291,7 @@ function copyShareLink() {
   const inp = document.getElementById('share-room-inp')
   if (!inp) return
   navigator.clipboard.writeText(inp.value).then(() => toast('Link copied!','🔗')).catch(() => {
-    inp.select(); document.execCommand('copy'); toast('Link copied!','🔗')
+    try { inp.select(); document.execCommand('copy') } catch (_) {}; toast('Link copied!','🔗')
   })
 }
 function leaveRoom() {

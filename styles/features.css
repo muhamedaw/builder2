@@ -1778,4 +1778,86 @@
 .cpb-detail{font-size:11px;color:var(--muted);margin-top:2px}
 .cpb-manage{background:none;border:1px solid var(--border2);border-radius:7px;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;padding:5px 12px;transition:all .15s}
 .cpb-manage:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ══════════════════════════════════════════════════════
+   VISUAL INSPECTOR — Floating Section Toolbar
+══════════════════════════════════════════════════════ */
+.vi-bar{
+  position:fixed;z-index:9000;display:flex;align-items:center;gap:4px;
+  background:#1a1a2e;border:1px solid rgba(108,99,255,.35);
+  border-radius:10px;padding:5px 8px;box-shadow:0 4px 24px rgba(0,0,0,.5);
+  transition:opacity .15s,transform .15s;
+  font-family:system-ui,sans-serif;
+}
+.vi-bar.vi-hidden{opacity:0;transform:translateY(4px);pointer-events:none}
+
+/* Action buttons */
+.vi-action-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:16px;line-height:1;padding:5px 6px;
+  border-radius:7px;transition:background .12s,transform .1s;
+  color:#fff;
+}
+.vi-action-btn:hover{background:rgba(108,99,255,.25);transform:scale(1.15)}
+.vi-action-btn.danger:hover{background:rgba(239,68,68,.25)}
+
+/* Separator */
+.vi-sep{width:1px;height:20px;background:rgba(255,255,255,.1);margin:0 2px;flex-shrink:0}
+
+/* AI section */
+.vi-ai-wrap{display:flex;align-items:center;gap:4px}
+.vi-ai-btn{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);
+  border-radius:7px;padding:4px 10px;cursor:pointer;
+  color:#a78bfa;font-size:12px;font-weight:600;
+  transition:all .15s;white-space:nowrap;
+}
+.vi-ai-btn:hover,.vi-ai-btn.active{background:rgba(108,99,255,.3);border-color:rgba(108,99,255,.6)}
+.vi-ai-label{font-size:11px}
+
+/* AI input row */
+.vi-ai-input-wrap{display:flex;align-items:center;gap:4px}
+.vi-ai-input{
+  background:rgba(255,255,255,.07);border:1px solid rgba(108,99,255,.3);
+  border-radius:6px;padding:4px 10px;color:#e2e8f0;
+  font-size:12px;font-family:inherit;outline:none;width:220px;
+  transition:border-color .15s;
+}
+.vi-ai-input:focus{border-color:rgba(108,99,255,.7);background:rgba(255,255,255,.1)}
+.vi-ai-input::placeholder{color:rgba(255,255,255,.3)}
+.vi-ai-go{
+  background:rgba(108,99,255,.25);border:1px solid rgba(108,99,255,.4);
+  border-radius:6px;padding:4px 10px;cursor:pointer;
+  color:#a78bfa;font-size:13px;font-weight:700;transition:all .15s;
+}
+.vi-ai-go:hover{background:rgba(108,99,255,.45)}
+.vi-ai-status{font-size:11px;color:#94a3b8;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
+
+/* ══════════════════════════════════════════════════════
+   MICRO-TARGET — Element Picker Overlay
+══════════════════════════════════════════════════════ */
+/* Cursor changes when picker is active */
+body.mt-picking,
+body.mt-picking *{ cursor:crosshair !important }
+
+/* Floating highlight box that tracks the hovered element */
+.mt-overlay{
+  position:absolute;z-index:8999;pointer-events:none;
+  outline:2px solid #a78bfa;
+  background:rgba(108,99,255,.08);
+  border-radius:3px;
+  display:none;
+  transition:top .06s,left .06s,width .06s,height .06s;
+}
+/* Label chip above the highlight */
+.mt-overlay::before{
+  content:attr(data-label);
+  position:absolute;bottom:calc(100% + 4px);left:0;
+  background:#1a1a2e;border:1px solid rgba(108,99,255,.4);
+  color:#a78bfa;font-size:10px;font-weight:600;
+  padding:2px 8px;border-radius:4px;white-space:nowrap;
+  font-family:system-ui,sans-serif;pointer-events:none;
+  max-width:240px;overflow:hidden;text-overflow:ellipsis;
+}
 

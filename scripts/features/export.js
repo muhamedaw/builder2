@@ -44,21 +44,25 @@ function genHTML(opts = {}) {
   const _srcSections = opts.sections || S.sections
   const _rawBody = _srcSections.map(s => {
     try {
-      const html = R[s.type](s.props, s.id)
-      return ANIM.enabled ? stripForExport(html, s.id) : html
+      let html = R[s.type](s.props, s.id)
+      // Inject animation targeting attr when animations active
+      if (ANIM.enabled) html = stripForExport(html, s.id)
+      // Inject semantic section-id marker for OutputEngine to convert to id="type"
+      html = html.replace(/^(\s*<(?:section|header|footer|nav)(?:\s[^>]*)?)>/, `$1 data-pc-type="${s.type}">`)
+      return html
     } catch { return '' }
   }).join('\n')
 
-  // Run OutputEngine pipeline: deep strip → CSS extraction → image opts → a11y
+  // Run OutputEngine pipeline: strip → sectionIds → extractCSS → images → links → a11y
   const _processed   = (typeof OutputEngine !== 'undefined')
-    ? OutputEngine.process(_rawBody, { minify, title, semantic: !opts.preview })
+    ? OutputEngine.process(_rawBody, { minify, title, semantic: !opts.preview, preview: opts.preview })
     : { html: strip(_rawBody), extractedCSS: '' }
   const bodyHTML     = _processed.html
   const extractedCSS = _processed.extractedCSS
 
   const animRuntime = genAnimRuntime()
 
-  // ── Global Styles ─────────────────────────────────────────────────────────
+  // ── Global Styles (merged into allCSS — no extra <style> tag) ───────────
   const gsCSS = (typeof GlobalStyles !== 'undefined') ? GlobalStyles.genCSS() : ''
 
   // ── Base CSS ──────────────────────────────────────────────────────────────
@@ -76,7 +80,9 @@ details summary::-webkit-details-marker{display:none}`.trim()
   // ── Responsive CSS — generated from RESP state ─────────────────────────────
   const responsiveCSS = responsive ? genResponsiveCSS() : ''
 
-  const allCSS = (baseCSS + responsiveCSS + (extractedCSS ? '\n' + extractedCSS : '')).replace(/\n\s*/g, minify ? '' : '\n  ')
+  const _cssMinRe = /\n\s*/g
+  const allCSS = (baseCSS + (gsCSS ? '\n' + gsCSS : '') + responsiveCSS + (extractedCSS ? '\n' + extractedCSS : ''))
+    .replace(_cssMinRe, minify ? '' : '\n  ')
 
   // ── SEO meta tags (merging SEOManager + export panel) ────────────────────
   const _robots   = _seoD.robots    || 'index,follow'
@@ -96,6 +102,9 @@ details summary::-webkit-details-marker{display:none}`.trim()
   if (_seoD.schemaWpName)  _schemaBlocks.push(JSON.stringify({'@context':'https://schema.org','@type':'WebPage',name:_seoD.schemaWpName,url:_seoD.schemaWpUrl||undefined,description:_seoD.schemaWpDesc||undefined}))
   const sc2 = 'scr'+'ipt'
   const schemaTag = _schemaBlocks.length ? _schemaBlocks.map(b=>`<${sc2} type="application/ld+json">${b}</${sc2}>`).join('\n') : ''
+
+  const nl  = minify ? '' : '\n'
+  const ind = minify ? '' : '  '
 
   const metaTags = [
     `<meta charset="UTF-8"/>`,
@@ -122,8 +131,21 @@ details summary::-webkit-details-marker{display:none}`.trim()
   ].filter(Boolean).join(minify ? '' : '\n  ')
 
   // ── Font link ─────────────────────────────────────────────────────────────
+  const _fontFamily = _gsCfg.fontBody && _gsCfg.fontBody !== 'system-ui'
+    ? encodeURIComponent(_gsCfg.fontBody)
+    : 'Inter'
   const fontLink = fonts
-    ? `<link rel="preconnect" href="https://fonts.googleapis.com"/>\n  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>`
+    ? [
+        `<link rel="preconnect" href="https://fonts.googleapis.com"/>`,
+        `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>`,
+        `<link href="https://fonts.googleapis.com/css2?family=${_fontFamily}:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>`,
+      ].join(`\n${ind}`)
+    : ''
+
+  // ── LCP preload — hero background image ──────────────────────────────────
+  const _heroBg = _srcSections.find(s => s.type === 'hero')?.props?.bgImage || ''
+  const heroPreload = _heroBg
+    ? `<link rel="preload" href="${_heroBg}" as="image" fetchpriority="high"/>`
     : ''
 
   // ── Analytics ─────────────────────────────────────────────────────────────
@@ -136,9 +158,6 @@ details summary::-webkit-details-marker{display:none}`.trim()
       analyticsScript = `\n<${sc} defer data-domain="${gaId}" src="https://plausible.io/js/plausible.js"></${sc}>`
     }
   }
-
-  const nl = minify ? '' : '\n'
-  const ind = minify ? '' : '  '
 
   // ── Custom CSS plugin ─────────────────────────────────────────────────────
   const _cssPl   = typeof PLUGIN_REGISTRY !== 'undefined' && PLUGIN_REGISTRY.find(p => p.id === 'custom-css')
@@ -281,7 +300,6 @@ var Cart = { add: xcAdd, remove: xcRemove, setQty: xcSetQty };
   }
 
   const customCSSTag = customCSS ? `${nl}${ind}<style id="custom-css">${nl}${ind}${customCSS}${nl}${ind}</style>` : ''
-  const gsCSSTag = gsCSS ? `${nl}${ind}<style id="global-styles">${nl}${ind}${gsCSS}${nl}${ind}</style>` : ''
 
   // White-label: custom CSS + powered-by badge
   const wlCfg = (() => { try { return JSON.parse(localStorage.getItem('pc_whitelabel_v1') || '{}') } catch { return {} } })()
@@ -293,7 +311,8 @@ var Cart = { add: xcAdd, remove: xcRemove, setQty: xcSetQty };
        ${wlCfg.poweredByText||'Built with PageCraft'}</a>`
     : ''
 
-  let _html = `<!DOCTYPE html>${nl}<html lang="${lang}">${nl}<head>${nl}${ind}${metaTags}${nl}${ind}${fontLink}${nl}${ind}<style>${nl}${ind}${allCSS}${nl}${ind}</style>${gsCSSTag}${customCSSTag}${wlCSS}${nl}</head>${nl}<body>${nl}${bodyHTML}${cartExportHTML}${wlBadge}${nl}${threeJS}${nl}${animRuntime}${cartExportJS}${nl}${analyticsScript}${nl}</body>${nl}</html>`
+  const _heroPreloadTag = heroPreload ? `${nl}${ind}${heroPreload}` : ''
+  let _html = `<!DOCTYPE html>${nl}<html lang="${lang}">${nl}<head>${nl}${ind}${metaTags}${nl}${ind}${fontLink}${_heroPreloadTag}${nl}${ind}<style>${nl}${ind}${allCSS}${nl}${ind}</style>${customCSSTag}${wlCSS}${nl}</head>${nl}<body>${nl}${bodyHTML}${cartExportHTML}${wlBadge}${nl}${threeJS}${nl}${animRuntime}${cartExportJS}${nl}${analyticsScript}${nl}</body>${nl}</html>`
   // ── Hook: export:beforeHTML — plugins may mutate the html string ─────────────
   const _htmlPayload = { html: _html }
   PluginSDK._emit('export:beforeHTML', _htmlPayload)
@@ -681,9 +700,9 @@ const ComponentImporter = (() => {
         .replace(/\s+/g, ' ')
         .trim()
         .replace(/,\s*$/, '')
-        .replace(/(\w+):\s*'([^']*)'/g, (m, p, v) => camelToKebab(p) + ':' + v)
-        .replace(/(\w+):\s*"([^"]*)"/g, (m, p, v) => camelToKebab(p) + ':' + v)
-        .replace(/(\w+):\s*(\d+(?:\.\d+)?)/g, (m, p, v) => camelToKebab(p) + ':' + v + (p !== 'zIndex' && p !== 'opacity' && p !== 'order' && p !== 'flex' ? 'px' : ''))
+        .replace(/(\w+):\s*'([^']*)'/g, (_, p, v) => camelToKebab(p) + ':' + v)
+        .replace(/(\w+):\s*"([^"]*)"/g, (_, p, v) => camelToKebab(p) + ':' + v)
+        .replace(/(\w+):\s*(\d+(?:\.\d+)?)/g, (_, p, v) => camelToKebab(p) + ':' + v + (p !== 'zIndex' && p !== 'opacity' && p !== 'order' && p !== 'flex' ? 'px' : ''))
         .replace(/,/g, ';')
       return `style="${css}"`
     })
@@ -1082,7 +1101,13 @@ function _exportAllPages(pages) {
 // Keep old openPreview working
 function openPreview(){
   if (!AUTH.user) { showAuthGate(); toast('Sign in to preview pages','🔒'); return }
-  if(!S.sections.length)return toast('Add sections first','⚠️');const w=window.open('','_blank');w.document.write(genHTML({preview:true}));w.document.close();toast('Preview opened','👁')
+  if(!S.sections.length)return toast('Add sections first','⚠️')
+  const html=genHTML({preview:true})
+  const blob=new Blob([html],{type:'text/html'})
+  const url=URL.createObjectURL(blob)
+  const w=window.open(url,'_blank')
+  if(w) w.addEventListener('load',()=>URL.revokeObjectURL(url),{once:true})
+  toast('Preview opened','👁')
 }
 
 // Close export modal on backdrop click

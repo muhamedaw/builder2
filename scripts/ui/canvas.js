@@ -60,6 +60,9 @@ function selectSection(id) {
   const sec = S.sections.find(s => s.id === id)
   if (typeof BottomBar !== 'undefined') BottomBar.updatePanelHeader(sec)
   if (S.panelTab === 'layout') renderLayoutPanel()
+  if (typeof VisualInspector !== 'undefined') {
+    id ? VisualInspector.show(id) : VisualInspector.hide()
+  }
 }
 
 /* ══════════════════════════════════════════════════════

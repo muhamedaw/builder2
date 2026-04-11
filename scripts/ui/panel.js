@@ -516,6 +516,9 @@ function setMode(m){
   renderCanvas()
   if(m==='preview' && typeof UXGuide!=='undefined') UXGuide.markPreviewed()
   else if(typeof UXGuide!=='undefined') UXGuide.update()
+  if (typeof VisualInspector !== 'undefined') {
+    m === 'preview' ? VisualInspector.hide() : (S.selected ? VisualInspector.show(S.selected) : VisualInspector.hide())
+  }
 }
 function switchSTab(id){
   // Normalise: 'components' → 'blocks' (merged into Add tab)
