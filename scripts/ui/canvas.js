@@ -31,6 +31,8 @@ function addSection(type, insertAtIdx=null) {
   if (typeof analyticsTrack === 'function') analyticsTrack('section_added', { props:{ type } })
   // Collab: broadcast to room
   if (typeof Collab !== 'undefined') Collab.emitSectionAdd(sec, _addedIdx)
+  // Stage 3.1: AI Director Mode — suggest 3 variations after a short delay
+  if (typeof AIDirector !== 'undefined') AIDirector.suggest(sec)
 }
 function removeSection(id,ev) {
   ev&&ev.stopPropagation()

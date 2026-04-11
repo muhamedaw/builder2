@@ -37,11 +37,39 @@ const RenderEngine = (() => {
     )
   }
 
+  // ── 1.1 Intent-Based Indexing ─────────────────────────────────────────────────
+  // Maps section type → semantic intent labels for AI context awareness
+  const INTENT_MAP = {
+    'hero':            'Hero Landing Conversion CTA',
+    'about':           'Brand Story Trust About Mission',
+    'features':        'Features Benefits Product Value',
+    'testimonial':     'Social Proof Trust Reviews Credibility',
+    'pricing':         'Pricing Conversion Monetization Plans',
+    'contact':         'Contact Lead Generation Form',
+    'footer':          'Navigation Footer Legal Brand Links',
+    'faq':             'FAQ Support Trust Help',
+    'gallery':         'Portfolio Gallery Showcase Visual',
+    'form-builder':    'Form Lead Capture Data Collection',
+    'product-grid':    'Ecommerce Products Shop Store',
+    'video-hero':      'Video Media Engagement Hero',
+    'scene-particles': '3D Interactive Immersive Particles',
+    'scene-waves':     '3D Interactive Immersive Waves',
+    'scene-globe':     '3D Interactive Global Geographic',
+    'scene-cards':     '3D Interactive Cards Flip',
+    'custom-html':     'Custom Code HTML Developer',
+  }
+
+  function _getIntent(type) {
+    return INTENT_MAP[type] || 'Section Content'
+  }
+
   // ── Build full wrapper HTML (first render) ────────────────────────────────────
   function _buildWrapper(sec, def, sel, bulk, first, last) {
+    const intent = _getIntent(sec.type)
     return (
       `<div class="section-wrapper${sel ? ' selected' : ''}${bulk ? ' section-selected' : ''}" ` +
-      `data-id="${sec.id}" data-section-id="${sec.id}" onclick="onSecClick(event,'${sec.id}')">` +
+      `data-id="${sec.id}" data-section-id="${sec.id}" data-intent="${intent}" data-type="${sec.type}" ` +
+      `onclick="onSecClick(event,'${sec.id}')">` +
       `<span class="section-label">${def.icon} ${def.label}</span>` +
       `<div class="section-controls">${_buildControls(sec.id, first, last)}</div>` +
       `<div class="sec-content">${R[sec.type](sec.props, sec.id)}</div>` +
@@ -155,8 +183,37 @@ const RenderEngine = (() => {
       root.appendChild(frag)
     }
 
+    // ── 1.2 Surgical ID Mirroring ─────────────────────────────────────────────
+    // After each render pass, assign persistent data-pc-id to every
+    // meaningful child element inside re-rendered sections so the AI can
+    // address micro-elements by stable path-based IDs.
+    if (rerendered.size > 0) {
+      rerendered.forEach(secId => {
+        const wrapper = domMap.get(secId)
+        if (!wrapper) return
+        _mirrorIds(wrapper, secId)
+      })
+    }
+
     return rerendered
   }
+
+  // ── 1.2 Surgical ID Mirroring helper ─────────────────────────────────────────
+  // Walk the rendered subtree and stamp data-pc-id="secId:tag:index" on
+  // every leaf/interactive element that doesn't already have one.
+  const _MIRROR_TAGS = new Set(['h1','h2','h3','h4','h5','h6','p','span','a','img','button','li','input','textarea','label','blockquote','strong','em'])
+
+  function _mirrorIds(wrapper, secId) {
+    const counters = {}
+    wrapper.querySelectorAll(_MIRROR_TAGS_SEL).forEach(el => {
+      if (el.dataset.pcId) return   // already stamped — preserve stability
+      const tag = el.tagName.toLowerCase()
+      counters[tag] = (counters[tag] || 0) + 1
+      el.dataset.pcId = `${secId}:${tag}:${counters[tag]}`
+    })
+  }
+
+  const _MIRROR_TAGS_SEL = [..._MIRROR_TAGS].join(',')
 
   // ── Cache invalidation ────────────────────────────────────────────────────────
   function invalidate(sectionId) {

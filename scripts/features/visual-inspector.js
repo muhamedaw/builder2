@@ -435,7 +435,20 @@ Reply ONLY with a JSON object of prop changes, e.g. {"bgColor":"#000","headline"
     })
   })
 
-  return { show, hide, _toggleAI, _submitAI, _runAction }
+  // ── _execCmd: called by PropertyBridge.cmd() ─────────────────────────────
+  // Runs a natural-language command against a given section object directly.
+  async function _execCmd(input, sec) {
+    const status = document.getElementById('vi-ai-status')
+    if (status) status.textContent = '⏳'
+    const result = await _runAICmd(input, sec)
+    if (status) {
+      status.textContent = result
+      setTimeout(() => { if (status) status.textContent = '' }, 3000)
+    }
+    return result
+  }
+
+  return { show, hide, _toggleAI, _submitAI, _runAction, _execCmd }
 })()
 
 window.PageCraft = window.PageCraft || {}

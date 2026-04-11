@@ -10,8 +10,7 @@ const MicroTarget = (() => {
   let _hovered   = null    // currently highlighted el
   let _picked    = null    // last confirmed pick
   let _overlay   = null    // highlight overlay div
-  let _onPick    = null    // callback(el, sectionId, path)
-  let _rafId     = null
+  let _onPick    = null    // callback(el, sectionId, path, context)
 
   // ── Overlay ───────────────────────────────────────────────────────────────
   function _ensureOverlay() {
@@ -69,7 +68,12 @@ const MicroTarget = (() => {
     const sectionId = sectionWrapper?.dataset?.id || null
     const path = _buildPath(_picked)
 
-    if (typeof _onPick === 'function') _onPick(_picked, sectionId, path)
+    // Stage 2.1: build full raycast context via PropertyBridge
+    const context = (typeof PropertyBridge !== 'undefined')
+      ? PropertyBridge.raycast(_picked)
+      : { tag: _picked.tagName.toLowerCase(), sectionId, path }
+
+    if (typeof _onPick === 'function') _onPick(_picked, sectionId, path, context)
 
     deactivate()
   }
