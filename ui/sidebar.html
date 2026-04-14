@@ -26,6 +26,30 @@
         <!-- legacy hidden list kept for internal compat -->
         <div id="component-list" style="display:none"></div>
 
+        <!-- Template Gallery — showcase-components.pagecraft.json -->
+        <div style="padding:0 8px 4px">
+          <div class="acc-cat" id="acc-cat-templates">
+            <div class="acc-header" onclick="toggleTemplates()" style="justify-content:space-between">
+              <div class="acc-cat-icon" style="background:rgba(99,102,241,.15)">🎨</div>
+              <div class="acc-cat-info">
+                <div class="acc-cat-name">Templates</div>
+                <div class="acc-cat-desc">Ready-made hero &amp; section designs</div>
+              </div>
+              <div class="acc-cat-meta">
+                <span class="acc-count" id="tpl-count">—</span>
+                <span class="acc-chevron">▼</span>
+              </div>
+            </div>
+            <div class="acc-body">
+              <div class="acc-items" id="acc-items-templates">
+                <p style="font-size:11px;color:var(--muted);text-align:center;padding:12px 8px" id="tpl-empty-msg">
+                  Click to load templates…
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- My Components — accordion style at the bottom -->
         <div id="saved-components-section" style="padding:0 8px 12px">
           <div class="acc-cat" id="acc-cat-saved">

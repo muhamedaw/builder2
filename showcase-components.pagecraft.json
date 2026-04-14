@@ -1,7 +1,7 @@
 {
   "format": "pagecraft-components-v1",
   "exportedAt": "2026-04-04T12:00:00.000Z",
-  "count": 12,
+  "count": 32,
   "components": [
 
     {
@@ -331,6 +331,676 @@
       },
       "userId": "guest",
       "updatedAt": "2026-04-04T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_013_hero",
+      "name": "🌌 Deep Space Glassmorphism",
+      "desc": "Dark galaxy bg with glassmorphic overlay feel — high-impact SaaS/AI hero",
+      "sectionType": "hero",
+      "props": {
+        "headline": "The Future of Work Starts Here",
+        "subheadline": "Harness the power of AI to automate your entire workflow. Join 50,000+ teams building smarter, faster, and without limits.",
+        "ctaText": "Start for Free — No Card",
+        "ctaLink": "#signup",
+        "ctaSecText": "See It In Action →",
+        "ctaSecLink": "#demo",
+        "align": "center",
+        "minHeight": "680",
+        "bgColor": "#030712",
+        "textColor": "#f0f9ff",
+        "bgImage": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#030712",
+        "overlayOpacity": "0.70",
+        "_elAnims": {
+          "sc_013_hero:h1:1":  { "preset": "fade-up",  "dur": 0.8, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_013_hero:p:1":   { "preset": "fade-up",  "dur": 0.7, "delay": 0.18, "ease": "ease-out", "repeat": "1" },
+          "sc_013_hero:a:1":   { "preset": "zoom-in",  "dur": 0.5, "delay": 0.35, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_013_hero:a:2":   { "preset": "fade-up",  "dur": 0.5, "delay": 0.45, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_014_hero",
+      "name": "⚡ Neon Purple Split",
+      "desc": "Electric purple gradient bg — futuristic and conversion-optimised for tech products",
+      "sectionType": "hero",
+      "props": {
+        "headline": "10× Your Output. Zero Compromise.",
+        "subheadline": "The only platform purpose-built for ambitious teams. Real-time collaboration, AI-native workflows, and enterprise-grade security — all in one.",
+        "ctaText": "Get Early Access",
+        "ctaLink": "#waitlist",
+        "ctaSecText": "Watch Demo",
+        "ctaSecLink": "#video",
+        "align": "left",
+        "minHeight": "660",
+        "bgColor": "#0a0010",
+        "textColor": "#faf5ff",
+        "bgImage": "https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0a0010",
+        "overlayOpacity": "0.60",
+        "_elAnims": {
+          "sc_014_hero:h1:1":  { "preset": "fade-right", "dur": 0.8, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_014_hero:p:1":   { "preset": "fade-right", "dur": 0.7, "delay": 0.15, "ease": "ease-out", "repeat": "1" },
+          "sc_014_hero:a:1":   { "preset": "zoom-in",    "dur": 0.5, "delay": 0.30, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_014_hero:a:2":   { "preset": "fade-up",    "dur": 0.4, "delay": 0.40, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_015_hero",
+      "name": "🔬 Tech Circuit Dark",
+      "desc": "Circuit-board bg with deep dark overlay — perfect for developer tools & API products",
+      "sectionType": "hero",
+      "props": {
+        "headline": "APIs That Move at the Speed of Thought",
+        "subheadline": "Build, test, and ship production-grade integrations in minutes. Trusted by 8,000+ engineering teams at companies that can't afford downtime.",
+        "ctaText": "Read the Docs",
+        "ctaLink": "#docs",
+        "ctaSecText": "Start Free Trial →",
+        "ctaSecLink": "#trial",
+        "align": "center",
+        "minHeight": "640",
+        "bgColor": "#01080f",
+        "textColor": "#e0f2fe",
+        "bgImage": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#01080f",
+        "overlayOpacity": "0.82",
+        "_elAnims": {
+          "sc_015_hero:h1:1":  { "preset": "blur-in",  "dur": 0.9, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_015_hero:p:1":   { "preset": "fade-up",  "dur": 0.7, "delay": 0.20, "ease": "ease-out", "repeat": "1" },
+          "sc_015_hero:a:1":   { "preset": "zoom-in",  "dur": 0.5, "delay": 0.38, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_015_hero:a:2":   { "preset": "fade-up",  "dur": 0.4, "delay": 0.48, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_016_hero",
+      "name": "🔲 Neo-Brutalism Bold",
+      "desc": "Stark yellow-on-black neo-brutalist hero — maximalist impact, zero decoration",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Stop Tweaking. Start Shipping.",
+        "subheadline": "The no-nonsense platform for builders who value results over aesthetics. Raw speed. Brutal simplicity. Unmatched output.",
+        "ctaText": "Build Now — It's Free",
+        "ctaLink": "#start",
+        "ctaSecText": "See What Ships",
+        "ctaSecLink": "#showcase",
+        "align": "left",
+        "minHeight": "620",
+        "bgColor": "#0a0a0a",
+        "textColor": "#faff00",
+        "bgImage": "",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0a0a0a",
+        "overlayOpacity": "0",
+        "_elAnims": {
+          "sc_016_hero:h1:1":  { "preset": "rotate-in", "dur": 0.6, "delay": 0,    "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_016_hero:p:1":   { "preset": "fade-right","dur": 0.6, "delay": 0.15, "ease": "ease-out", "repeat": "1" },
+          "sc_016_hero:a:1":   { "preset": "bounce-in", "dur": 0.6, "delay": 0.28, "ease": "ease-out", "repeat": "1" },
+          "sc_016_hero:a:2":   { "preset": "fade-up",   "dur": 0.4, "delay": 0.40, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_017_hero",
+      "name": "☁️ Ultra-White Premium",
+      "desc": "Luxury white-on-white hero — editorial typography, premium brand positioning",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Crafted With Intention. Built to Last.",
+        "subheadline": "For brands that believe every pixel tells a story. Premium-tier design system trusted by the world's most recognised names.",
+        "ctaText": "Explore the Collection",
+        "ctaLink": "#work",
+        "ctaSecText": "About Our Studio",
+        "ctaSecLink": "#about",
+        "align": "center",
+        "minHeight": "680",
+        "bgColor": "#fafafa",
+        "textColor": "#0a0a0a",
+        "bgImage": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#ffffff",
+        "overlayOpacity": "0.86",
+        "_elAnims": {
+          "sc_017_hero:h1:1":  { "preset": "fade-up",  "dur": 1.0, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_017_hero:p:1":   { "preset": "fade-up",  "dur": 0.8, "delay": 0.22, "ease": "ease-out", "repeat": "1" },
+          "sc_017_hero:a:1":   { "preset": "zoom-in",  "dur": 0.5, "delay": 0.42, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_017_hero:a:2":   { "preset": "fade-up",  "dur": 0.4, "delay": 0.52, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_018_hero",
+      "name": "🎬 Cinematic Dark Drama",
+      "desc": "Dramatic dark cinematic hero — film-quality overlay perfect for storytelling brands",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Every Story Deserves an Audience.",
+        "subheadline": "The creator platform built for impact. Publish, monetise, and grow a dedicated fanbase — on your terms, not ours.",
+        "ctaText": "Claim Your Channel",
+        "ctaLink": "#create",
+        "ctaSecText": "See Creator Stories",
+        "ctaSecLink": "#stories",
+        "align": "center",
+        "minHeight": "720",
+        "bgColor": "#0c0c0c",
+        "textColor": "#f8f8f8",
+        "bgImage": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0c0c0c",
+        "overlayOpacity": "0.65",
+        "_elAnims": {
+          "sc_018_hero:h1:1":  { "preset": "fade-up",   "dur": 1.0, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_018_hero:p:1":   { "preset": "fade-up",   "dur": 0.8, "delay": 0.25, "ease": "ease-out", "repeat": "1" },
+          "sc_018_hero:a:1":   { "preset": "zoom-in",   "dur": 0.6, "delay": 0.45, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_018_hero:a:2":   { "preset": "fade-up",   "dur": 0.4, "delay": 0.55, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_019_hero",
+      "name": "🪐 Cosmic Nebula",
+      "desc": "Deep space nebula bg — immersive, mysterious, perfect for innovative B2B/B2C products",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Think Beyond the Horizon.",
+        "subheadline": "We're not building another SaaS tool. We're redefining how intelligent systems and human creativity coexist at enterprise scale.",
+        "ctaText": "Join the Beta",
+        "ctaLink": "#beta",
+        "ctaSecText": "Our Manifesto →",
+        "ctaSecLink": "#manifesto",
+        "align": "center",
+        "minHeight": "700",
+        "bgColor": "#0d0021",
+        "textColor": "#ede9fe",
+        "bgImage": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0d0021",
+        "overlayOpacity": "0.58",
+        "_elAnims": {
+          "sc_019_hero:h1:1":  { "preset": "blur-in",   "dur": 1.0, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_019_hero:p:1":   { "preset": "fade-up",   "dur": 0.8, "delay": 0.22, "ease": "ease-out", "repeat": "1" },
+          "sc_019_hero:a:1":   { "preset": "bounce-in", "dur": 0.6, "delay": 0.40, "ease": "ease-out", "repeat": "1" },
+          "sc_019_hero:a:2":   { "preset": "fade-up",   "dur": 0.4, "delay": 0.52, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_020_hero",
+      "name": "🤖 AI Command Center",
+      "desc": "Sleek AI/ML product hero — dark teal accent, precision typography for developer audiences",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Your AI Co-Pilot Is Ready.",
+        "subheadline": "Deploy fine-tuned models in 60 seconds. Scale to billions of inferences with zero DevOps overhead. Built for teams who ship, not manage.",
+        "ctaText": "Deploy Your First Model",
+        "ctaLink": "#deploy",
+        "ctaSecText": "View Benchmarks",
+        "ctaSecLink": "#benchmarks",
+        "align": "left",
+        "minHeight": "660",
+        "bgColor": "#020408",
+        "textColor": "#ccfbf1",
+        "bgImage": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#020408",
+        "overlayOpacity": "0.78",
+        "_elAnims": {
+          "sc_020_hero:h1:1":  { "preset": "fade-right", "dur": 0.8, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_020_hero:p:1":   { "preset": "fade-right", "dur": 0.7, "delay": 0.18, "ease": "ease-out", "repeat": "1" },
+          "sc_020_hero:a:1":   { "preset": "zoom-in",    "dur": 0.5, "delay": 0.34, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_020_hero:a:2":   { "preset": "fade-up",    "dur": 0.4, "delay": 0.44, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_021_hero",
+      "name": "🧊 Enterprise Navy Trust",
+      "desc": "Professional navy hero for B2B enterprise — builds trust with Fortune 500 audiences",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Enterprise Infrastructure You Can Rely On.",
+        "subheadline": "99.99% uptime SLA. SOC 2 Type II certified. Deployed in 140 countries. The infrastructure backbone for 3,200+ regulated industries worldwide.",
+        "ctaText": "Request Enterprise Demo",
+        "ctaLink": "#demo",
+        "ctaSecText": "Download Security Brief",
+        "ctaSecLink": "#security",
+        "align": "center",
+        "minHeight": "640",
+        "bgColor": "#0f1e3d",
+        "textColor": "#e2e8f0",
+        "bgImage": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0f1e3d",
+        "overlayOpacity": "0.80",
+        "_elAnims": {
+          "sc_021_hero:h1:1":  { "preset": "fade-up",  "dur": 0.7, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_021_hero:p:1":   { "preset": "fade-up",  "dur": 0.7, "delay": 0.18, "ease": "ease-out", "repeat": "1" },
+          "sc_021_hero:a:1":   { "preset": "zoom-in",  "dur": 0.5, "delay": 0.34, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "sc_021_hero:a:2":   { "preset": "fade-up",  "dur": 0.4, "delay": 0.44, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "sc_022_hero",
+      "name": "🔥 Startup Bold Orange",
+      "desc": "High-energy warm orange hero — urgency-driven copy, built to convert startup audiences",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Don't Build Alone. Launch Together.",
+        "subheadline": "The co-founder you never had. Connect with 12,000+ builders, get expert feedback in 24 hours, and ship your first version before the week is out.",
+        "ctaText": "Join 12,000+ Builders",
+        "ctaLink": "#community",
+        "ctaSecText": "Read Founder Stories",
+        "ctaSecLink": "#stories",
+        "align": "center",
+        "minHeight": "660",
+        "bgColor": "#7c2d12",
+        "textColor": "#fff7ed",
+        "bgImage": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#7c2d12",
+        "overlayOpacity": "0.68",
+        "_elAnims": {
+          "sc_022_hero:h1:1":  { "preset": "fade-up",  "dur": 0.8, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "sc_022_hero:p:1":   { "preset": "fade-up",  "dur": 0.7, "delay": 0.18, "ease": "ease-out", "repeat": "1" },
+          "sc_022_hero:a:1":   { "preset": "bounce-in","dur": 0.6, "delay": 0.34, "ease": "ease-out", "repeat": "1" },
+          "sc_022_hero:a:2":   { "preset": "fade-up",  "dur": 0.4, "delay": 0.46, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_ai_01",
+      "name": "⚡ Quantum AI Landing",
+      "desc": "Electric blue on deep black — high-converting AI/ML SaaS hero with neon accent energy",
+      "category": "Technology & AI",
+      "sectionType": "hero",
+      "props": {
+        "headline": "The AI That Thinks Ahead of You.",
+        "subheadline": "Quantum doesn't just process data — it predicts outcomes, eliminates bottlenecks, and recommends decisions before your team even asks the question. This is machine intelligence, redefined.",
+        "ctaText": "Start Your Free Trial",
+        "ctaLink": "#trial",
+        "ctaSecText": "See Live Demo →",
+        "ctaSecLink": "#demo",
+        "align": "center",
+        "minHeight": "700",
+        "bgColor": "#00040f",
+        "textColor": "#e0f2fe",
+        "bgImage": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#00040f",
+        "overlayOpacity": "0.75",
+        "_elAnims": {
+          "tpl_hero_ai_01:h1:1": { "preset": "blur-in",   "dur": 1.0, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_01:p:1":  { "preset": "fade-up",   "dur": 0.8, "delay": 0.22, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_01:a:1":  { "preset": "zoom-in",   "dur": 0.6, "delay": 0.42, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_ai_01:a:2":  { "preset": "fade-up",   "dur": 0.5, "delay": 0.52, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_ai_02",
+      "name": "🧬 Neural Matrix Dark",
+      "desc": "Matrix-code green on obsidian — cyberpunk intelligence aesthetic for developer-first products",
+      "category": "Technology & AI",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Code Less. Ship More. Think Different.",
+        "subheadline": "Neural gives your engineering team a superintelligent co-pilot that writes boilerplate, catches bugs at compile time, and auto-generates tests. 3× velocity from day one.",
+        "ctaText": "Clone the Repo",
+        "ctaLink": "#github",
+        "ctaSecText": "Read the Docs",
+        "ctaSecLink": "#docs",
+        "align": "left",
+        "minHeight": "680",
+        "bgColor": "#010d05",
+        "textColor": "#dcfce7",
+        "bgImage": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#010d05",
+        "overlayOpacity": "0.80",
+        "_elAnims": {
+          "tpl_hero_ai_02:h1:1": { "preset": "fade-right", "dur": 0.9, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_02:p:1":  { "preset": "fade-right", "dur": 0.7, "delay": 0.18, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_02:a:1":  { "preset": "zoom-in",    "dur": 0.5, "delay": 0.34, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_ai_02:a:2":  { "preset": "fade-up",    "dur": 0.4, "delay": 0.44, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_ai_03",
+      "name": "☁️ Infinite Cloud Scale",
+      "desc": "Enterprise cloud platform hero — navy authority, precise copy for DevOps and infrastructure buyers",
+      "category": "Technology & AI",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Infrastructure That Scales to Infinity and Beyond.",
+        "subheadline": "Provision servers in 90 seconds. Auto-scale to 1M concurrent users without touching a config file. SOC 2 certified, GDPR compliant, and battle-tested by teams shipping 100M+ requests per day.",
+        "ctaText": "Get $300 Free Credits",
+        "ctaLink": "#signup",
+        "ctaSecText": "Architecture Overview",
+        "ctaSecLink": "#docs",
+        "align": "center",
+        "minHeight": "660",
+        "bgColor": "#05101f",
+        "textColor": "#f0f9ff",
+        "bgImage": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#05101f",
+        "overlayOpacity": "0.82",
+        "_elAnims": {
+          "tpl_hero_ai_03:h1:1": { "preset": "fade-up",  "dur": 0.9, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_03:p:1":  { "preset": "fade-up",  "dur": 0.7, "delay": 0.20, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_03:a:1":  { "preset": "zoom-in",  "dur": 0.5, "delay": 0.38, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_ai_03:a:2":  { "preset": "fade-up",  "dur": 0.4, "delay": 0.48, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_ai_04",
+      "name": "🖥 Developer-First Platform",
+      "desc": "Code-background hero for API products — monospace aesthetic, engineers as primary audience",
+      "category": "Technology & AI",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Build What You Imagine. Deploy in Minutes.",
+        "subheadline": "The platform developers actually enjoy using. Clean REST and GraphQL APIs, real-time webhooks, and an SDK that reads like great prose. No YAML hell. No vendor lock-in. Just code.",
+        "ctaText": "npm install devstack",
+        "ctaLink": "#install",
+        "ctaSecText": "Browse API Reference →",
+        "ctaSecLink": "#api",
+        "align": "left",
+        "minHeight": "660",
+        "bgColor": "#0d0d0d",
+        "textColor": "#f8fafc",
+        "bgImage": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0d0d0d",
+        "overlayOpacity": "0.85",
+        "_elAnims": {
+          "tpl_hero_ai_04:h1:1": { "preset": "fade-right", "dur": 0.8, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_04:p:1":  { "preset": "fade-right", "dur": 0.7, "delay": 0.16, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_04:a:1":  { "preset": "zoom-in",    "dur": 0.5, "delay": 0.30, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_ai_04:a:2":  { "preset": "fade-up",    "dur": 0.4, "delay": 0.40, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_ai_05",
+      "name": "🛡 Cybersecurity Command",
+      "desc": "Dark red threat-intelligence hero — authority and urgency for security products and SOC teams",
+      "category": "Technology & AI",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Your Perimeter Is Already Breached. We Stop the Rest.",
+        "subheadline": "Sentinel monitors 140 billion signals per day, detects lateral movement in under 3 seconds, and autonomously isolates threats before your team even gets paged. 96% of incidents resolved without human intervention.",
+        "ctaText": "Run Free Threat Scan",
+        "ctaLink": "#scan",
+        "ctaSecText": "Read the 2026 Threat Report",
+        "ctaSecLink": "#report",
+        "align": "center",
+        "minHeight": "700",
+        "bgColor": "#0a0005",
+        "textColor": "#ffe4e6",
+        "bgImage": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0a0005",
+        "overlayOpacity": "0.78",
+        "_elAnims": {
+          "tpl_hero_ai_05:h1:1": { "preset": "blur-in",   "dur": 1.0, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_05:p:1":  { "preset": "fade-up",   "dur": 0.8, "delay": 0.22, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_ai_05:a:1":  { "preset": "zoom-in",   "dur": 0.6, "delay": 0.40, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_ai_05:a:2":  { "preset": "fade-up",   "dur": 0.5, "delay": 0.52, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_agency_01",
+      "name": "◼ Studio Noir",
+      "desc": "Black-on-black editorial hero — pure typographic power for premium creative studios",
+      "category": "Portfolio & Agency",
+      "sectionType": "hero",
+      "props": {
+        "headline": "We Don't Follow Trends. We Set Them.",
+        "subheadline": "Studio Noir is a boutique creative consultancy for brands that refuse to be average. Brand strategy, identity systems, and digital experiences that earn attention and hold it.",
+        "ctaText": "View Selected Work",
+        "ctaLink": "#work",
+        "ctaSecText": "Start a Project",
+        "ctaSecLink": "#contact",
+        "align": "left",
+        "minHeight": "700",
+        "bgColor": "#080808",
+        "textColor": "#f5f5f5",
+        "bgImage": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#080808",
+        "overlayOpacity": "0.72",
+        "_elAnims": {
+          "tpl_hero_agency_01:h1:1": { "preset": "fade-up",  "dur": 1.0, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_01:p:1":  { "preset": "fade-up",  "dur": 0.8, "delay": 0.25, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_01:a:1":  { "preset": "zoom-in",  "dur": 0.5, "delay": 0.48, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_agency_01:a:2":  { "preset": "fade-up",  "dur": 0.4, "delay": 0.58, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_agency_02",
+      "name": "🌿 Creative Collective",
+      "desc": "Warm sand and sage — soft organic aesthetic for independent studios, photographers and art directors",
+      "category": "Portfolio & Agency",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Slow Design for a Fast World.",
+        "subheadline": "We believe the best work takes time. Our collective of 12 independent designers, photographers, and copywriters creates campaigns with intention — work that still feels right three years from now.",
+        "ctaText": "See Our Collective",
+        "ctaLink": "#collective",
+        "ctaSecText": "Available for 2026 Projects",
+        "ctaSecLink": "#book",
+        "align": "center",
+        "minHeight": "680",
+        "bgColor": "#2c2416",
+        "textColor": "#fdf6ec",
+        "bgImage": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#2c2416",
+        "overlayOpacity": "0.68",
+        "_elAnims": {
+          "tpl_hero_agency_02:h1:1": { "preset": "fade-up",  "dur": 1.2, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_02:p:1":  { "preset": "fade-up",  "dur": 0.9, "delay": 0.28, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_02:a:1":  { "preset": "zoom-in",  "dur": 0.6, "delay": 0.50, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_agency_02:a:2":  { "preset": "fade-up",  "dur": 0.5, "delay": 0.62, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_agency_03",
+      "name": "🔠 Brutalist Type Hero",
+      "desc": "Oversized typography on raw white — bold, confrontational, unmistakable for progressive agencies",
+      "category": "Portfolio & Agency",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Big Ideas. Bigger Execution.",
+        "subheadline": "We are FORM — a culture-first branding agency that builds identities too bold to ignore. No safe choices. No generic deliverables. Just honest work that earns its place in the world.",
+        "ctaText": "Our Latest Campaign",
+        "ctaLink": "#campaigns",
+        "ctaSecText": "Apply to Work With Us",
+        "ctaSecLink": "#apply",
+        "align": "left",
+        "minHeight": "680",
+        "bgColor": "#f0f0f0",
+        "textColor": "#0a0a0a",
+        "bgImage": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#f0f0f0",
+        "overlayOpacity": "0.88",
+        "_elAnims": {
+          "tpl_hero_agency_03:h1:1": { "preset": "rotate-in", "dur": 0.7, "delay": 0,    "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_agency_03:p:1":  { "preset": "fade-right","dur": 0.7, "delay": 0.20, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_03:a:1":  { "preset": "bounce-in", "dur": 0.6, "delay": 0.36, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_03:a:2":  { "preset": "fade-up",   "dur": 0.5, "delay": 0.48, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_agency_04",
+      "name": "✦ Luxury Brand Studio",
+      "desc": "Obsidian and gold — ultra-premium positioning for luxury brand consultancies and high-end studios",
+      "category": "Portfolio & Agency",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Where Heritage Meets the Future of Luxury.",
+        "subheadline": "We shape the identities of the world's most coveted brands — from Maison-level fashion houses to next-generation private banking experiences. Our work whispers. The results speak volumes.",
+        "ctaText": "Request a Private Consultation",
+        "ctaLink": "#consult",
+        "ctaSecText": "Selected Clients",
+        "ctaSecLink": "#clients",
+        "align": "center",
+        "minHeight": "720",
+        "bgColor": "#07060a",
+        "textColor": "#f5f0e8",
+        "bgImage": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#07060a",
+        "overlayOpacity": "0.70",
+        "_elAnims": {
+          "tpl_hero_agency_04:h1:1": { "preset": "blur-in",  "dur": 1.2, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_04:p:1":  { "preset": "fade-up",  "dur": 1.0, "delay": 0.30, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_04:a:1":  { "preset": "zoom-in",  "dur": 0.6, "delay": 0.55, "ease": "cubic-bezier(.34,1.56,.64,1)", "repeat": "1" },
+          "tpl_hero_agency_04:a:2":  { "preset": "fade-up",  "dur": 0.5, "delay": 0.68, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
+    },
+
+    {
+      "id": "tpl_hero_agency_05",
+      "name": "🎞 Motion & Digital Studio",
+      "desc": "Vivid gradient-mesh hero for motion studios and full-service digital agencies — energy and versatility",
+      "category": "Portfolio & Agency",
+      "sectionType": "hero",
+      "props": {
+        "headline": "Motion is Our Native Language.",
+        "subheadline": "From 30-second brand films to full-scale campaign productions — we make brands move. Our Los Angeles and Amsterdam studios partner with global brands to create content that stops the scroll and starts conversations.",
+        "ctaText": "Watch Our Reel",
+        "ctaLink": "#reel",
+        "ctaSecText": "Get a Project Quote",
+        "ctaSecLink": "#quote",
+        "align": "center",
+        "minHeight": "700",
+        "bgColor": "#0f0520",
+        "textColor": "#faf5ff",
+        "bgImage": "https://images.unsplash.com/photo-1535223289827-42f1e9919769?w=1920&q=80",
+        "videoEnabled": "false",
+        "videoType": "youtube",
+        "videoUrl": "",
+        "overlayColor": "#0f0520",
+        "overlayOpacity": "0.65",
+        "_elAnims": {
+          "tpl_hero_agency_05:h1:1": { "preset": "blur-in",   "dur": 1.0, "delay": 0,    "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_05:p:1":  { "preset": "fade-up",   "dur": 0.8, "delay": 0.24, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_05:a:1":  { "preset": "bounce-in", "dur": 0.6, "delay": 0.44, "ease": "ease-out", "repeat": "1" },
+          "tpl_hero_agency_05:a:2":  { "preset": "fade-up",   "dur": 0.5, "delay": 0.56, "ease": "ease-out", "repeat": "1" }
+        }
+      },
+      "userId": "guest",
+      "updatedAt": "2026-04-13T12:00:00.000Z"
     }
 
   ]

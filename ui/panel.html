@@ -5,35 +5,12 @@
       <div class="panel-section-name" id="panel-section-name">
         <span id="panel-section-label" style="color:var(--muted);font-weight:400;font-size:11px">No section selected</span>
       </div>
-      <div class="ptabs">
-        <div class="ptab active" id="ptab-edit"  onclick="switchPTab('edit')"><span class="ptab-icon">✏️</span>Content</div>
-        <div class="ptab"        id="ptab-style" onclick="switchPTab('style')"><span class="ptab-icon">🎨</span>Style</div>
-        <div class="ptab"        id="ptab-layout" onclick="switchPTab('layout')"><span class="ptab-icon">⚡</span>Layout</div>
-        <div class="ptab"        id="ptab-live"  onclick="switchPTab('live')"><span class="ptab-icon">👁</span>Live</div>
-      </div>
     </div>
-    <div id="ppanel-edit"  class="panel-body" style="display:block">
+    <div id="ppanel-edit" class="panel-body" style="display:block">
       <div class="p-empty">
         <div class="p-empty-icon">🎛</div>
         <p>Select a section on the canvas to edit its content</p>
         <span class="p-empty-hint">Click any section to start</span>
       </div>
-    </div>
-    <div id="ppanel-style" class="panel-body" style="display:none">
-      <div class="p-empty">
-        <div class="p-empty-icon">🎨</div>
-        <p>Select a section to adjust colors, fonts, and styling</p>
-        <span class="p-empty-hint">Click any section to start</span>
-      </div>
-    </div>
-    <div id="ppanel-layout" class="panel-body" style="display:none">
-      <div class="p-empty">
-        <div class="p-empty-icon">📐</div>
-        <p>Select a section to adjust spacing, alignment, and layout</p>
-        <span class="p-empty-hint">Click any section to start</span>
-      </div>
-    </div>
-    <div id="ppanel-live" style="display:none;flex:1;overflow:hidden">
-      <iframe id="live-frame" class="live-frame" srcdoc="<p style='padding:20px;color:#888;font-size:13px'>Add sections to preview</p>"></iframe>
     </div>
   </aside>

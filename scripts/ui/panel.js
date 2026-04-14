@@ -2,7 +2,7 @@
 
 function renderPanel() {
   const sec = S.sections.find(s=>s.id===S.selected)
-  renderEditP(sec); renderStyleP(sec)
+  renderEditP(sec)
 }
 function renderEditP(sec) {
   const el=document.getElementById('ppanel-edit')
@@ -213,17 +213,6 @@ function renderPF(f,sec) {
   if(f.t==='textarea')return`<div class="prop-row"><label>${f.l}${_aib(f.k,f.l)}</label><textarea class="prop-textarea" data-pk="${f.k}" rows="3">${e(val)}</textarea></div>`
   if(f.t==='select')return`<div class="prop-row"><label>${f.l}</label><select class="prop-select" data-pk="${f.k}">${f.o.map(o=>`<option value="${o}"${val===o?' selected':''}>${o}</option>`).join('')}</select></div>`
   return`<div class="prop-row"><label>${f.l}${_aib(f.k,f.l)}</label><input class="prop-input" data-pk="${f.k}" value="${e(val)}" placeholder="${f.l}"/></div>`
-}
-function renderStyleP(sec) {
-  const el=document.getElementById('ppanel-style')
-  if(!sec){el.innerHTML='<div class="p-empty"><div class="p-empty-icon">🎨</div><p>Select a section to adjust styling</p></div>';return}
-  const flds=SS[sec.type]||[]
-  if(!flds.length){el.innerHTML='<div class="p-empty"><div class="p-empty-icon">🎨</div><p>Style this section directly inside your HTML code using inline styles or CSS.</p></div>';return}
-  el.innerHTML=`<div class="prop-group"><div class="prop-group-label">Colors</div>${flds.map(f=>`<div class="prop-row"><label>${f.l}</label><div class="color-row"><input type="color" class="color-swatch" data-pk="${f.k}" value="${sec.props[f.k]||'#000000'}"/><input type="text" class="prop-input" data-pk="${f.k}" value="${e(sec.props[f.k]||'')}"/></div></div>`).join('')}</div>`
-  el.querySelectorAll('[data-pk]').forEach(inp=>{
-    inp.addEventListener('input',()=>setProp(sec.id,inp.dataset.pk,inp.value))
-    inp.addEventListener('change',()=>setProp(sec.id,inp.dataset.pk,inp.value,true))
-  })
 }
 
 /* ══════════════════════════════════════════════════════
@@ -486,15 +475,11 @@ function onImgFileDrop(ev) {
 }
 
 /* ══════════════════════════════════════════════════════
-   LIVE PREVIEW
-══════════════════════════════════════════════════════ */
-let liveT=null
-function scheduleLive(){if(S.panelTab!=='live')return;clearTimeout(liveT);liveT=setTimeout(updateLive,350)}
-function updateLive(){const f=document.getElementById('live-frame');f.srcdoc=S.sections.length?genHTML({preview:true}):`<p style="padding:20px;color:#888;font-size:13px">Add sections to preview</p>`}
-
-/* ══════════════════════════════════════════════════════
    DEVICE / MODE / TABS / MISC
 ══════════════════════════════════════════════════════ */
+// Live preview removed — keep stub so callers don't throw
+function scheduleLive() {}
+
 function setDevice(d){
   RESP.customWidth = null
   const fr = document.getElementById('canvas-frame')
@@ -513,7 +498,15 @@ function setMode(m){
   S.mode=m
   document.getElementById('mode-edit').classList.toggle('active',m==='edit')
   document.getElementById('mode-preview').classList.toggle('active',m==='preview')
+
+  // Toggle full-width preview: hide sidebar, panel, inspector
+  document.body.classList.toggle('builder-preview', m === 'preview')
+
+  // Force all sections to re-render so preview ↔ edit always match exactly
+  if (typeof RenderEngine !== 'undefined') RenderEngine.invalidateAll()
+
   renderCanvas()
+
   if(m==='preview' && typeof UXGuide!=='undefined') UXGuide.markPreviewed()
   else if(typeof UXGuide!=='undefined') UXGuide.update()
   if (typeof VisualInspector !== 'undefined') {
@@ -540,77 +533,8 @@ function switchSTab(id){
   }
 }
 function switchPTab(id) {
+  // Legacy shim — panel now has only one pane (edit)
   S.panelTab = id
-  ;['edit','style','layout','live'].forEach(t => {
-    const tab = document.getElementById('ptab-' + t)
-    const pnl = document.getElementById('ppanel-' + t)
-    if (tab) tab.classList.toggle('active', t === id)
-    if (pnl) pnl.style.display = t === id ? (t === 'live' ? 'flex' : 'block') : 'none'
-  })
-  if (id === 'live') updateLive()
-  if (id === 'layout') renderLayoutPanel()
-}
-
-function renderLayoutPanel() {
-  const sec = S.sections.find(s => s.id === S.selected)
-  const pnl = document.getElementById('ppanel-layout')
-  if (!pnl) return
-  if (!sec) {
-    pnl.innerHTML = `<div class="p-empty"><div class="p-empty-icon">📐</div><p>Select a section to adjust layout</p><span class="p-empty-hint">Click any section to start</span></div>`
-    return
-  }
-  const p = sec.props
-  pnl.innerHTML = `
-    <div class="prop-group">
-      <div class="prop-group-label">Spacing</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div><div style="font-size:10px;color:var(--muted);margin-bottom:4px">Min Height</div>
-          <input class="prop-inp" type="number" value="${p.minHeight||400}" min="100" max="1200" step="20"
-            oninput="setProp('${sec.id}','minHeight',this.value)" style="width:100%"/></div>
-        <div><div style="font-size:10px;color:var(--muted);margin-bottom:4px">Max Width</div>
-          <input class="prop-inp" type="text" value="${p.maxWidth||'1200px'}"
-            oninput="setProp('${sec.id}','maxWidth',this.value)" style="width:100%"/></div>
-      </div>
-    </div>
-    <div class="prop-group">
-      <div class="prop-group-label">Alignment</div>
-      <div style="display:flex;gap:4px">
-        ${[
-          { val:'left',   label:'Left',   icon:'⬅' },
-          { val:'center', label:'Center', icon:'↔' },
-          { val:'right',  label:'Right',  icon:'➡' },
-        ].map(({val, label, icon}) => {
-          const active = (p.align || 'center') === val
-          const border = active ? 'var(--accent)' : 'var(--border2)'
-          const bg     = active ? 'rgba(108,99,255,.15)' : 'none'
-          const color  = active ? 'var(--accent)' : 'var(--muted)'
-          return `<button onclick="setProp('${sec.id}','align','${val}');renderLayoutPanel()"
-            style="flex:1;padding:8px 4px;border-radius:7px;border:1.5px solid ${border};
-            background:${bg};color:${color};
-            cursor:pointer;font-size:11px;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:3px">
-            <span>${icon}</span><span>${label}</span>
-          </button>`
-        }).join('')}
-      </div>
-    </div>
-    <div class="prop-group">
-      <div class="prop-group-label">Visibility</div>
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px;border-radius:7px;background:var(--surface2)">
-        <input type="checkbox" ${p.hidden?'':'checked'} onchange="setProp('${sec.id}','hidden',!this.checked)"
-          style="width:14px;height:14px;accent-color:var(--accent)"/>
-        <span style="font-size:12px;color:var(--text2)">Visible on page</span>
-      </label>
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px;border-radius:7px;background:var(--surface2);margin-top:6px">
-        <input type="checkbox" ${p.hideOnMobile?'checked':''} onchange="setProp('${sec.id}','hideOnMobile',this.checked)"
-          style="width:14px;height:14px;accent-color:var(--accent)"/>
-        <span style="font-size:12px;color:var(--text2)">Hide on mobile</span>
-      </label>
-    </div>
-    <div class="prop-group">
-      <div class="prop-group-label">Custom CSS Class</div>
-      <input class="prop-inp" type="text" value="${p.cssClass||''}" placeholder="my-section"
-        oninput="setProp('${sec.id}','cssClass',this.value)"/>
-    </div>`
 }
 function onSecClick(ev,id){
   if(ev.target.isContentEditable)return

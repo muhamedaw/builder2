@@ -4,7 +4,8 @@
    RIGHT PANEL
 ══════════════════════════════════════════════════════ */
 .panel{width:296px;background:var(--surface);border-left:1px solid var(--border);
-  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;
+  position:fixed;right:0;top:50px;bottom:0;z-index:200}
 /* ── Right Panel Header ── */
 .panel-header{padding:12px 14px 0;border-bottom:1px solid var(--border);flex-shrink:0}
 .panel-section-name{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:10px;
@@ -56,8 +57,8 @@
 .bb-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:.03em}
 .bb-badge.pro{background:linear-gradient(135deg,rgba(108,99,255,.25),rgba(167,139,250,.2));color:#a78bfa;border:1px solid rgba(108,99,255,.3)}
 /* App layout — full height with bottom bar */
-.app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
-.workspace{flex:1;min-height:0}
+/* .app defined in topbar.css with padding-top:50px */
+.workspace{flex:1;min-height:0;overflow:hidden;position:relative}
 .prop-group{margin-bottom:20px}
 .prop-group-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);margin-bottom:9px;display:flex;align-items:center;gap:6px}

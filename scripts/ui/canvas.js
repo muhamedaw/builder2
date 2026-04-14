@@ -562,6 +562,7 @@ function bindInline(rerendered) {
         sec.props[cl.dataset.key] = cl.innerText; scheduleLive()
         const pi = document.querySelector(`[data-pk="${cl.dataset.key}"]`)
         if(pi && pi !== document.activeElement) pi.value = cl.innerText
+        scheduleAutoSave()
       })
       cl.addEventListener('focus', () => { if(S.selected !== cl.dataset.id) selectSection(cl.dataset.id) })
       cl.addEventListener('keydown', ev => { if(ev.key === 'Enter' && cl.tagName !== 'P'){ev.preventDefault(); cl.blur()} })

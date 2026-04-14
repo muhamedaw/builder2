@@ -283,6 +283,22 @@ function filterSections(q) {
     }
   })
 
+  // Also search loaded templates
+  if (_tplState.loaded) {
+    const tplCatEl = document.getElementById('acc-cat-templates')
+    const tplItems = document.getElementById('acc-items-templates')
+    if (tplCatEl && tplItems) {
+      let tplVisible = 0
+      tplItems.querySelectorAll('.block-card').forEach(card => {
+        const match = card.textContent.toLowerCase().includes(q)
+        card.classList.toggle('acc-hidden', !match)
+        if (match) { tplVisible++; totalVisible++ }
+      })
+      if (tplVisible > 0) tplCatEl.classList.add('open')
+      else tplCatEl.classList.remove('open')
+    }
+  }
+
   // Global empty state
   const list = document.getElementById('block-list')
   const existing = list.querySelector('.acc-empty')
@@ -292,6 +308,145 @@ function filterSections(q) {
   } else {
     if (existing) existing.remove()
   }
+}
+
+/* ══ TEMPLATE GALLERY — showcase-components.pagecraft.json ══ */
+
+const _tplState = { loaded: false, loading: false, open: false, data: [] }
+
+// Category labels for templates
+const _TPL_CATEGORY_LABELS = {
+  hero:        { label: 'Hero', icon: '🦸', color: 'rgba(108,99,255,.15)' },
+  features:    { label: 'Features', icon: '✨', color: 'rgba(139,92,246,.15)' },
+  testimonial: { label: 'Trust & Proof', icon: '💬', color: 'rgba(16,185,129,.15)' },
+  pricing:     { label: 'Conversion', icon: '💎', color: 'rgba(14,165,233,.15)' },
+  about:       { label: 'Content', icon: '📝', color: 'rgba(245,158,11,.15)' },
+  faq:         { label: 'Content', icon: '📝', color: 'rgba(245,158,11,.15)' },
+  gallery:     { label: 'Media', icon: '🖼', color: 'rgba(236,72,153,.15)' },
+  footer:      { label: 'Footer', icon: '🔻', color: 'rgba(100,116,139,.15)' },
+}
+
+function _tplCardHTML(comp) {
+  const meta = _TPL_CATEGORY_LABELS[comp.sectionType] || { label: comp.sectionType, icon: '◻', color: 'rgba(100,116,139,.15)' }
+  return `<div class="block-card tpl-card" onclick="addFromShowcase('${comp.id}')" title="${comp.desc || comp.name}">
+    <div class="bci" style="background:${meta.color}">${meta.icon}</div>
+    <div style="flex:1;min-width:0">
+      <div class="bcl">${comp.name}</div>
+      <div class="bcd" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${comp.desc || ''}</div>
+    </div>
+  </div>`
+}
+
+function _renderTemplatesByCategory(data) {
+  // Group by `category` field if present, else fall back to sectionType
+  const byGroup = {}
+  data.forEach(c => {
+    const key = c.category || _TPL_CATEGORY_LABELS[c.sectionType]?.label || c.sectionType || 'Other'
+    if (!byGroup[key]) byGroup[key] = []
+    byGroup[key].push(c)
+  })
+
+  // Sort: named categories first (alphabetical), then sectionType fallbacks
+  const namedFirst = ['Technology & AI', 'Portfolio & Agency', 'Professional Services', 'Launch & Coming Soon']
+  const sectionOrder = ['hero','features','testimonial','pricing','about','faq','gallery','footer']
+  const allKeys = Object.keys(byGroup)
+  const sorted = [
+    ...namedFirst.filter(k => byGroup[k]),
+    ...sectionOrder.map(t => _TPL_CATEGORY_LABELS[t]?.label).filter(k => k && byGroup[k] && !namedFirst.includes(k)),
+    ...allKeys.filter(k => !namedFirst.includes(k) && !sectionOrder.map(t => _TPL_CATEGORY_LABELS[t]?.label).includes(k))
+  ]
+
+  // Deduplicate
+  const seen = new Set()
+  const deduped = sorted.filter(k => { if (seen.has(k)) return false; seen.add(k); return true })
+
+  const _categoryIcons = {
+    'Technology & AI': { icon: '🤖', color: 'rgba(99,102,241,.15)' },
+    'Portfolio & Agency': { icon: '🎨', color: 'rgba(236,72,153,.15)' },
+    'Professional Services': { icon: '💼', color: 'rgba(14,165,233,.15)' },
+    'Launch & Coming Soon': { icon: '🚀', color: 'rgba(245,158,11,.15)' },
+  }
+
+  return deduped.map(groupKey => {
+    const comps = byGroup[groupKey]
+    const icon = _categoryIcons[groupKey]?.icon || '◻'
+    return `<div style="padding:6px 8px 2px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:4px 2px 6px;display:flex;align-items:center;gap:5px">
+        <span>${icon}</span><span>${groupKey} (${comps.length})</span>
+      </div>
+      ${comps.map(c => _tplCardHTML(c)).join('')}
+    </div>`
+  }).join('')
+}
+
+function toggleTemplates() {
+  const catEl = document.getElementById('acc-cat-templates')
+  const items = document.getElementById('acc-items-templates')
+  if (!catEl) return
+
+  _tplState.open = !_tplState.open
+  catEl.classList.toggle('open', _tplState.open)
+
+  if (_tplState.open && !_tplState.loaded && !_tplState.loading) {
+    _tplState.loading = true
+    const msg = document.getElementById('tpl-empty-msg')
+    if (msg) msg.textContent = 'Loading templates…'
+
+    fetch('/showcase-components.pagecraft.json')
+      .then(r => r.json())
+      .then(json => {
+        _tplState.data   = json.components || []
+        _tplState.loaded = true
+        _tplState.loading = false
+        const count = _tplState.data.length
+        const countEl = document.getElementById('tpl-count')
+        if (countEl) countEl.textContent = count
+        if (items) items.innerHTML = _renderTemplatesByCategory(_tplState.data)
+      })
+      .catch(() => {
+        _tplState.loading = false
+        if (items) items.innerHTML = '<p style="font-size:11px;color:var(--muted);text-align:center;padding:12px">Failed to load templates</p>'
+      })
+  }
+}
+
+function addFromShowcase(compId) {
+  if (!_tplState.loaded) return
+  const comp = _tplState.data.find(c => c.id === compId)
+  if (!comp) return
+  if (!DEFS[comp.sectionType]) { toast(`Section type "${comp.sectionType}" not available`, '⚠️'); return }
+
+  pushH('Add template: ' + comp.name)
+
+  // Remap _elAnims keys: replace template prefix with new section ID
+  const newId = uid()
+  let props = JSON.parse(JSON.stringify(comp.props))
+  if (props._elAnims) {
+    const remapped = {}
+    Object.entries(props._elAnims).forEach(([key, val]) => {
+      // key format: "templateId:tag:N" or "templateId:__section"
+      const colonIdx = key.indexOf(':')
+      if (colonIdx > -1) {
+        remapped[newId + key.slice(colonIdx)] = val
+      } else {
+        remapped[key] = val
+      }
+    })
+    props._elAnims = remapped
+  }
+
+  const sec = { id: newId, type: comp.sectionType, props }
+  const insertIdx = S.selected
+    ? S.sections.findIndex(s => s.id === S.selected) + 1
+    : S.sections.length
+  S.sections.splice(insertIdx, 0, sec)
+  S.selected = sec.id
+
+  renderAll('structure')
+  scrollToSection(sec.id)
+  // Restore animations on the newly added section
+  if (typeof AnimationEngine !== 'undefined') AnimationEngine.restoreSection(sec.id)
+  toast(`"${comp.name}" added`, '🎨')
 }
 
 /* ══ STAGE 2: KEYBOARD NAVIGATION ══════════════════════════ */

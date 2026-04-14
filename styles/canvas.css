@@ -4,16 +4,25 @@
    CANVAS
 ══════════════════════════════════════════════════════ */
 .canvas-wrap{flex:1;background:var(--canvas-bg);overflow:auto;
-  display:flex;justify-content:center;padding:40px 24px 80px;position:relative}
+  display:flex;justify-content:center;padding:0;position:relative;
+  margin-left:252px;margin-right:296px}
 .canvas-wrap::-webkit-scrollbar{width:6px} .canvas-wrap::-webkit-scrollbar-thumb{background:#b0b0c0;border-radius:4px}
-.canvas-pos{position:relative;width:100%;max-width:920px}
-.canvas-badge{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
-  font-size:11px;color:#888;background:var(--canvas-bg);padding:1px 10px;border-radius:6px;pointer-events:none;white-space:nowrap}
-.canvas-frame{width:100%;background:#fff;min-height:560px;
+.canvas-pos{position:relative;width:100%;max-width:none}
+.canvas-badge{position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  font-size:11px;color:#888;background:var(--canvas-bg);padding:1px 10px;border-radius:6px;pointer-events:none;white-space:nowrap;z-index:30}
+.canvas-frame{width:100%;background:#fff;min-height:100vh;
   box-shadow:0 2px 32px rgba(0,0,0,.14),0 0 0 1px rgba(0,0,0,.06);
-  border-radius:3px;overflow:visible;transition:max-width .3s;position:relative}
+  overflow:visible;position:relative}
 .canvas-frame.tablet{max-width:768px;margin:0 auto} .canvas-frame.mobile{max-width:375px;margin:0 auto}
 .canvas-frame.preview-mode .section-controls,.canvas-frame.preview-mode .section-label{opacity:0!important;pointer-events:none}
+
+/* ── Preview mode — full-width, hide all builder chrome ─────────────────── */
+body.builder-preview .sidebar      { visibility:hidden !important; pointer-events:none !important }
+body.builder-preview .panel        { visibility:hidden !important; pointer-events:none !important }
+body.builder-preview #pc-inspector { visibility:hidden !important; pointer-events:none !important }
+body.builder-preview .canvas-badge { display:none !important }
+body.builder-preview .canvas-wrap  { margin:0 !important; background:#fff }
+body.builder-preview .canvas-frame { box-shadow:none !important }
 
 /* Canvas drop-active state */
 .canvas-frame.canvas-drop-active{outline:2px dashed var(--accent);outline-offset:3px}
@@ -41,7 +50,7 @@
 /* Drop indicator line between sections */
 .drop-line{
   height:3px;background:var(--dnd-line);border-radius:2px;
-  margin:0;opacity:0;transition:opacity .12s;position:relative;z-index:50;
+  margin:0;opacity:0;transition:opacity .12s;position:relative;z-index:100;
   pointer-events:none;
 }
 .drop-line::before,.drop-line::after{

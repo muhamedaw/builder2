@@ -44,9 +44,9 @@ ${p.ctaSecText?`<a href="${eu(p.ctaSecLink||'#')}" style="display:inline-flex;al
 <p contenteditable="true" data-id="${id}" data-key="body" style="font-size:15px;line-height:1.8;opacity:.75;margin:0 0 24px;">${e(p.body)}</p>
 <div style="background:${p.accentColor}18;border-left:3px solid ${p.accentColor};padding:14px 18px;border-radius:0 8px 8px 0;font-size:14px;font-weight:500;line-height:1.6;"><span contenteditable="true" data-id="${id}" data-key="highlight">${e(p.highlight)}</span></div>
 </div>
-<div style="direction:ltr;"><div class="img-editable" onclick="openModal('${id}','image')">
+<div style="direction:ltr;"><div class="img-editable">
 <img src="${eu(p.image)}" alt="About" style="width:100%;border-radius:16px;display:block;box-shadow:0 20px 60px rgba(0,0,0,.12);" onerror="this.src='https://placehold.co/520x360/e2e8f0/94a3b8?text=Image'"/>
-<div class="img-overlay"><div class="img-edit-btn">🖼 Replace Image</div></div>
+<div class="img-overlay" onclick="openModal('${id}','image')"><div class="img-edit-btn">🖼 Replace Image</div></div>
 </div></div></div></section>`},
 
   contact(p,id){
@@ -95,9 +95,9 @@ ${fs.map(f=>`<div style="background:${p.accentColor}0d;border:1px solid ${p.acce
 <div style="font-size:2rem;color:${p.accentColor};margin-bottom:8px;">${st}</div>
 <blockquote contenteditable="true" data-id="${id}" data-key="quote" style="font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:500;line-height:1.7;font-style:italic;margin:0 0 36px;opacity:.9;">"${e(p.quote)}"</blockquote>
 <div style="display:flex;align-items:center;justify-content:center;gap:14px;">
-<div class="img-editable" style="width:52px;height:52px;flex-shrink:0;border-radius:50%;overflow:hidden;" onclick="openModal('${id}','avatar')">
+<div class="img-editable" style="width:52px;height:52px;flex-shrink:0;border-radius:50%;overflow:hidden;">
 ${p.avatar?`<img src="${eu(p.avatar)}" style="width:52px;height:52px;object-fit:cover;display:block;"/>`:`<div style="width:52px;height:52px;background:${ec(p.accentColor)}33;display:flex;align-items:center;justify-content:center;font-size:22px;">${e(p.author).charAt(0)}</div>`}
-<div class="img-overlay" style="border-radius:50%;"><div class="img-edit-btn" style="font-size:10px;padding:4px 8px;">Edit</div></div>
+<div class="img-overlay" style="border-radius:50%;" onclick="openModal('${id}','avatar')"><div class="img-edit-btn" style="font-size:10px;padding:4px 8px;">Edit</div></div>
 </div>
 <div style="text-align:left;">
 <p contenteditable="true" data-id="${id}" data-key="author" style="font-weight:700;font-size:15px;margin:0;">${e(p.author)}</p>
@@ -266,12 +266,12 @@ ${p.avatar?`<img src="${eu(p.avatar)}" style="width:52px;height:52px;object-fit:
     // Helper: single image cell
     const imgCell = (img, extraStyle='', showCap=true) => `
       <div style="position:relative;overflow:hidden;border-radius:12px;background:#e2e8f0;${extraStyle}" class="gal-cell-${id}">
-        <div class="img-editable" onclick="openModal('${id}','${img.sk}')" style="display:block;width:100%;height:100%;">
+        <div class="img-editable" style="display:block;width:100%;height:100%;">
           <img src="${img.src||'https://placehold.co/600x400/e2e8f0/94a3b8?text=Image'}"
             alt="${e(img.cap)}"
             style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;"
             onerror="this.src='https://placehold.co/600x400/e2e8f0/94a3b8?text=Image'"/>
-          <div class="img-overlay" style="background:rgba(0,0,0,.4);">
+          <div class="img-overlay" style="background:rgba(0,0,0,.4);" onclick="openModal('${id}','${img.sk}')">
             <div class="img-edit-btn">🖼 Replace</div>
           </div>
         </div>

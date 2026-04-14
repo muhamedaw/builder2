@@ -5,7 +5,7 @@
 #pc-inspector {
   position: fixed;
   top: 60px;
-  right: 16px;
+  right: 312px; /* panel(296px) + gap(16px) — sits left of the right panel */
   width: 280px;
   max-height: calc(100vh - 80px);
   display: flex;
@@ -46,6 +46,115 @@
   font-size: 14px; padding: 2px 6px; border-radius: 4px; line-height: 1;
 }
 .ins-deselect:hover { color: #ccc; background: rgba(255,255,255,.06) }
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+.ins-tabs {
+  display: flex;
+  border-bottom: 1px solid #2a2a2a;
+  background: #1a1a1a;
+  flex-shrink: 0;
+}
+.ins-tab {
+  flex: 1;
+  padding: 8px 4px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  user-select: none;
+}
+.ins-tab:hover { color: #aaa }
+.ins-tab.ins-tab-active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+/* ── Animations tab ──────────────────────────────────────────────────────── */
+.ins-anim-wrap { padding: 10px 12px; display: flex; flex-direction: column; gap: 12px }
+.ins-anim-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+.ins-anim-section { display: flex; flex-direction: column; gap: 6px }
+.ins-anim-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #555;
+}
+.ins-anim-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.ins-anim-chip {
+  padding: 5px 4px;
+  background: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 5px;
+  font-size: 10px;
+  color: #888;
+  text-align: center;
+  cursor: pointer;
+  transition: all .12s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ins-anim-chip:hover { background: #333; color: #ccc; border-color: #444 }
+.ins-anim-chip.ins-anim-chip-active {
+  background: rgba(59,130,246,.15);
+  border-color: #3b82f6;
+  color: #60a5fa;
+  font-weight: 600;
+}
+.ins-anim-sel {
+  width: 100%;
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  color: #ccc;
+  font-size: 11px;
+  font-family: inherit;
+  padding: 5px 8px;
+  outline: none;
+  cursor: pointer;
+}
+.ins-anim-sel:focus { border-color: #3b82f6 }
+/* ── Anim target row ────────────────────────────────────────────────────── */
+.ins-anim-target-row {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 2px;
+}
+.ins-anim-target-badge {
+  font-size: 10px; font-weight: 700; padding: 3px 8px;
+  border-radius: 4px; letter-spacing: .04em;
+}
+.ins-anim-target-el  { background: rgba(59,130,246,.12); color: #60a5fa; border: 1px solid rgba(59,130,246,.25); }
+.ins-anim-target-sec { background: rgba(16,185,129,.12); color: #34d399; border: 1px solid rgba(16,185,129,.25); }
+.ins-anim-sec-btn {
+  flex: 1;
+  background: none; border: 1px dashed #333;
+  border-radius: 5px; color: #555; font-size: 10px;
+  font-family: inherit; padding: 3px 8px; cursor: pointer;
+  transition: all .12s; text-align: left;
+}
+.ins-anim-sec-btn:hover { border-color: #34d399; color: #34d399; background: rgba(16,185,129,.06); }
+
+.ins-anim-preview-btn {
+  width: 100%;
+  padding: 8px;
+  background: rgba(59,130,246,.12);
+  border: 1px solid rgba(59,130,246,.3);
+  border-radius: 6px;
+  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+.ins-anim-preview-btn:hover { background: rgba(59,130,246,.22); border-color: #3b82f6 }
 
 /* ── Scrollable body ─────────────────────────────────────────────────────── */
 .ins-body {
@@ -274,5 +383,88 @@
 }
 .ins-pin-center { font-size: 16px; color: #3b82f6 }
 
+/* ── Box Shadow toggle switch ────────────────────────────────────────────── */
+.ins-shadow-toggle { position: relative; display: inline-flex; align-items: center; cursor: pointer; flex-shrink: 0 }
+.ins-shadow-toggle input { position: absolute; opacity: 0; width: 0; height: 0 }
+.ins-shadow-track {
+  width: 28px; height: 16px; background: #333; border-radius: 8px;
+  transition: background .15s; display: block;
+}
+.ins-shadow-toggle input:checked + .ins-shadow-track { background: #3b82f6 }
+.ins-shadow-track::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 10px; height: 10px; background: #fff; border-radius: 50%;
+  transition: transform .15s; pointer-events: none;
+}
+.ins-shadow-toggle input:checked + .ins-shadow-track::after { transform: translateX(12px) }
+
+/* ── Small color swatch input ────────────────────────────────────────────── */
+.ins-color-sm {
+  width: 28px; height: 28px; border: 1px solid #333; border-radius: 6px;
+  padding: 1px; background: none; cursor: pointer; flex-shrink: 0;
+}
+
+/* ── Background module tabs ──────────────────────────────────────────────── */
+.ins-bg-tabs { display: flex; gap: 2px; background: #1a1a1a; border-radius: 7px; padding: 3px; margin-bottom: 8px }
+.ins-bg-tab {
+  flex: 1; padding: 4px 0; border: none; background: none; color: #666;
+  font-size: 11px; font-weight: 600; border-radius: 5px; cursor: pointer; transition: all .12s;
+}
+.ins-bg-tab.active { background: #2a2a2a; color: var(--text) }
+.ins-bg-panel { }
+.ins-btn-ghost {
+  background: none; border: 1px solid #333; color: #666; font-size: 11px;
+  border-radius: 5px; padding: 3px 7px; cursor: pointer; transition: all .12s;
+}
+.ins-btn-ghost:hover { border-color: #ef4444; color: #ef4444 }
+.ins-radial-lbl { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); cursor: pointer; white-space: nowrap }
+.ins-select {
+  width: 100%; padding: 4px 6px; background: #1e1e1e; border: 1px solid #2f2f2f;
+  border-radius: 5px; color: var(--text); font-size: 11px; cursor: pointer;
+}
+
+/* ── Borders module — corner radius grid ─────────────────────────────────── */
+.ins-corners {
+  display: grid;
+  grid-template-areas:
+    "tl . tr"
+    ".  p  ."
+    "bl . br";
+  grid-template-columns: 52px 1fr 52px;
+  grid-template-rows: 36px 52px 36px;
+  gap: 4px; align-items: center; justify-items: center;
+  margin: 6px 0;
+}
+.ins-corner input.ins-num { width: 48px; text-align: center; font-size: 11px }
+.ins-corner-tl { grid-area: tl }
+.ins-corner-tr { grid-area: tr }
+.ins-corner-br { grid-area: br }
+.ins-corner-bl { grid-area: bl }
+.ins-corners-preview {
+  grid-area: p; width: 52px; height: 52px;
+  background: rgba(108,99,255,.2); border: 2px solid var(--accent);
+  transition: border-radius .15s;
+}
+
 /* ── Empty state ─────────────────────────────────────────────────────────── */
 .ins-empty { color: #555; font-size: 11px; padding: 8px 0; text-align: center }
+
+/* ── Smart Layers drag handle + insertion line ───────────────────────────── */
+.sl-handle {
+  position: absolute;
+  width: 20px; height: 20px;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: grab;
+  z-index: 9000;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,.5);
+  transition: transform .1s, opacity .1s;
+  opacity: .85;
+}
+.sl-handle:hover { transform: scale(1.15); opacity: 1; }
+.sl-handle:active { cursor: grabbing; }

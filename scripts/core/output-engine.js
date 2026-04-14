@@ -16,6 +16,7 @@ const OutputEngine = (() => {
       .replace(/\s+data-drop-idx="[^"]*"/g, '')
       .replace(/\s+data-pc-section="[^"]*"/g, '')  // animation targeting attr
       .replace(/\s+data-pc-type="[^"]*"/g, '')      // semantic-id passthrough attr
+      .replace(/\s+data-pc-id="[^"]*"/g, '')         // builder micro-target IDs (keep data-pc-animation)
       .replace(/\s+data-bind="[^"]*"/g, '')
       // Builder class fragments — strip from class attribute strings
       .replace(/\b(img-editable|sec-content|section-wrapper|section-selected|drop-line|canvas-empty|anim-badge)\b\s*/g, '')

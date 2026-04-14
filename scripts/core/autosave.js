@@ -8,13 +8,18 @@ let   autoSaveTimer  = null
 
 function scheduleAutoSave() {
   clearTimeout(autoSaveTimer)
-  autoSaveTimer = setTimeout(doAutoSave, 1500)
+  autoSaveTimer = setTimeout(doAutoSave, 800)
   // Stage 9: also trigger guest autosave (works without login)
   if (typeof Reliability !== 'undefined') Reliability.scheduleGuestSave()
 }
 
+// Save immediately before the page unloads — catches any unsaved changes
+window.addEventListener('beforeunload', () => {
+  clearTimeout(autoSaveTimer)
+  doAutoSave()
+})
+
 function doAutoSave() {
-  if (!AUTH?.user) return   // don't save if not logged in
   const st = editorStore.getState()
   if (!st.sections.length) return
   try {
@@ -22,7 +27,7 @@ function doAutoSave() {
       sections:  st.sections,
       pageTitle: document.getElementById('page-title')?.value || 'My Page',
       savedAt:   new Date().toISOString(),
-      userId:    AUTH.user?.id,
+      userId:    AUTH?.user?.id || 'guest',
     }
     localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(payload))
     localStorage.setItem(AUTO_SAVE_META, JSON.stringify({
@@ -43,19 +48,11 @@ function restoreAutoSave() {
     if (!raw) return false
     const payload = JSON.parse(raw)
     if (!payload?.sections?.length) return false
-    if (payload.userId && AUTH?.user && payload.userId !== AUTH.user.id) return false
+    if (payload.userId && payload.userId !== 'guest' && AUTH?.user && payload.userId !== AUTH.user.id) return false
 
-    const meta    = JSON.parse(localStorage.getItem(AUTO_SAVE_META) || '{}')
-    const savedAt = new Date(payload.savedAt).toLocaleString()
-    const ok      = confirm(
-      `Restore auto-saved draft?\n\n` +
-      `"${meta.pageTitle || 'My Page'}" — ${meta.sections || 0} sections\n` +
-      `Saved: ${savedAt}`
-    )
-    if (!ok) return false
-
+    // Keep original section IDs — no uid() reassignment, avoids breaking _elStyles references
     editorStore.produce(draft => {
-      draft.sections = payload.sections.map(s => ({ ...s, id: uid() }))
+      draft.sections = payload.sections.map(s => ({ ...s }))
       draft.isDirty  = false
     }, 'restore-autosave')
     if (payload.pageTitle) {
@@ -63,7 +60,19 @@ function restoreAutoSave() {
       if (t) t.value = payload.pageTitle
     }
     renderAll()
-    toast('Draft restored ✓', '↺')
+    // Re-apply element-level CSS (_elStyles) after restore — style tag is rebuilt here
+    // because pc:rendered fires during renderAll but Inspector may not be ready yet
+    requestAnimationFrame(() => {
+      const secs = editorStore.getState().sections
+      secs.forEach(sec => {
+        if (sec.props._elStyles && typeof Inspector !== 'undefined') {
+          Inspector.restoreSection(sec.id)
+        }
+      })
+    })
+    const meta = JSON.parse(localStorage.getItem(AUTO_SAVE_META) || '{}')
+    const savedAt = new Date(payload.savedAt).toLocaleString()
+    toast(`Draft restored — ${meta.sections || payload.sections.length} sections (${savedAt})`, '↺')
     return true
   } catch { return false }
 }
@@ -140,7 +149,7 @@ function formatAgo(ts) {
 }
 
 // ── Logger middleware (dev tool) ──────────────────────────────────────────────
-editorStore.use(({ prev, next, action }) => {
+editorStore.use(({ action }) => {
   if (action === 'autosave' || action.startsWith('set:')) return // skip noisy ones
   // Uncomment for debugging:
   // console.log(`[Store] ${action}`, { sections: next.sections.length })

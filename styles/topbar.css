@@ -5,9 +5,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
   font-family:'Inter',system-ui,sans-serif;font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
 /* ── App shell ── */
-.app{display:flex;flex-direction:column;height:100vh}
+.app{display:flex;flex-direction:column;height:100vh;padding-top:50px}
 .topbar{height:50px;background:var(--surface);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 12px;gap:0;flex-shrink:0;z-index:200;position:relative}
+  display:flex;align-items:center;padding:0 12px;gap:0;flex-shrink:0;
+  position:fixed;top:0;left:0;right:0;z-index:300}
 .logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding-right:8px}
 .logo-mark{width:26px;height:26px;border-radius:7px;font-size:13px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center}

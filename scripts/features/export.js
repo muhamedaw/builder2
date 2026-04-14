@@ -1,6 +1,95 @@
 /* EXPORT SYSTEM
 ══════════════════════════════════════════════════════ */
 
+// ── Inject Inspector element-level styles as inline styles ───────────────────
+// pcId format: "secId:tag:N"  — finds the Nth <tag> in html and merges style attr
+function _injectElStylesInline(html, elStyles) {
+  if (!elStyles || typeof elStyles !== 'object') return html
+  // group by tag so we only do one pass per tag
+  const byTag = {}
+  Object.entries(elStyles).forEach(([pcId, styles]) => {
+    if (!styles || typeof styles !== 'object') return
+    const parts = pcId.split(':')
+    if (parts.length < 3) return
+    const tag = parts[1]
+    const n   = parseInt(parts[2], 10)
+    if (!tag || !n) return
+    const styleStr = Object.entries(styles)
+      .map(([p, v]) => `${p.replace(/([A-Z])/g, '-$1').toLowerCase()}:${v}`)
+      .join(';')
+    if (!styleStr) return
+    if (!byTag[tag]) byTag[tag] = []
+    byTag[tag].push({ n, styleStr })
+  })
+  Object.entries(byTag).forEach(([tag, entries]) => {
+    // Sort entries by n so we can count correctly across one pass
+    const sorted = entries.slice().sort((a, b) => a.n - b.n)
+    let count = 0
+    const re = new RegExp(`<${tag}(\\s[^>]*)?>`, 'gi')
+    html = html.replace(re, (match) => {
+      count++
+      const entry = sorted.find(e => e.n === count)
+      if (!entry) return match
+      if (match.includes(' style="')) {
+        return match.replace(/style="([^"]*)"/, `style="$1;${entry.styleStr}"`)
+      }
+      return match.replace(/>$/, ` style="${entry.styleStr}">`)
+    })
+  })
+  return html
+}
+
+// ── Inject element-level animation attrs inline (by positional count) ────────
+// pcId format: "secId:tag:N" — finds Nth <tag> and adds data-pc-animation attr
+// Special key: "secId:__section" — injects on the root opening tag of the section HTML
+function _injectElAnimsInline(html, elAnims) {
+  if (!elAnims || typeof elAnims !== 'object') return html
+
+  // Handle __section key: inject on the root element of the section HTML
+  Object.entries(elAnims).forEach(([pcId, cfg]) => {
+    if (!cfg || cfg.preset === 'none') return
+    if (!pcId.endsWith(':__section')) return
+    const val = `${cfg.preset}|${cfg.dur}|${cfg.delay}|${cfg.ease}|${cfg.repeat}`
+    // Replace the very first opening tag in the section HTML
+    html = html.replace(/^(\s*<\w+)(\s[^>]*)?>/,  (match, tag, attrs) => {
+      const a = attrs || ''
+      if (a.includes('data-pc-animation=')) {
+        return match.replace(/data-pc-animation="[^"]*"/, `data-pc-animation="${val}"`)
+      }
+      return `${tag}${a} data-pc-animation="${val}">`
+    })
+  })
+
+  const byTag = {}
+  Object.entries(elAnims).forEach(([pcId, cfg]) => {
+    if (!cfg || cfg.preset === 'none') return
+    const parts = pcId.split(':')
+    if (parts.length < 3) return
+    const tag = parts[1]
+    if (tag === '__section') return           // already handled above
+    const n   = parseInt(parts[2], 10)
+    if (!tag || !n) return
+    const val = `${cfg.preset}|${cfg.dur}|${cfg.delay}|${cfg.ease}|${cfg.repeat}`
+    if (!byTag[tag]) byTag[tag] = []
+    byTag[tag].push({ n, val })
+  })
+  Object.entries(byTag).forEach(([tag, entries]) => {
+    const sorted = entries.slice().sort((a, b) => a.n - b.n)
+    let count = 0
+    const re = new RegExp(`<${tag}(\\s[^>]*)?>`, 'gi')
+    html = html.replace(re, (match) => {
+      count++
+      const entry = sorted.find(e => e.n === count)
+      if (!entry) return match
+      if (match.includes('data-pc-animation=')) {
+        return match.replace(/data-pc-animation="[^"]*"/, `data-pc-animation="${entry.val}"`)
+      }
+      return match.replace(/>$/, ` data-pc-animation="${entry.val}">`)
+    })
+  })
+  return html
+}
+
 // ── Strip builder-only attributes ────────────────────────────────────────────
 function strip(html) {
   return html
@@ -44,8 +133,14 @@ function genHTML(opts = {}) {
   const _srcSections = opts.sections || S.sections
   const _rawBody = _srcSections.map(s => {
     try {
-      let html = R[s.type](s.props, s.id)
-      // Inject animation targeting attr when animations active
+      const hasCustom = !!s.props?._customHtml
+      // Use custom HTML if Smart Layers moved elements; fall back to template renderer
+      let html = hasCustom ? s.props._customHtml : R[s.type](s.props, s.id)
+      // Inject Inspector element-level styles (skip when custom HTML — styles already embedded inline)
+      if (s.props?._elStyles && !hasCustom) html = _injectElStylesInline(html, s.props._elStyles)
+      // Inject element-level animation attrs (data-pc-animation) by position
+      if (s.props?._elAnims)  html = _injectElAnimsInline(html, s.props._elAnims)
+      // Legacy section-level animation targeting
       if (ANIM.enabled) html = stripForExport(html, s.id)
       // Inject semantic section-id marker for OutputEngine to convert to id="type"
       html = html.replace(/^(\s*<(?:section|header|footer|nav)(?:\s[^>]*)?)>/, `$1 data-pc-type="${s.type}">`)
@@ -60,7 +155,9 @@ function genHTML(opts = {}) {
   const bodyHTML     = _processed.html
   const extractedCSS = _processed.extractedCSS
 
-  const animRuntime = genAnimRuntime()
+  // AnimationEngine returns { css, script } — CSS goes in HEAD, script at end of BODY
+  const _aeRuntime   = (typeof AnimationEngine !== 'undefined') ? AnimationEngine.genExportRuntime(_srcSections) : { css: '', script: '' }
+  const animBodyScript = genAnimRuntime() + (_aeRuntime.script || '')
 
   // ── Global Styles (merged into allCSS — no extra <style> tag) ───────────
   const gsCSS = (typeof GlobalStyles !== 'undefined') ? GlobalStyles.genCSS() : ''
@@ -81,7 +178,8 @@ details summary::-webkit-details-marker{display:none}`.trim()
   const responsiveCSS = responsive ? genResponsiveCSS() : ''
 
   const _cssMinRe = /\n\s*/g
-  const allCSS = (baseCSS + (gsCSS ? '\n' + gsCSS : '') + responsiveCSS + (extractedCSS ? '\n' + extractedCSS : ''))
+  // Animation CSS merged into HEAD <style> — opacity:0 rule must be in HEAD to avoid FOUC
+  const allCSS = (baseCSS + (gsCSS ? '\n' + gsCSS : '') + responsiveCSS + (extractedCSS ? '\n' + extractedCSS : '') + (_aeRuntime.css ? '\n' + _aeRuntime.css : ''))
     .replace(_cssMinRe, minify ? '' : '\n  ')
 
   // ── SEO meta tags (merging SEOManager + export panel) ────────────────────
@@ -312,7 +410,7 @@ var Cart = { add: xcAdd, remove: xcRemove, setQty: xcSetQty };
     : ''
 
   const _heroPreloadTag = heroPreload ? `${nl}${ind}${heroPreload}` : ''
-  let _html = `<!DOCTYPE html>${nl}<html lang="${lang}">${nl}<head>${nl}${ind}${metaTags}${nl}${ind}${fontLink}${_heroPreloadTag}${nl}${ind}<style>${nl}${ind}${allCSS}${nl}${ind}</style>${customCSSTag}${wlCSS}${nl}</head>${nl}<body>${nl}${bodyHTML}${cartExportHTML}${wlBadge}${nl}${threeJS}${nl}${animRuntime}${cartExportJS}${nl}${analyticsScript}${nl}</body>${nl}</html>`
+  let _html = `<!DOCTYPE html>${nl}<html lang="${lang}">${nl}<head>${nl}${ind}${metaTags}${nl}${ind}${fontLink}${_heroPreloadTag}${nl}${ind}<style>${nl}${ind}${allCSS}${nl}${ind}</style>${customCSSTag}${wlCSS}${nl}</head>${nl}<body>${nl}${bodyHTML}${cartExportHTML}${wlBadge}${nl}${threeJS}${nl}${animBodyScript}${cartExportJS}${nl}${analyticsScript}${nl}</body>${nl}</html>`
   // ── Hook: export:beforeHTML — plugins may mutate the html string ─────────────
   const _htmlPayload = { html: _html }
   PluginSDK._emit('export:beforeHTML', _htmlPayload)

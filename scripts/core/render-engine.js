@@ -72,7 +72,7 @@ const RenderEngine = (() => {
       `onclick="onSecClick(event,'${sec.id}')">` +
       `<span class="section-label">${def.icon} ${def.label}</span>` +
       `<div class="section-controls">${_buildControls(sec.id, first, last)}</div>` +
-      `<div class="sec-content">${R[sec.type](sec.props, sec.id)}</div>` +
+      `<div class="sec-content">${sec.props._customHtml || R[sec.type](sec.props, sec.id)}</div>` +
       `</div>`
     )
   }
@@ -142,7 +142,7 @@ const RenderEngine = (() => {
         // Content (only when props changed)
         if (_propsHash.get(sec.id) !== ph) {
           const content = el.querySelector('.sec-content')
-          if (content) content.innerHTML = R[sec.type](sec.props, sec.id)
+          if (content) content.innerHTML = sec.props._customHtml || R[sec.type](sec.props, sec.id)
           _propsHash.set(sec.id, ph)
           rerendered.add(sec.id)
         }
@@ -193,6 +193,8 @@ const RenderEngine = (() => {
         if (!wrapper) return
         _mirrorIds(wrapper, secId)
       })
+      // Notify Inspector and other listeners that sections were re-rendered
+      document.dispatchEvent(new CustomEvent('pc:rendered', { detail: { rerendered: [...rerendered] } }))
     }
 
     return rerendered
@@ -201,19 +203,28 @@ const RenderEngine = (() => {
   // ── 1.2 Surgical ID Mirroring helper ─────────────────────────────────────────
   // Walk the rendered subtree and stamp data-pc-id="secId:tag:index" on
   // every leaf/interactive element that doesn't already have one.
-  const _MIRROR_TAGS = new Set(['h1','h2','h3','h4','h5','h6','p','span','a','img','button','li','input','textarea','label','blockquote','strong','em'])
+  const _MIRROR_TAGS = new Set([
+    // Inline / text
+    'h1','h2','h3','h4','h5','h6','p','span','a','strong','em','blockquote','label','li',
+    // Interactive
+    'button','input','textarea','select','img','video','iframe',
+    // Layout containers (needed for Inspector style + animation persistence)
+    'div','section','header','footer','nav','main','aside','article','figure','form',
+    'ul','ol','table','tr','td','th',
+  ])
+  const _MIRROR_TAGS_SEL = [..._MIRROR_TAGS].join(',')
 
   function _mirrorIds(wrapper, secId) {
+    // Stamp only within .sec-content so counters match _injectElStylesInline in export.js
+    const root = wrapper.querySelector('.sec-content') || wrapper
     const counters = {}
-    wrapper.querySelectorAll(_MIRROR_TAGS_SEL).forEach(el => {
+    root.querySelectorAll(_MIRROR_TAGS_SEL).forEach(el => {
       if (el.dataset.pcId) return   // already stamped — preserve stability
       const tag = el.tagName.toLowerCase()
       counters[tag] = (counters[tag] || 0) + 1
       el.dataset.pcId = `${secId}:${tag}:${counters[tag]}`
     })
   }
-
-  const _MIRROR_TAGS_SEL = [..._MIRROR_TAGS].join(',')
 
   // ── Cache invalidation ────────────────────────────────────────────────────────
   function invalidate(sectionId) {

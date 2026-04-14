@@ -60,7 +60,7 @@ const Navigator = (() => {
 
   // ── Path ID — stable positional key ──────────────────────────────────────
   function _pathId(el) {
-    const root = document.getElementById('canvas-frame')
+    const root = document.getElementById('sections-root')
     const parts = []
     let cur = el
     while (cur && cur !== root && cur !== document.body) {
@@ -121,10 +121,10 @@ const Navigator = (() => {
   // ── Build full tree ───────────────────────────────────────────────────────
   function _buildTree() {
     _elMap.clear()
-    const frame = document.getElementById('canvas-frame')
-    if (!frame) return '<div class="nav-empty">Canvas not ready</div>'
+    const root = document.getElementById('sections-root')
+    if (!root) return '<div class="nav-empty">Canvas not ready</div>'
 
-    const wrappers = [...frame.querySelectorAll(':scope > .section-wrapper')]
+    const wrappers = [...root.querySelectorAll(':scope > .section-wrapper')]
     if (!wrappers.length) return '<div class="nav-empty">No sections yet — add one to start</div>'
 
     return wrappers.map(wrapper => {
@@ -213,7 +213,7 @@ const Navigator = (() => {
 
     // Expand parents
     let cur = el.parentElement
-    const frame = document.getElementById('canvas-frame')
+    const frame = document.getElementById('sections-root')
     while (cur && cur !== frame) {
       const parentPid = _pathId(cur)
       _collapsed.delete(parentPid)
@@ -264,23 +264,53 @@ const Navigator = (() => {
     if (!_dragSrc) return
     const targetEl = _elMap.get(pid)
     if (!targetEl || targetEl === _dragSrc) return
-    // Only reorder siblings
-    if (_dragSrc.parentElement !== targetEl.parentElement) {
-      toast('Can only reorder siblings', '⚠️')
+    // Prevent dropping an element into one of its own descendants
+    if (targetEl.contains(_dragSrc)) {
+      toast('Cannot move element into itself', '⚠️')
+      _dragSrc = null
       return
     }
-    // Move before target
+
+    const isCross = _dragSrc.parentElement !== targetEl.parentElement
+    // Record source section before move
+    const srcWrapper = _dragSrc.closest('.section-wrapper')
+
+    // DOM re-parent: insert before target
     targetEl.parentElement.insertBefore(_dragSrc, targetEl)
+
+    // Save affected sections as custom HTML
+    _saveAfterDrop(srcWrapper?.dataset?.id)
+    const tgtWrapper = _dragSrc.closest('.section-wrapper')
+    if (tgtWrapper && tgtWrapper !== srcWrapper) _saveAfterDrop(tgtWrapper.dataset.id)
+
     refresh()
-    if (typeof pushH === 'function') pushH('Navigator: reorder element')
-    toast('Element moved ✓', '🌳')
+    if (typeof pushH === 'function') pushH('Smart Move: ' + (_dragSrc.tagName?.toLowerCase() || 'element'))
+    toast(isCross ? 'Moved to new section ✓' : 'Reordered ✓', '🌳')
     _dragSrc = null
+  }
+
+  // ── Persist section DOM after a move ─────────────────────────────────────
+  function _saveAfterDrop(secId) {
+    if (!secId) return
+    const sec = (typeof S !== 'undefined') ? S.sections.find(s => s.id === secId) : null
+    if (!sec) return
+    const content = document.querySelector(`.section-wrapper[data-id="${secId}"] .sec-content`)
+    if (!content) return
+    // Save cleaned HTML: strip builder-only overlays/attrs but keep data-pc-id
+    const tmp = document.createElement('div')
+    tmp.innerHTML = content.innerHTML
+    tmp.querySelectorAll('.img-overlay,.anim-badge,.cms-bind-badge,.vi-bar,.grid-overlay').forEach(n => n.remove())
+    tmp.querySelectorAll('[contenteditable]').forEach(n => n.removeAttribute('contenteditable'))
+    tmp.querySelectorAll('[data-id]').forEach(n => n.removeAttribute('data-id'))
+    tmp.querySelectorAll('[data-key]').forEach(n => n.removeAttribute('data-key'))
+    sec.props._customHtml = tmp.innerHTML
+    if (typeof scheduleAutoSave === 'function') scheduleAutoSave()
   }
 
   // ── Expand path to a specific element ────────────────────────────────────
   function expandTo(el) {
     let cur = el?.parentElement
-    const frame = document.getElementById('canvas-frame')
+    const frame = document.getElementById('sections-root')
     while (cur && cur !== frame) {
       const pid = _pathId(cur)
       _collapsed.delete(pid)
@@ -303,7 +333,7 @@ const Navigator = (() => {
   // ── Init: attach canvas click listener ───────────────────────────────────
   function init() {
     // Canvas → Navigator: click on any element with data-pc-id
-    const frame = document.getElementById('canvas-frame')
+    const frame = document.getElementById('sections-root') || document.getElementById('canvas-frame')
     if (frame) {
       frame.addEventListener('click', ev => {
         if (S?.mode !== 'edit') return

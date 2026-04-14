@@ -95,17 +95,9 @@ function updateAllAnimBadges() {
   S.sections.forEach(sec => updateSectionAnimBadge(sec.id))
 }
 
-// ── Panel open / close ────────────────────────────────────────────────────────
-function openAnimPanel() {
-  if (typeof requirePro === 'function' && !isPro()) {
-    requirePro('animate', 'Animations require the Pro plan'); return
-  }
-  document.getElementById('anim-panel').classList.add('open')
-  renderAnimPanel()
-}
-function closeAnimPanel() {
-  document.getElementById('anim-panel').classList.remove('open')
-}
+// ── Panel open / close — legacy stubs (panel removed; animations now in Inspector) ──
+function openAnimPanel()  { /* Animations are in the Style Inspector → Animations tab */ }
+function closeAnimPanel() { /* no-op */ }
 
 // ── Toggle global enable ──────────────────────────────────────────────────────
 function toggleAnimGlobal() {
