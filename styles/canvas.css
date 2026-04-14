@@ -97,10 +97,11 @@ body.builder-preview .canvas-frame { box-shadow:none !important }
 [contenteditable]:focus{box-shadow:0 0 0 2px var(--accent),0 0 0 4px rgba(108,99,255,.15);background:rgba(108,99,255,.05)}
 .img-editable{position:relative;display:inline-block;width:100%}
 .img-overlay{position:absolute;inset:0;background:rgba(108,99,255,0);display:flex;align-items:center;
-  justify-content:center;opacity:0;transition:all .2s;cursor:pointer;border-radius:inherit}
+  justify-content:center;flex-direction:column;gap:4px;opacity:0;transition:all .2s;cursor:pointer;border-radius:inherit}
 .img-editable:hover .img-overlay{background:rgba(108,99,255,.55);opacity:1}
 .img-edit-btn{background:#fff;color:#1e1b4b;font-size:12px;font-weight:700;
-  padding:8px 16px;border-radius:8px;pointer-events:none;display:flex;align-items:center;gap:6px}
+  padding:8px 16px;border-radius:8px;pointer-events:auto;display:flex;align-items:center;gap:6px;
+  border:none;cursor:pointer;font-family:inherit;}
 
 /* ══════════════════════════════════════════════════════
    DRAG GHOST (custom cursor follower)

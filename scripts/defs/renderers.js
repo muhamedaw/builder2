@@ -46,7 +46,11 @@ ${p.ctaSecText?`<a href="${eu(p.ctaSecLink||'#')}" style="display:inline-flex;al
 </div>
 <div style="direction:ltr;"><div class="img-editable">
 <img src="${eu(p.image)}" alt="About" style="width:100%;border-radius:16px;display:block;box-shadow:0 20px 60px rgba(0,0,0,.12);" onerror="this.src='https://placehold.co/520x360/e2e8f0/94a3b8?text=Image'"/>
-<div class="img-overlay" onclick="openModal('${id}','image')"><div class="img-edit-btn">🖼 Replace Image</div></div>
+<div class="img-overlay" onclick="ImageEditor&&ImageEditor.launch(this.previousElementSibling)||openModal('${id}','image')">
+  <div class="img-edit-btn">🖼 Edit in Studio</div>
+  <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;margin-top:4px;opacity:.8"
+    onclick="event.stopPropagation();openModal('${id}','image')">Replace</div>
+</div>
 </div></div></div></section>`},
 
   contact(p,id){
@@ -97,7 +101,9 @@ ${fs.map(f=>`<div style="background:${p.accentColor}0d;border:1px solid ${p.acce
 <div style="display:flex;align-items:center;justify-content:center;gap:14px;">
 <div class="img-editable" style="width:52px;height:52px;flex-shrink:0;border-radius:50%;overflow:hidden;">
 ${p.avatar?`<img src="${eu(p.avatar)}" style="width:52px;height:52px;object-fit:cover;display:block;"/>`:`<div style="width:52px;height:52px;background:${ec(p.accentColor)}33;display:flex;align-items:center;justify-content:center;font-size:22px;">${e(p.author).charAt(0)}</div>`}
-<div class="img-overlay" style="border-radius:50%;" onclick="openModal('${id}','avatar')"><div class="img-edit-btn" style="font-size:10px;padding:4px 8px;">Edit</div></div>
+<div class="img-overlay" style="border-radius:50%;" onclick="(ImageEditor&&p.avatar)?ImageEditor.launch(this.previousElementSibling||this.closest('.img-editable').querySelector('img')):openModal('${id}','avatar')">
+  <div class="img-edit-btn" style="font-size:10px;padding:4px 8px;">Edit</div>
+</div>
 </div>
 <div style="text-align:left;">
 <p contenteditable="true" data-id="${id}" data-key="author" style="font-weight:700;font-size:15px;margin:0;">${e(p.author)}</p>
@@ -271,8 +277,11 @@ ${p.avatar?`<img src="${eu(p.avatar)}" style="width:52px;height:52px;object-fit:
             alt="${e(img.cap)}"
             style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;"
             onerror="this.src='https://placehold.co/600x400/e2e8f0/94a3b8?text=Image'"/>
-          <div class="img-overlay" style="background:rgba(0,0,0,.4);" onclick="openModal('${id}','${img.sk}')">
-            <div class="img-edit-btn">🖼 Replace</div>
+          <div class="img-overlay" style="background:rgba(0,0,0,.4);"
+            onclick="ImageEditor&&ImageEditor.launch(this.previousElementSibling)||openModal('${id}','${img.sk}')">
+            <div class="img-edit-btn">🖼 Edit in Studio</div>
+            <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;margin-top:4px;opacity:.8"
+              onclick="event.stopPropagation();openModal('${id}','${img.sk}')">Replace</div>
           </div>
         </div>
         ${showCap && img.cap ? `
