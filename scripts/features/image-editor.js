@@ -14,7 +14,6 @@ const ImageEditor = (() => {
   let _octx      = null   // overlay 2D context
   let _original  = null   // original ImageData snapshot
   let _activeTool = 'adjust'
-  let _zoom      = 1
   let _cropRect  = null   // { x, y, w, h } in canvas coords
   let _isCropping = false
   let _brushDown = false
@@ -852,10 +851,12 @@ const ImageEditor = (() => {
       // Update DOM src
       _imgEl.src = dataURL
 
-      // Update JSON state if Inspector / PropertyBridge is available
-      const pcId = _imgEl.closest('[data-pc-id]')?.dataset?.pcId
-      if (pcId && typeof Inspector !== 'undefined' && typeof PropertyBridge !== 'undefined') {
-        PropertyBridge.set(pcId, 'src', dataURL)
+      // Update JSON state via PropertyBridge.update (section-level key sync)
+      const wrapper0 = _imgEl.closest('.section-wrapper')
+      if (wrapper0?.dataset?.id && typeof PropertyBridge !== 'undefined') {
+        // Find which prop key this img maps to (data-key on a sibling or parent)
+        const dataKey = _imgEl.dataset?.key || _imgEl.getAttribute('data-key')
+        if (dataKey) PropertyBridge.update(wrapper0.dataset.id, dataKey, dataURL)
       }
 
       // Persist to media library
