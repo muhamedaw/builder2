@@ -75,7 +75,7 @@ const ImageEditor = (() => {
             <canvas id="ie-canvas"></canvas>
             <canvas id="ie-overlay-canvas"></canvas>
           </div>
-          <div class="ie-loading hidden" id="ie-loading">
+          <div class="ie-loading" id="ie-loading" style="display:none">
             <div class="ie-spinner"></div>
             <div class="ie-loading-text" id="ie-loading-text">Processing…</div>
           </div>
@@ -949,13 +949,14 @@ const ImageEditor = (() => {
   function _showLoading(msg) {
     const el = $('ie-loading')
     if (!el) return
-    el.classList.remove('hidden')
+    el.style.display = 'flex'
     const txt = $('ie-loading-text')
     if (txt) txt.textContent = msg || 'Processing…'
   }
 
   function _hideLoading() {
-    $('ie-loading')?.classList.add('hidden')
+    const el = $('ie-loading')
+    if (el) el.style.display = 'none'
   }
 
   // ── Keyboard shortcuts ────────────────────────────────────────────────────
