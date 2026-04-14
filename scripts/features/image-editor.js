@@ -130,31 +130,67 @@ const ImageEditor = (() => {
   }
 
   // ── Load image into canvas ────────────────────────────────────────────────
+  let _corsMode = false  // true when canvas is tainted (pixel ops disabled)
+
   function _loadImage(src) {
     _showLoading('Loading image…')
-    const img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.onload = () => {
-      const MAX = 1600
-      let w = img.naturalWidth, h = img.naturalHeight
-      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX }
-      if (h > MAX) { w = Math.round(w * MAX / h); h = MAX }
+    _corsMode = false
 
-      _canvas.width  = w; _canvas.height  = h
-      _overlay.width = w; _overlay.height = h
+    const _doLoad = (useCors) => {
+      const img = new Image()
+      if (useCors) img.crossOrigin = 'anonymous'
 
-      _ctx.drawImage(img, 0, 0, w, h)
-      _original = _ctx.getImageData(0, 0, w, h)
-      _pushHistory()
-      _hideLoading()
-      _addLayer('Background', _canvas.toDataURL('image/png', 0.5))
-      _renderProps()
+      img.onload = () => {
+        try {
+          const MAX = 1600
+          let w = img.naturalWidth, h = img.naturalHeight
+          if (w > MAX) { h = Math.round(h * MAX / w); w = MAX }
+          if (h > MAX) { w = Math.round(w * MAX / h); h = MAX }
+
+          _canvas.width  = w; _canvas.height  = h
+          _overlay.width = w; _overlay.height = h
+
+          _ctx.drawImage(img, 0, 0, w, h)
+
+          // Try to read pixel data — may throw SecurityError if cross-origin
+          try {
+            _original = _ctx.getImageData(0, 0, w, h)
+            _corsMode = false
+          } catch (e) {
+            // Canvas tainted — filter-only mode (no eraser pixel ops)
+            _original = null
+            _corsMode = true
+          }
+
+          _pushHistory()
+          _hideLoading()
+
+          // Try to get thumb — may fail if tainted
+          let thumb = ''
+          try { thumb = _canvas.toDataURL('image/png', 0.5) } catch(e) {}
+          _addLayer('Background', thumb)
+          _renderProps()
+        } catch (err) {
+          _hideLoading()
+          toast('Error loading image: ' + err.message, '⚠️')
+        }
+      }
+
+      img.onerror = () => {
+        if (useCors) {
+          // Retry without crossOrigin (some servers block CORS preflight)
+          _doLoad(false)
+        } else {
+          _hideLoading()
+          toast('Cannot load image', '⚠️')
+        }
+      }
+
+      img.src = src
     }
-    img.onerror = () => {
-      _hideLoading()
-      toast('Cannot load image (CORS or invalid URL)', '⚠️')
-    }
-    img.src = src
+
+    // Start with CORS mode; retry without if it fails
+    _doLoad(!src.startsWith('data:'))
   }
 
   // ── Tool selection ────────────────────────────────────────────────────────
@@ -484,6 +520,10 @@ const ImageEditor = (() => {
   }
 
   function _applyErase() {
+    if (_corsMode) {
+      toast('Pixel editing unavailable for cross-origin images. Use Replace to upload a local file.', '⚠️')
+      return
+    }
     // Stub: in production, send canvas + mask to backend Stable Diffusion API
     _showLoading('Erasing with AI…')
     setTimeout(() => {
