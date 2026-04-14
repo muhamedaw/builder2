@@ -887,39 +887,41 @@ const ImageEditor = (() => {
     _showLoading('Saving…')
     setTimeout(() => {
       const dataURL = _canvas.toDataURL('image/jpeg', 0.92)
+      const propKey = _imgEl.dataset?.pcProp   // set by renderers via data-pc-prop
+      const oldSrc  = _imgEl.getAttribute('src')
 
-      // Update DOM src
+      // Immediate DOM update
       _imgEl.src = dataURL
 
-      // Update JSON state via PropertyBridge.update (section-level key sync)
-      const wrapper0 = _imgEl.closest('.section-wrapper')
-      if (wrapper0?.dataset?.id && typeof PropertyBridge !== 'undefined') {
-        // Find which prop key this img maps to (data-key on a sibling or parent)
-        const dataKey = _imgEl.dataset?.key || _imgEl.getAttribute('data-key')
-        if (dataKey) PropertyBridge.update(wrapper0.dataset.id, dataKey, dataURL)
-      }
-
-      // Persist to media library
+      // Save to media library
       _syncToAssets(dataURL)
 
-      // Save section
       const wrapper = _imgEl.closest('.section-wrapper')
-      if (wrapper?.dataset?.id && typeof S !== 'undefined') {
-        const sec = S.sections?.find(s => s.id === wrapper.dataset.id)
-        if (sec) {
-          const content = wrapper.querySelector('.sec-content')
-          if (content) {
-            const tmp = document.createElement('div')
-            tmp.innerHTML = content.innerHTML
-            tmp.querySelectorAll('.img-overlay,.anim-badge,.cms-bind-badge,.vi-bar').forEach(n => n.remove())
-            tmp.querySelectorAll('[contenteditable]').forEach(n => n.removeAttribute('contenteditable'))
-            sec.props._customHtml = tmp.innerHTML
+      const secId   = wrapper?.dataset?.id
+
+      if (secId && typeof S !== 'undefined') {
+        const sec = S.sections?.find(s => s.id === secId)
+
+        if (sec?.props?._customHtml) {
+          // Section was re-parented by Smart Layers — update img src inside _customHtml
+          // without touching the layout or adding _customHtml unnecessarily
+          if (oldSrc) {
+            sec.props._customHtml = sec.props._customHtml.split(oldSrc).join(dataURL)
           }
+          if (typeof scheduleAutoSave === 'function') scheduleAutoSave()
+
+        } else if (propKey && typeof PropertyBridge !== 'undefined') {
+          // Normal template section — update prop and let PropertyBridge
+          // re-render the section (restores img-overlay buttons automatically)
+          PropertyBridge.update(secId, propKey, dataURL)
+
+        } else {
+          // Fallback: just autosave current state
+          if (typeof scheduleAutoSave === 'function') scheduleAutoSave()
         }
       }
-      if (typeof scheduleAutoSave === 'function') scheduleAutoSave()
-      if (typeof pushH === 'function') pushH('Photo Edit: ' + (_imgEl.alt || 'image'))
 
+      if (typeof pushH === 'function') pushH('Photo Edit: ' + (_imgEl.alt || 'image'))
       _hideLoading()
       toast('Changes applied ✓', '🖼')
       close()
