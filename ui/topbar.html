@@ -77,17 +77,17 @@
       </div>
     </div>
 
-    <!-- miniPaint -->
-    <div class="tb-menu" id="tbm-minipaint">
-      <button class="tb-menu-btn" onclick="tbToggle('minipaint')" style="color:#a78bfa">🎨 miniPaint <span class="tb-caret">▾</span></button>
-      <div class="tb-dropdown" id="tbd-minipaint">
-        <div class="tb-group-label">Professional Pixel Editor</div>
-        <button class="tb-item" onclick="MiniPaintBridge.openWithSelected();tbClose()"><span class="tb-item-icon">🎨</span><span class="tb-item-label">Open miniPaint</span><span class="tb-item-badge">Pro</span></button>
-        <button class="tb-item" onclick="MiniPaintBridge.open(document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">↓</span><span class="tb-item-label">Load Canvas Image</span></button>
+    <!-- Advanced Design (Fabric.js) -->
+    <div class="tb-menu" id="tbm-design">
+      <button class="tb-menu-btn" onclick="tbToggle('design')" style="color:#4ade80">🎨 Design <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown" id="tbd-design">
+        <div class="tb-group-label">Advanced Design Studio</div>
+        <button class="tb-item" onclick="FabricEngine.launch(document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">🎨</span><span class="tb-item-label">Advanced Design</span><span class="tb-item-badge">Fabric.js</span></button>
+        <button class="tb-item" onclick="FabricEngine.launch(Inspector?._selectedEl?.querySelector?.('img')||document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">✏️</span><span class="tb-item-label">Edit Selected Image</span></button>
         <div class="tb-sep-line"></div>
         <div class="tb-group-label">AI Generative Studio</div>
-        <button class="tb-item ai-item" onclick="AIStudio.open(document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">✨</span><span class="tb-item-label">Open AI Studio</span><span class="tb-item-badge">SD</span></button>
-        <button class="tb-item ai-item" onclick="AIStudio.open(null);tbClose()"><span class="tb-item-icon">🖌</span><span class="tb-item-label">In-paint Selection</span></button>
+        <button class="tb-item ai-item" onclick="AIStudio.open(Inspector?._selectedEl?.querySelector?.('img')||document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">✨</span><span class="tb-item-label">AI In-paint / Generate</span><span class="tb-item-badge">SD</span></button>
+        <button class="tb-item ai-item" onclick="AIStudio.open(null);tbClose()"><span class="tb-item-icon">🖌</span><span class="tb-item-label">Open AI Studio</span></button>
       </div>
     </div>
 

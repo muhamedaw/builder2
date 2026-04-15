@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="styles/navigator.css">
   <link rel="stylesheet" href="styles/image-editor.css">
   <link rel="stylesheet" href="styles/ai-studio.css">
+  <link rel="stylesheet" href="styles/fabric-studio.css">
 <body>
 <!-- @include ui/modals.html -->
 
@@ -1124,8 +1125,9 @@ window.PageCraft.openCLIPanel = openCLIPanel
 /* @include scripts/features/navigator.js */
 /* @include scripts/features/smart-layers.js */
 /* @include scripts/features/image-editor.js */
-/* @include scripts/features/minipaint-bridge.js */
 /* @include scripts/features/ai-studio.js */
+/* @include scripts/core/fabric-engine.js */
+/* @include scripts/ui/fabric-toolbar.js */
 
 /* ══════════════════════════════════════════════════════
    TEST RUNNER
@@ -2926,6 +2928,8 @@ export function Card({ title, desc }) {
   </div>
 </div>
 
+<!-- Fabric.js v5 — Design Engine for image editing & transforms -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
 <!-- Three.js r128 — loaded once for all 3D sections -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <!-- Stripe.js — payments -->
