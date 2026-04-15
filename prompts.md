@@ -1,22 +1,27 @@
-"I have a massive index.html (17k+ lines) and we need to Modularize the project to make it maintainable and ready for the miniPaint & Stable Diffusion integrations.
+"We are implementing the Wix Free-Composition Engine using Fabric.js. Based on the uploaded images, the user needs to add elements (Icons, Text, Shapes) ON TOP of an image and move them anywhere with total freedom.
 
-Step 1: File Structure
-Create a directory structure: /src/core, /src/ui, /src/data.
+1. Modular Architecture (New Files Only):
+Create src/core/CompositionEngine.js (The logic for handling multiple objects).
 
-Step 2: Component Extraction
+Create src/ui/ElementPicker.js (A sidebar to add icons, stickers, and shapes).
 
-Extract the Collaboration/Socket logic from the main script into src/core/collaboration.js.
+2. Features to Implement (The Wix Experience):
+Canvas Promotion: When an image is selected, 'Promote' it to a Fabric Canvas that allows adding child objects.
 
-Extract the Property Inspector UI into src/ui/Inspector.js.
+Absolute Freedom: Any element added to the image (Text, Stickers, Icons) must be draggable, rotatable, and scalable with 8-point handles.
 
-Extract the Section Templates (Hero, Testimonials, etc.) into a JSON/JS file named src/data/showcase.js.
+Smart Layers: Implement a 'Layers Panel' to change the stack order (Bring to Front / Send to Back) for every icon or text added.
 
-Step 3: Main Script Cleanup
+Snapping & Guides: Add visual 'Snap-to-Center' lines when the user moves elements around the picture.
 
-Keep only the initialization logic in the main <script> tag.
+3. The Toolset (Matching the Images):
+Add Text: Multi-font support with curved text options.
 
-Use import/export (ES Modules) to bring in the logic.
+Add Shapes: Circles, squares, and decorative lines.
 
-Ensure the data-pc-id logic remains intact during the move.
+Stickers/Icons: A library of SVG icons that can be colored and moved anywhere.
 
-Start with extracting the 'Share & Collaborate' logic and the 'Feature Flags' UI into their own modules first."
+4. Critical Sync:
+When the user is done, the entire composition (Image + Icons + Text) must be flattened and saved as a single high-quality version in .pagecraft.json.
+
+Mandatory: Do not edit the 17k-line file. Link these new modules and follow the CLAUDE.md mandate."

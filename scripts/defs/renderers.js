@@ -46,12 +46,8 @@ ${p.ctaSecText?`<a href="${eu(p.ctaSecLink||'#')}" style="display:inline-flex;al
 </div>
 <div style="direction:ltr;"><div class="img-editable">
 <img src="${eu(p.image)}" alt="About" data-pc-prop="image" style="width:100%;border-radius:16px;display:block;box-shadow:0 20px 60px rgba(0,0,0,.12);" onerror="this.src='https://placehold.co/520x360/e2e8f0/94a3b8?text=Image'"/>
-<div class="img-overlay" onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof FabricEngine!='undefined'){FabricEngine.launch(_i)}else if(_i&&typeof ImageEditor!='undefined'){ImageEditor.launch(_i)}">
+<div class="img-overlay" onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof DesignStudio!='undefined')DesignStudio.launch(_i)">
   <div class="img-edit-btn">🎨 Design Studio</div>
-  <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.85"
-    onclick="event.stopPropagation();var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof CompositionEngine!='undefined')CompositionEngine.launch(_i)">🎭 Compose</div>
-  <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.85"
-    onclick="event.stopPropagation();var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof AIStudio!='undefined')AIStudio.open(_i)">✨ AI Studio</div>
   <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.7"
     onclick="event.stopPropagation();openModal('${id}','image')">Replace</div>
 </div>
@@ -105,7 +101,7 @@ ${fs.map(f=>`<div style="background:${p.accentColor}0d;border:1px solid ${p.acce
 <div style="display:flex;align-items:center;justify-content:center;gap:14px;">
 <div class="img-editable" style="width:52px;height:52px;flex-shrink:0;border-radius:50%;overflow:hidden;">
 ${p.avatar?`<img src="${eu(p.avatar)}" data-pc-prop="avatar" style="width:52px;height:52px;object-fit:cover;display:block;"/>`:`<div style="width:52px;height:52px;background:${ec(p.accentColor)}33;display:flex;align-items:center;justify-content:center;font-size:22px;">${e(p.author).charAt(0)}</div>`}
-<div class="img-overlay" style="border-radius:50%;" onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof ImageEditor!='undefined'){ImageEditor.launch(_i)}else{openModal('${id}','avatar')}">
+<div class="img-overlay" style="border-radius:50%;" onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof DesignStudio!='undefined'){DesignStudio.launch(_i)}else{openModal('${id}','avatar')}">
   <div class="img-edit-btn" style="font-size:10px;padding:4px 8px;">Edit</div>
 </div>
 </div>
@@ -282,7 +278,7 @@ ${p.avatar?`<img src="${eu(p.avatar)}" data-pc-prop="avatar" style="width:52px;h
             style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;"
             onerror="this.src='https://placehold.co/600x400/e2e8f0/94a3b8?text=Image'"/>
           <div class="img-overlay" style="background:rgba(0,0,0,.4);"
-            onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof ImageEditor!='undefined'){ImageEditor.launch(_i)}else{openModal('${id}','${img.sk}')}">
+            onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof DesignStudio!='undefined'){DesignStudio.launch(_i)}else{openModal('${id}','${img.sk}')}">
             <div class="img-edit-btn">🖼 Edit in Studio</div>
             <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;margin-top:4px;opacity:.8"
               onclick="event.stopPropagation();openModal('${id}','${img.sk}')">Replace</div>

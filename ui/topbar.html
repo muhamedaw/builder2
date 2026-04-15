@@ -81,10 +81,8 @@
     <div class="tb-menu" id="tbm-design">
       <button class="tb-menu-btn" onclick="tbToggle('design')" style="color:#4ade80">🎨 Design <span class="tb-caret">▾</span></button>
       <div class="tb-dropdown" id="tbd-design">
-        <div class="tb-group-label">Advanced Design Studio</div>
-        <button class="tb-item" onclick="FabricEngine.launch(document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">🎨</span><span class="tb-item-label">Advanced Design</span><span class="tb-item-badge">Fabric.js</span></button>
-        <button class="tb-item" onclick="FabricEngine.launch(Inspector?._selectedEl?.querySelector?.('img')||document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">✏️</span><span class="tb-item-label">Edit Selected Image</span></button>
-        <button class="tb-item" onclick="CompositionEngine.launch(Inspector?._selectedEl?.querySelector?.('img')||document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">🎭</span><span class="tb-item-label">Composition Studio</span><span class="tb-item-badge">New</span></button>
+        <div class="tb-group-label">Design Studio</div>
+        <button class="tb-item" onclick="DesignStudio.launch(Inspector?._selectedEl?.querySelector?.('img')||document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">🎨</span><span class="tb-item-label">Open Design Studio</span><span class="tb-item-badge">v5.5</span></button>
         <div class="tb-sep-line"></div>
         <div class="tb-group-label">AI Generative Studio</div>
         <button class="tb-item ai-item" onclick="AIStudio.open(Inspector?._selectedEl?.querySelector?.('img')||document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">✨</span><span class="tb-item-label">AI In-paint / Generate</span><span class="tb-item-badge">SD</span></button>
