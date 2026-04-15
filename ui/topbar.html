@@ -77,6 +77,20 @@
       </div>
     </div>
 
+    <!-- miniPaint -->
+    <div class="tb-menu" id="tbm-minipaint">
+      <button class="tb-menu-btn" onclick="tbToggle('minipaint')" style="color:#a78bfa">🎨 miniPaint <span class="tb-caret">▾</span></button>
+      <div class="tb-dropdown" id="tbd-minipaint">
+        <div class="tb-group-label">Professional Pixel Editor</div>
+        <button class="tb-item" onclick="MiniPaintBridge.openWithSelected();tbClose()"><span class="tb-item-icon">🎨</span><span class="tb-item-label">Open miniPaint</span><span class="tb-item-badge">Pro</span></button>
+        <button class="tb-item" onclick="MiniPaintBridge.open(document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">↓</span><span class="tb-item-label">Load Canvas Image</span></button>
+        <div class="tb-sep-line"></div>
+        <div class="tb-group-label">AI Generative Studio</div>
+        <button class="tb-item ai-item" onclick="AIStudio.open(document.querySelector('[data-pc-id] img'));tbClose()"><span class="tb-item-icon">✨</span><span class="tb-item-label">Open AI Studio</span><span class="tb-item-badge">SD</span></button>
+        <button class="tb-item ai-item" onclick="AIStudio.open(null);tbClose()"><span class="tb-item-icon">🖌</span><span class="tb-item-label">In-paint Selection</span></button>
+      </div>
+    </div>
+
     <!-- AI -->
     <div class="tb-menu" id="tbm-ai">
       <button class="tb-menu-btn" onclick="tbToggle('ai')" style="color:#a78bfa">AI <span class="tb-caret">▾</span></button>

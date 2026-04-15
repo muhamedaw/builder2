@@ -47,8 +47,10 @@ ${p.ctaSecText?`<a href="${eu(p.ctaSecLink||'#')}" style="display:inline-flex;al
 <div style="direction:ltr;"><div class="img-editable">
 <img src="${eu(p.image)}" alt="About" data-pc-prop="image" style="width:100%;border-radius:16px;display:block;box-shadow:0 20px 60px rgba(0,0,0,.12);" onerror="this.src='https://placehold.co/520x360/e2e8f0/94a3b8?text=Image'"/>
 <div class="img-overlay" onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof ImageEditor!='undefined'){ImageEditor.launch(_i)}else{openModal('${id}','image')}">
-  <div class="img-edit-btn">🖼 Edit in Studio</div>
-  <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;margin-top:4px;opacity:.8"
+  <div class="img-edit-btn">🖼 Photo Studio</div>
+  <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.8"
+    onclick="event.stopPropagation();var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof AIStudio!='undefined')AIStudio.open(_i)">✨ AI Studio</div>
+  <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.7"
     onclick="event.stopPropagation();openModal('${id}','image')">Replace</div>
 </div>
 </div></div></div></section>`},
