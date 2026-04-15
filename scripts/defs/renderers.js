@@ -49,6 +49,8 @@ ${p.ctaSecText?`<a href="${eu(p.ctaSecLink||'#')}" style="display:inline-flex;al
 <div class="img-overlay" onclick="var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof FabricEngine!='undefined'){FabricEngine.launch(_i)}else if(_i&&typeof ImageEditor!='undefined'){ImageEditor.launch(_i)}">
   <div class="img-edit-btn">🎨 Design Studio</div>
   <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.85"
+    onclick="event.stopPropagation();var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof CompositionEngine!='undefined')CompositionEngine.launch(_i)">🎭 Compose</div>
+  <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.85"
     onclick="event.stopPropagation();var _i=this.closest('.img-editable').querySelector('img');if(_i&&typeof AIStudio!='undefined')AIStudio.open(_i)">✨ AI Studio</div>
   <div class="img-edit-btn" style="font-size:10px;padding:3px 8px;opacity:.7"
     onclick="event.stopPropagation();openModal('${id}','image')">Replace</div>

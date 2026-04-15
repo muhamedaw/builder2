@@ -1,0 +1,153 @@
+/* composition.css — Composition Studio UI
+   CompositionEngine modal + ElementPicker sidebar + Layers panel */
+
+/* ── Modal ────────────────────────────────────────────────────────────────── */
+#comp-modal {
+  position: fixed; inset: 0; z-index: 10000;
+  display: none; flex-direction: column;
+  background: #0d0d1a; font-family: system-ui, sans-serif; color: #e8e8f0;
+}
+
+/* ── Top bar ──────────────────────────────────────────────────────────────── */
+.comp-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; height: 50px; flex-shrink: 0;
+  background: #161626; border-bottom: 1px solid #2a2a4a;
+}
+.comp-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
+.comp-logo  { font-size: 20px; }
+.comp-badge { background: #6c63ff22; color: #6c63ff; border: 1px solid #6c63ff44;
+              padding: 1px 8px; border-radius: 10px; font-size: 11px; }
+.comp-actions { display: flex; gap: 8px; align-items: center; }
+
+.comp-btn-ghost   { background: none; border: 1px solid #3a3a5a; color: #a0a0c0;
+                    padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+.comp-btn-ghost:hover { background: #2a2a4a; color: #e8e8f0; }
+.comp-btn-primary { background: #6c63ff; border: none; color: #fff;
+                    padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; }
+.comp-btn-primary:hover { background: #7c73ff; }
+.comp-btn-close   { background: none; border: none; color: #a0a0c0;
+                    font-size: 18px; cursor: pointer; padding: 4px 8px; line-height: 1; }
+.comp-btn-close:hover { color: #ff6b6b; }
+
+/* ── Body ─────────────────────────────────────────────────────────────────── */
+.comp-body {
+  display: flex; flex: 1; overflow: hidden;
+}
+
+/* ── Canvas area ──────────────────────────────────────────────────────────── */
+.comp-canvas-area {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  background: repeating-conic-gradient(#1a1a2e 0% 25%, #111 0% 50%) 0 0 / 20px 20px;
+  overflow: hidden;
+}
+#comp-canvas { box-shadow: 0 8px 40px rgba(0,0,0,0.6); }
+
+/* ── Layers panel ─────────────────────────────────────────────────────────── */
+.comp-layers-panel {
+  width: 180px; flex-shrink: 0; background: #161626;
+  border-left: 1px solid #2a2a4a; display: flex; flex-direction: column; overflow: hidden;
+}
+.comp-layers-title {
+  padding: 10px 12px; font-size: 11px; font-weight: 700; color: #6c63ff;
+  text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2a2a4a;
+  flex-shrink: 0;
+}
+#comp-layers-list { flex: 1; overflow-y: auto; padding: 4px; }
+
+.comp-layer-item {
+  display: flex; align-items: center; gap: 6px; padding: 6px 8px;
+  border-radius: 6px; cursor: pointer; font-size: 12px; color: #a0a0c0;
+  border: 1px solid transparent; margin-bottom: 2px;
+}
+.comp-layer-item:hover  { background: #2a2a4a; color: #e8e8f0; }
+.comp-layer-item.active { background: #6c63ff22; border-color: #6c63ff44; color: #e8e8f0; }
+.comp-layer-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.comp-layer-btns { display: flex; gap: 2px; }
+.comp-layer-btns button {
+  background: none; border: none; color: #606080; cursor: pointer;
+  padding: 2px 4px; font-size: 11px; border-radius: 3px; line-height: 1;
+}
+.comp-layer-btns button:hover { background: #3a3a5a; color: #e8e8f0; }
+
+/* ── Element Picker panel ─────────────────────────────────────────────────── */
+.ep-panel {
+  width: 220px; flex-shrink: 0; background: #161626;
+  border-right: 1px solid #2a2a4a; display: flex; flex-direction: column; overflow: hidden;
+}
+.ep-tabs {
+  display: flex; border-bottom: 1px solid #2a2a4a; flex-shrink: 0;
+}
+.ep-tab {
+  flex: 1; background: none; border: none; color: #707090;
+  padding: 10px 4px; font-size: 11px; cursor: pointer; font-weight: 600;
+  border-bottom: 2px solid transparent; transition: color .15s;
+}
+.ep-tab:hover  { color: #a0a0c0; }
+.ep-tab.active { color: #6c63ff; border-bottom-color: #6c63ff; }
+
+.ep-content { display: none; flex-direction: column; gap: 8px; padding: 12px; overflow-y: auto; flex: 1; }
+.ep-content.active { display: flex; }
+
+/* ── Inputs ───────────────────────────────────────────────────────────────── */
+.ep-input {
+  width: 100%; background: #0d0d1a; border: 1px solid #2a2a4a; color: #e8e8f0;
+  padding: 7px 10px; border-radius: 6px; font-size: 13px; box-sizing: border-box;
+}
+.ep-input:focus { outline: none; border-color: #6c63ff; }
+
+.ep-input-sm {
+  width: 60px; background: #0d0d1a; border: 1px solid #2a2a4a; color: #e8e8f0;
+  padding: 6px 8px; border-radius: 6px; font-size: 12px; text-align: center;
+}
+.ep-select {
+  flex: 1; background: #0d0d1a; border: 1px solid #2a2a4a; color: #e8e8f0;
+  padding: 6px 8px; border-radius: 6px; font-size: 12px;
+}
+.ep-select:focus { outline: none; border-color: #6c63ff; }
+
+.ep-color { width: 30px; height: 28px; border: 1px solid #2a2a4a; border-radius: 6px;
+            padding: 2px; background: #0d0d1a; cursor: pointer; }
+
+.ep-row   { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.ep-label { font-size: 11px; color: #707090; white-space: nowrap; }
+
+/* ── Toggle buttons ───────────────────────────────────────────────────────── */
+.ep-toggles { gap: 6px; }
+.ep-toggle {
+  background: #1e1e3a; border: 1px solid #2a2a4a; color: #a0a0c0;
+  width: 34px; height: 30px; border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.ep-toggle:hover { background: #2a2a4a; color: #e8e8f0; }
+.ep-toggle.on    { background: #6c63ff33; border-color: #6c63ff; color: #6c63ff; }
+
+/* ── Add Text button ──────────────────────────────────────────────────────── */
+.ep-add-btn {
+  width: 100%; background: #6c63ff; border: none; color: #fff;
+  padding: 9px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600;
+  margin-top: 4px;
+}
+.ep-add-btn:hover { background: #7c73ff; }
+
+/* ── Shapes grid ──────────────────────────────────────────────────────────── */
+.ep-shapes-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 4px;
+}
+.ep-shape-btn {
+  background: #1e1e3a; border: 1px solid #2a2a4a; color: #6c63ff;
+  aspect-ratio: 1; border-radius: 8px; cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ep-shape-btn:hover { background: #6c63ff22; border-color: #6c63ff66; }
+
+/* ── Stickers grid ────────────────────────────────────────────────────────── */
+.ep-stickers-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 4px;
+}
+.ep-sticker-btn {
+  background: #1e1e3a; border: 1px solid #2a2a4a;
+  aspect-ratio: 1; border-radius: 8px; cursor: pointer; padding: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ep-sticker-btn:hover { background: #6c63ff22; border-color: #6c63ff66; }
+.ep-sticker-btn svg   { width: 100%; height: 100%; }
