@@ -356,7 +356,7 @@ e.g. professional photo of a modern office, 4k, cinematic"></textarea>
   function _generate() {
     switch (_mode) {
       case 'inpaint':  _runInpaint();  break
-      case 'outpaint': _runOutpaint(); break
+      case 'outpaint': _outpaint('all'); break
       case 'txt2img':  _runTxt2img();  break
     }
   }
@@ -367,37 +367,40 @@ e.g. professional photo of a modern office, 4k, cinematic"></textarea>
     const negProm = $('ais-prompt-neg')?.value?.trim() || 'blurry, low quality, watermark'
     if (!prompt) { toast('Enter a prompt first', '⚠️'); return }
 
-    // Check mask has content
     const maskData = _mctx.getImageData(0, 0, _maskCanvas.width, _maskCanvas.height)
     const hasMask  = maskData.data.some((v, i) => i % 4 === 3 && v > 10)
     if (!hasMask) { toast('Paint a mask over the area to change', '⚠️'); return }
 
     _showLoading('Generating in-paint…')
 
+    // Try SD → fallback to OpenAI edit → fallback to OpenAI generate
     try {
-      // Build base64 images
       const initB64 = _canvas.toDataURL('image/png').split(',')[1]
       const maskB64 = _buildBinaryMask()
-
-      // Try local SD first
-      const result = await _callSD_inpaint({
-        init_images: [initB64],
-        mask: maskB64,
-        prompt, negative_prompt: negProm,
-        inpainting_fill: 1,
+      const result  = await _callSD_inpaint({
+        init_images: [initB64], mask: maskB64,
+        prompt, negative_prompt: negProm, inpainting_fill: 1,
         denoising_strength: +($('ais-strength')?.value || 0.75),
         steps: +($('ais-steps')?.value || 25),
-        cfg_scale: _cfg.cfgScale,
-        sampler_name: _cfg.sampler,
+        cfg_scale: _cfg.cfgScale, sampler_name: _cfg.sampler,
         width: _canvas.width, height: _canvas.height,
       })
-
       _applyResult('data:image/png;base64,' + result)
-    } catch (e) {
-      _hideLoading()
-      toast('SD not available. Connect a local Stable Diffusion WebUI or configure OpenAI.', '⚠️')
-      // Show setup guidance
-      $('ais-settings-panel') && (document.getElementById('ais-settings-panel').style.display = 'flex')
+    } catch (sdErr) {
+      // SD failed — try OpenAI image edit (DALL-E 2 supports inpainting natively)
+      if (_cfg.openaiKey) {
+        try {
+          _setLoadingText('SD offline — trying OpenAI…')
+          const dataURL = await _callOpenAI_edit(prompt)
+          _applyResult(dataURL)
+        } catch (oaiErr) {
+          _hideLoading()
+          _showSetupGuide()
+        }
+      } else {
+        _hideLoading()
+        _showSetupGuide()
+      }
     }
   }
 
@@ -486,14 +489,24 @@ e.g. professional photo of a modern office, 4k, cinematic"></textarea>
         prompt: fullPrompt,
         negative_prompt: 'blurry, low quality, watermark, text',
         steps: +($('ais-steps')?.value || 25),
-        cfg_scale: _cfg.cfgScale,
-        sampler_name: _cfg.sampler,
+        cfg_scale: _cfg.cfgScale, sampler_name: _cfg.sampler,
         width: w, height: h,
       })
       _applyResult('data:image/png;base64,' + result, w, h)
-    } catch (e) {
-      _hideLoading()
-      toast('SD not reachable. Configure endpoint in ⚙ Settings.', '⚠️')
+    } catch {
+      if (_cfg.openaiKey) {
+        try {
+          _setLoadingText('SD offline — trying OpenAI DALL-E…')
+          const dataURL = await _callOpenAI_generate(fullPrompt, w, h)
+          _applyResult(dataURL, w, h)
+        } catch {
+          _hideLoading()
+          _showSetupGuide()
+        }
+      } else {
+        _hideLoading()
+        _showSetupGuide()
+      }
     }
   }
 
@@ -522,6 +535,105 @@ e.g. professional photo of a modern office, 4k, cinematic"></textarea>
     if (!r.ok) throw new Error(`SD HTTP ${r.status}`)
     const data = await r.json()
     return data.images[0]
+  }
+
+  // ── OpenAI API calls (DALL-E fallback) ────────────────────────────────────
+  // DALL-E 3 text-to-image
+  async function _callOpenAI_generate(prompt, w, h) {
+    // DALL-E 3 supports 1024×1024, 1792×1024, 1024×1792
+    const size = (w > h) ? '1792x1024' : (h > w) ? '1024x1792' : '1024x1024'
+    _abortCtrl = new AbortController()
+    const r = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${_cfg.openaiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'dall-e-3',
+        prompt,
+        n: 1,
+        size,
+        response_format: 'b64_json',
+      }),
+      signal: _abortCtrl.signal,
+    })
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}))
+      throw new Error(err?.error?.message || `OpenAI HTTP ${r.status}`)
+    }
+    const data = await r.json()
+    return 'data:image/png;base64,' + data.data[0].b64_json
+  }
+
+  // DALL-E 2 image edit (inpainting) — requires PNG ≤ 4MB with alpha mask
+  async function _callOpenAI_edit(prompt) {
+    const size = '1024x1024'
+    // Resize canvas to 1024×1024 for DALL-E 2
+    const tmpC = document.createElement('canvas')
+    tmpC.width = 1024; tmpC.height = 1024
+    const tmpX = tmpC.getContext('2d')
+    tmpX.drawImage(_canvas, 0, 0, 1024, 1024)
+
+    // Build RGBA mask: white where mask is painted, transparent elsewhere
+    const maskC = document.createElement('canvas')
+    maskC.width = 1024; maskC.height = 1024
+    const mX = maskC.getContext('2d')
+    const rawMask = _mctx.getImageData(0, 0, _maskCanvas.width, _maskCanvas.height)
+    const scaledMask = mX.createImageData(1024, 1024)
+    // Simple nearest-neighbour scale of mask
+    const scX = _maskCanvas.width / 1024, scY = _maskCanvas.height / 1024
+    for (let y = 0; y < 1024; y++) {
+      for (let x = 0; x < 1024; x++) {
+        const si = (Math.floor(y * scY) * _maskCanvas.width + Math.floor(x * scX)) * 4
+        const di = (y * 1024 + x) * 4
+        const isMasked = rawMask.data[si + 3] > 10
+        scaledMask.data[di] = scaledMask.data[di+1] = scaledMask.data[di+2] = 0
+        scaledMask.data[di+3] = isMasked ? 0 : 255  // transparent = edit here
+      }
+    }
+    mX.putImageData(scaledMask, 0, 0)
+
+    // Convert to Blobs for multipart form
+    const [imgBlob, maskBlob] = await Promise.all([
+      new Promise(res => tmpC.toBlob(res, 'image/png')),
+      new Promise(res => maskC.toBlob(res, 'image/png')),
+    ])
+
+    const form = new FormData()
+    form.append('model', 'dall-e-2')
+    form.append('image', imgBlob, 'image.png')
+    form.append('mask',  maskBlob, 'mask.png')
+    form.append('prompt', prompt)
+    form.append('n', '1')
+    form.append('size', size)
+    form.append('response_format', 'b64_json')
+
+    _abortCtrl = new AbortController()
+    const r = await fetch('https://api.openai.com/v1/images/edits', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${_cfg.openaiKey}` },
+      body: form,
+      signal: _abortCtrl.signal,
+    })
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}))
+      throw new Error(err?.error?.message || `OpenAI HTTP ${r.status}`)
+    }
+    const data = await r.json()
+    return 'data:image/png;base64,' + data.data[0].b64_json
+  }
+
+  // ── Helper: loading text + setup guide ────────────────────────────────────
+  function _setLoadingText(msg) {
+    const t = $('ais-loading-text')
+    if (t) t.textContent = msg
+  }
+
+  function _showSetupGuide() {
+    const panel = $('ais-settings-panel')
+    if (panel) panel.style.display = 'flex'
+    toast('No AI backend connected. Add your OpenAI key in ⚙ Settings to use DALL-E.', '⚠️')
   }
 
   function _cancelGenerate() {
