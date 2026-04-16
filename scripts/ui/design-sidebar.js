@@ -156,7 +156,7 @@ const DesignSidebar = (() => {
         </div>
         <div class="dsb-sub" id="dsb-sub-stickers">
           <div class="dsb-row"><span class="dsb-label">Color</span>
-            <input id="dsb-scolor" class="dsb-color" type="color" value="#ffffff" oninput="DesignSidebar._sc(this.value)"/>
+            <input id="dsb-scolor" class="dsb-color" type="color" value="#ffffff" oninput="DesignSidebar.setStickerColor(this.value)"/>
           </div>
           <div class="dsb-stickers-grid">
             ${STICKERS.map((s,i)=>`<button class="dsb-sticker-btn" onclick="DesignSidebar.addSticker(${i})" title="${s.n}">${s.s.replace(/\bC\b/g,'#6c63ff')}</button>`).join('')}
@@ -194,15 +194,15 @@ const DesignSidebar = (() => {
     DesignStudio.addShape(type, { fill, stroke, strokeWidth: stroke ? 3 : 0, rounded: !!rounded })
   }
 
-  let _sc = '#ffffff'
-  function _sc(v) { _sc = v }
+  let _stickerColor = '#ffffff'
+  function setStickerColor(v) { _stickerColor = v }
 
   function addSticker(idx) {
     const s = STICKERS[idx]; if (!s) return
-    DesignStudio.addSticker(s.s.replace(/\bC\b/g, _sc))
+    DesignStudio.addSticker(s.s.replace(/\bC\b/g, _stickerColor))
   }
 
-  return { mountEdit, mountCompose, syncSliders, resetEdit, addText, addShape, addSticker, _tab2, _sc }
+  return { mountEdit, mountCompose, syncSliders, resetEdit, addText, addShape, addSticker, _tab2, setStickerColor }
 })()
 window.PageCraft = window.PageCraft || {}
 window.PageCraft.DesignSidebar = DesignSidebar
