@@ -29,8 +29,6 @@ const DesignSidebar = (() => {
     {n:'Thumbs',    s:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,45L20,90L40,90L40,45ZM40,45C40,45 45,20 60,15C65,13 70,16 70,22L70,40L85,40C90,40 92,45 90,50L82,85C81,89 77,90 74,90L40,90Z" fill="C"/></svg>`},
   ]
 
-  let _stickerColor = '#ffffff'
-
   // ── Edit panel ────────────────────────────────────────────────────────────
   function mountEdit(id) {
     const el = document.getElementById(id); if (!el) return
